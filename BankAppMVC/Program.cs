@@ -4,6 +4,8 @@
 using DatabaseLayer.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Services;
+using Services.Statistics;
 
 namespace BankAppMVC
 {
@@ -25,12 +27,15 @@ namespace BankAppMVC
             builder.Services.AddRazorPages();
 
             builder.Services.AddTransient<DataInitializer>();
+            
+            builder.Services.AddTransient<IStatisticsService, StatisticsService>();
             var app = builder.Build();
 
-            using (var scope = app.Services.CreateScope())
-            {
-                scope.ServiceProvider.GetService<DataInitializer>().SeedData();
-            }
+
+            //using (var scope = app.Services.CreateScope())
+            //{
+            //    scope.ServiceProvider.GetService<DataInitializer>().SeedData();
+            //}
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())

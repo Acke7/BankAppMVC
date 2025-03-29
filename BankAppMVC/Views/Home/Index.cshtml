@@ -1,24 +1,71 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-
+@functions {
+    string GetFlagImagePath(string country) => country.ToLower() switch
+    {
+        "sweden" => "https://flagcdn.com/se.svg",
+        "finland" => "https://flagcdn.com/fi.svg",
+        "denmark" => "https://flagcdn.com/dk.svg",
+        "norway" => "https://flagcdn.com/no.svg",
+        
+    };
+}
+@{
+    DateTime? swedenTime = ViewBag.SwedenTime as DateTime?;
+}
 <!-- Main -->
 <main class="main px-lg-6">
     <!-- Content -->
     <div class="container-lg">
         <!-- Page content -->
-        <div class="row align-items-center">
-            <div class="col-12 col-md-auto order-md-1 d-flex align-items-center justify-content-center mb-4 mb-md-0">
-                <div class="avatar text-info me-2">
-                    <i class="fs-4" data-duoicon="world"></i>
+      
+            <div class="row align-items-center">
+                <div class="col-12 col-md-auto order-md-1 d-flex align-items-center justify-content-center mb-4 mb-md-0">
+                    <div class="avatar text-info me-2">
+                        <i class="fs-4" data-duoicon="world"></i>
+                    </div>
+                    @if (swedenTime.HasValue)
+                    {
+
+                        <div class="mb-4 text-muted">
+                            🇸🇪 Sweden – <time datetime="@swedenTime.Value.ToString("HH:mm")">@swedenTime.Value.ToString("h:mm tt")</time>
+                        </div>
+
+                    }
                 </div>
-                San Francisco, CA –&nbsp;<time datetime="20:00">8:00 PM</time>
+                <div class="col-12 col-md order-md-0 text-center text-md-start">
+                    <h1>Hello, John</h1>
+                    
+                </div>
             </div>
-            <div class="col-12 col-md order-md-0 text-center text-md-start">
-                <h1>Hello, John</h1>
-                <p class="fs-lg text-body-secondary mb-0">Here's a summary of your account activity for this week.</p>
+            <div id="statstic-section">
+            <div class="row ">
+                 <p class="fs-lg text-body-secondary mb-0">Here's a summary of your account activity for this week.</p>
+                @foreach (var item in Model)
+                {
+                    
+                    <div class="col-md-3 mb-4 p-5">
+                        <div class="card border-info shadow h-100" >
+                            <div class=" card-header bg-info text-white d-flex align-items-center ">
+                                <img src="@GetFlagImagePath(item.Country)" alt="@item.Country Flag" width="24" height="16" class="me-2" />
+                                <h3 class="fs-6 mb-0">@item.Country</h3>
+                            </div>
+                            <div class="card-body text-dark">
+                            <h4 class=" fs-base fw-normal text-body-secondary mb-7">👥 Customers: @item.Customers</h4>
+                            <h4 class=" fs-base fw-normal text-body-secondary mb-7">🏦 Accounts: @item.Accounts</h4>
+                             <h4 class=" fs-base fw-normal text-body-secondary mb-7">💰 Total Saldo: @item.TotalSaldo.ToString("C")</h4>
+                                
+                            </div>
+                        </div>
+                    </div>
+                }
             </div>
-        </div>
+            </div>
+                        
+                
+         
+     
 
         <!-- Divider -->
         <hr class="my-8" />
@@ -496,7 +543,7 @@
                             <li data-icon="thumb_up">
                                 <div>
                                     <h6 class="fs-base mb-1">You <span class="fs-sm fw-normal text-body-secondary ms-1">1hr ago</span></h6>
-                                   @*  <p class="mb-0">Liked a post by @john_doe</p> *@
+                                    @*  <p class="mb-0">Liked a post by @john_doe</p> *@
                                 </div>
                             </li>
                             <li data-icon="chat_bubble">
@@ -514,7 +561,7 @@
                             <li data-icon="person_add">
                                 <div>
                                     <h6 class="fs-base mb-1">You <span class="fs-sm fw-normal text-body-secondary ms-1">1 day ago</span></h6>
-                                   @*  <p class="mb-0">Started following @jane_smith</p> *@
+                                    @*  <p class="mb-0">Started following @jane_smith</p> *@
                                 </div>
                             </li>
                             <li data-icon="account_circle">
