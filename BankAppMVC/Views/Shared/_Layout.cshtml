@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc." />
 
-  
+
     <!-- Favicon -->
     <link rel="shortcut icon" href="./favicon/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -29,7 +29,7 @@
     <title>Dashbrd</title>
 </head>
 
-<body>
+<body id="app-body">
     <!-- Sidenav -->
     <!-- Sidenav (sm) -->
     <aside class="aside aside-sm d-none d-xl-flex" id="sidenav-sm" style="z-index: 1">
@@ -90,7 +90,7 @@
                 </a>
                 <partial name="_LoginPartial"/>
                 <!-- User -->
-            @*     <div class="ms-auto d-xl-none">
+                @*     <div class="ms-auto d-xl-none">
                     <div class="dropdown my-n2">
                         <a class="btn btn-link d-inline-flex align-items-center dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <span class="avatar avatar-sm avatar-status avatar-status-success me-3">
@@ -111,25 +111,26 @@
  *@
                 <!-- Toggler -->
                 <button class="navbar-toggler ms-3"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#sidenavLargeCollapse"
-                        aria-controls="sidenavLargeCollapse"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation">
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#sidenavLargeCollapse"
+                aria-controls="sidenavLargeCollapse"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <!-- Collapse -->
                 <div class="collapse navbar-collapse" id="sidenavLargeCollapse">
                     <!-- Search -->
+
                     <div class="input-group d-xl-none my-4 my-xl-0">
                         <input class="form-control"
-                               id="topnavSearchInputMobile"
-                               type="search"
-                               placeholder="Search"
-                               aria-label="Search"
-                               aria-describedby="navbarSearchMobile" />
+                        id="topnavSearchInputMobile"
+                        type="search"
+                        placeholder="Search"
+                        aria-label="Search"
+                        aria-describedby="navbarSearchMobile" />
                         <span class="input-group-text" id="navbarSearchMobile">
                             <span class="material-symbols-outlined"> search </span>
                         </span>
@@ -139,12 +140,12 @@
                     <nav class="navbar-nav nav-pills mb-7">
                         <div class="nav-item">
                             <a class="nav-link "
-                               href="#"
-                               data-bs-toggle="collapse"
-                               data-bs-target="#dashboards"
-                               role="button"
-                               aria-expanded="false"
-                               aria-controls="dashboards">
+                            href="#"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#dashboards"
+                            role="button"
+                            aria-expanded="false"
+                            aria-controls="dashboards">
                                 <span class="material-symbols-outlined me-3">space_dashboard</span> Dashboards
                             </a>
                             <div class="collapse " id="dashboards">
@@ -157,12 +158,12 @@
                         </div>
                         <div class="nav-item">
                             <a class="nav-link "
-                               href="#"
-                               data-bs-toggle="collapse"
-                               data-bs-target="#customers"
-                               role="button"
-                               aria-expanded="false"
-                               aria-controls="customers">
+                            href="#"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#customers"
+                            role="button"
+                            aria-expanded="false"
+                            aria-controls="customers">
                                 <span class="material-symbols-outlined me-3">group</span> Customers
                             </a>
                             <div class="collapse " id="customers">
@@ -175,12 +176,12 @@
                         </div>
                         <div class="nav-item">
                             <a class="nav-link "
-                               href="#"
-                               data-bs-toggle="collapse"
-                               data-bs-target="#projects"
-                               role="button"
-                               aria-expanded="false"
-                               aria-controls="projects">
+                            href="#"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#projects"
+                            role="button"
+                            aria-expanded="false"
+                            aria-controls="projects">
                                 <span class="material-symbols-outlined me-3">list_alt</span> Projects
                             </a>
                             <div class="collapse " id="projects">
@@ -193,12 +194,12 @@
                         </div>
                         <div class="nav-item">
                             <a class="nav-link "
-                               href="#"
-                               data-bs-toggle="collapse"
-                               data-bs-target="#account"
-                               role="button"
-                               aria-expanded="false"
-                               aria-controls="account">
+                            href="#"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#account"
+                            role="button"
+                            aria-expanded="false"
+                            aria-controls="account">
                                 <span class="material-symbols-outlined me-3">person</span> Account
                             </a>
                             <div class="collapse " id="account">
@@ -210,12 +211,12 @@
                         </div>
                         <div class="nav-item">
                             <a class="nav-link "
-                               href="#"
-                               data-bs-toggle="collapse"
-                               data-bs-target="#orders"
-                               role="button"
-                               aria-expanded="false"
-                               aria-controls="orders">
+                            href="#"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#orders"
+                            role="button"
+                            aria-expanded="false"
+                            aria-controls="orders">
                                 <span class="material-symbols-outlined me-3">shopping_cart</span> Orders
                             </a>
                             <div class="collapse " id="orders">
@@ -228,12 +229,12 @@
                         </div>
                         <div class="nav-item">
                             <a class="nav-link "
-                               href="#"
-                               data-bs-toggle="collapse"
-                               data-bs-target="#posts"
-                               role="button"
-                               aria-expanded="false"
-                               aria-controls="posts">
+                            href="#"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#posts"
+                            role="button"
+                            aria-expanded="false"
+                            aria-controls="posts">
                                 <span class="material-symbols-outlined me-3">text_fields</span> Posts
                             </a>
                             <div class="collapse " id="posts">
@@ -246,12 +247,12 @@
                         </div>
                         <div class="nav-item">
                             <a class="nav-link"
-                               href="#"
-                               data-bs-toggle="collapse"
-                               data-bs-target="#authentication"
-                               role="button"
-                               aria-expanded="false"
-                               aria-controls="authentication">
+                            href="#"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#authentication"
+                            role="button"
+                            aria-expanded="false"
+                            aria-controls="authentication">
                                 <span class="material-symbols-outlined me-3">login</span> Authentication
                             </a>
                             <div class="collapse" id="authentication">
@@ -351,6 +352,7 @@
     <nav class="navbar navbar-expand-xl" id="topnav-lg">
         <div class="container-lg">
             <!-- Brand -->
+
             <a class="navbar-brand fs-5 fw-bold" href="./index.html"> <i class="fs-4 text-secondary me-1" data-duoicon="box-2"></i> Dashbrd </a>
 
             <!-- User -->
@@ -359,12 +361,12 @@
 
             <!-- Toggler -->
             <button class="navbar-toggler ms-3"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#topnavLargeCollapse"
-                    aria-controls="topnavLargeCollapse"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation">
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#topnavLargeCollapse"
+            aria-controls="topnavLargeCollapse"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -450,10 +452,10 @@
                     </div>
                     <div class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle "
-                           href="#"
-                           role="button"
-                           data-bs-toggle="dropdown"
-                           aria-expanded="false">
+                        href="#"
+                        role="button"
+                        data-bs-toggle="dropdown"
+                        aria-expanded="false">
                             Documentation
                         </a>
                         <div class="dropdown-menu">
@@ -516,8 +518,10 @@
     <!-- Topnav (sm) -->
     <nav class="navbar d-none d-xl-flex px-xl-6" id="topnav-sm">
         <div class="container flex-column align-items-stretch">
+
             <div class="row">
                 <div class="col">
+
                     <!-- Search -->
                     <div class="input-group" style="max-width: 400px">
                         <input class="form-control" id="topnavSearchInput" type="search" placeholder="Search" aria-label="Search" aria-describedby="navbarSearch" />
@@ -527,6 +531,8 @@
                         </span>
                     </div>
                 </div>
+
+               
                 <div class="col-auto">
                     <!-- User -->
                     <div class="dropdown my-n2">
@@ -539,6 +545,10 @@
                             </a> <!-- CLOSE the <a> here -->
 
                             <ul class="dropdown-menu dropdown-menu-end">
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Register">Register</a></li>
+                                }
                                 @* <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Register">Register</a></li> *@
                                 <li>
                                     <form method="post"
@@ -569,7 +579,8 @@
 
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Login">Login</a></li>
-                                <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Register">Register</a></li>
+
+
 
 
 
@@ -602,5 +613,29 @@
     <script src="~/js/theme.bundle.js" asp-append-version="true"></script>
     <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
+    <script>
+        function applyThemeBackgroundClass() {
+            const theme = document.documentElement.getAttribute("data-bs-theme");
+            const body = document.getElementById("app-body");
+
+            body.classList.remove("bg-app-wrapper", "bg-app-wrapper-light");
+
+            if (theme === "dark") {
+                body.classList.add("bg-app-wrapper");
+            } else if (theme === "light") {
+                body.classList.add("bg-app-wrapper-light");
+            }
+        }
+
+        // Run on page load
+        applyThemeBackgroundClass();
+
+        // Watch for theme changes
+        const observer = new MutationObserver(applyThemeBackgroundClass);
+        observer.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ["data-bs-theme"]
+        });
+    </script>>
 </body>
 </html>

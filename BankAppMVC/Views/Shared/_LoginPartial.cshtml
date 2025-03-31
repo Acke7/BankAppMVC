@@ -4,35 +4,40 @@
 
 <div class="ms-auto d-xl-none">
     <div class="dropdown my-n2">
-@if (SignInManager.IsSignedIn(User))
-{
+        @if (SignInManager.IsSignedIn(User))
+        {
             <a class="btn btn-link d-inline-flex align-items-center dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <span class="avatar avatar-sm avatar-status avatar-status-success me-3">
                     <img class="avatar-img" src="./img/photos/photo-6.jpg" alt="..." />
                 </span>
+            
             </a> <!-- CLOSE the <a> here -->
 
             <ul class="dropdown-menu dropdown-menu-end">
+                @if (User.IsInRole("Admin"))
+                {
+                    <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Register">Register</a></li>
+                }
                 @* <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Register">Register</a></li> *@
                 <li>
                     <form method="post"
-                          asp-area="Identity"
-                          asp-page="/Account/Logout"
-                          asp-route-returnUrl="@Url.Page("/Index", new { area = "" })"
-                          class="w-100">
+                    asp-area="Identity"
+                    asp-page="/Account/Logout"
+                    asp-route-returnUrl="@Url.Page("/Index", new { area = "" })"
+                    class="w-100">
                         <button type="submit" class="dropdown-item text-start w-100">Sign out</button>
                     </form>
                 </li>
             </ul>
 
 
-    @* <li class="nav-item">
+            @* <li class="nav-item">
         <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
     </li>
  *@
-}
-else
-{
+        }
+        else
+        {
 
             <a class="btn btn-link d-inline-flex align-items-center dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <span class="avatar avatar-sm avatar-status avatar-status-success me-3">
@@ -43,7 +48,8 @@ else
 
             <ul class="dropdown-menu dropdown-menu-end">
                 <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Login">Login</a></li>
-                <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Register">Register</a></li>
+               
+              
            
 
               

@@ -1,4 +1,7 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@{
     ViewData["Title"] = "Home Page";
 }
 @functions {
@@ -35,13 +38,22 @@
                     }
                 </div>
                 <div class="col-12 col-md order-md-0 text-center text-md-start">
-                    <h1>Hello, John</h1>
+
+                <div class="col p-3">
+
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <h4 class=" fs-md fw-normal text-body-secondary mb-7"> Hellow @User.Identity?.Name</h4>
+                    }
+
+                </div>
+
                     
                 </div>
             </div>
             <div id="statstic-section">
             <div class="row ">
-                 <p class="fs-lg text-body-secondary mb-0">Here's a summary of your account activity for this week.</p>
+                <h2 class="fs-lg text-body-secondary mb-0">Here's a summary of bank activity.</h2>
                 @foreach (var item in Model)
                 {
                     

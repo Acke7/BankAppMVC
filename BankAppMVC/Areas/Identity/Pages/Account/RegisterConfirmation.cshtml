@@ -2,22 +2,41 @@
 @model RegisterConfirmationModel
 @{
     ViewData["Title"] = "Register confirmation";
+    Layout = "~/Views/Shared/_Layout.cshtml"; 
 }
 
-<h1>@ViewData["Title"]</h1>
-@{
-    if (@Model.DisplayConfirmAccountLink)
-    {
-<p>
-    This app does not currently have a real email sender registered, see <a href="https://aka.ms/aspaccountconf">these docs</a> for how to configure a real email sender.
-    Normally this would be emailed: <a id="confirm-link" href="@Model.EmailConfirmationUrl">Click here to confirm your account</a>
-</p>
-    }
-    else
-    {
-<p>
-        Please check your email to confirm your account.
-</p>
-    }
-}
+<div class="container d-flex align-items-center" style="min-height: 100vh;">
+    <div class="row justify-content-center w-100">
+        <div class="col-12" style="max-width: 32rem; margin: auto;">
+            <div class="card shadow-sm p-4">
+                <div class="text-center">
+                    <i class="fa-solid fa-envelope-circle-check fa-3x text-success mb-3"></i>
+                    <h2 class="fw-bold">@ViewData["Title"]</h2>
+                </div>
+
+                <div class="mt-4">
+                    @if (Model.DisplayConfirmAccountLink)
+                    {
+                        <div class="alert alert-warning" role="alert">
+                            <p>This app does not currently have a real email sender registered.</p>
+                            <p>See <a href="https://aka.ms/aspaccountconf" target="_blank">these docs</a> for how to configure a real email sender.</p>
+                        </div>
+
+                        <p class="text-center">
+                            Normally this would be emailed:<br />
+                            <a id="confirm-link" class="btn btn-primary mt-2" href="@Model.EmailConfirmationUrl">Click here to confirm your account</a>
+                        </p>
+                    }
+                    else
+                    {
+                        <div class="alert alert-success text-center" role="alert">
+                            Please check your email to confirm your account.
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
