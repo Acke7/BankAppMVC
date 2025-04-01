@@ -1,32 +1,36 @@
 using System.Diagnostics;
 using BankAppMVC.Models;
+using BankAppMVC.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Services.Statistics;
 
 namespace BankAppMVC.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IStatisticsService _statisticsService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IStatisticsService statisticsService)
         {
-            _logger = logger;
+            _statisticsService = statisticsService;
         }
 
         public IActionResult Index()
         {
-            return View();
-        }
+            var swedenTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Central European Standard Time");
+            var swedenTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, swedenTimeZone);
+            ViewBag.SwedenTime = swedenTime; ;
+            var dtoList = _statisticsService.GetCountryStatistics();
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+            var viewModelList = dtoList.Select(dto => new CountryStatsViewModel
+            {
+                Country = dto.Country,
+                Customers = dto.CustomerCount,
+                Accounts = dto.AccountCount,
+                TotalSaldo = dto.TotalBalance
+            }).ToList();
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(viewModelList);
         }
     }
 }

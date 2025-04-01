@@ -20,6 +20,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DatabaseLayer\DatabaseLayer.csproj" />
+    <ProjectReference Include="..\Services\Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\img\flags\" />
   </ItemGroup>
 
 </Project>
