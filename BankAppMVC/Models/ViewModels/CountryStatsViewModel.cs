@@ -1,4 +1,4 @@
-﻿namespace BankAppMVC.ViewModels
+﻿namespace BankAppMVC.Models.ViewModels
 {
     public class CountryStatsViewModel
     {
