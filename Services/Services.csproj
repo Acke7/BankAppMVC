@@ -10,8 +10,4 @@
     <ProjectReference Include="..\DatabaseLayer\DatabaseLayer.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Customers\" />
-  </ItemGroup>
-
 </Project>

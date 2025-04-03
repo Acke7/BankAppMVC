@@ -168,9 +168,9 @@
                             </a>
                             <div class="collapse " id="customers">
                                 <nav class="nav nav-pills">
-                                    <a class="nav-link " href="./customers/customers.html">Customers</a>
-                                    <a class="nav-link " href="./customers/customer.html">Customer details</a>
-                                    <a class="nav-link " href="./customers/customer-new.html">New customer</a>
+                                    <a class="nav-link" asp-controller="Customer" asp-action="Index">Customers</a>
+                                    <a class="nav-link" asp-controller="Customer" asp-action="Details" asp-route-id="1">Customer details</a>
+                                    <a class="nav-link" asp-controller="Customer" asp-action="Create">New customer</a>
                                 </nav>
                             </div>
                         </div>
@@ -397,9 +397,9 @@
                             Customers
                         </a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item " href="./customers/customers.html">Customers</a>
-                            <a class="dropdown-item " href="./customers/customer.html">Customer details</a>
-                            <a class="dropdown-item " href="./customers/customer-new.html">New customer</a>
+                            <a class="nav-link" asp-controller="Customer" asp-action="Index">Customers</a>
+                            <a class="nav-link" asp-controller="Customer" asp-action="Details" asp-route-id="1">Customer details</a>
+                            <a class="nav-link" asp-controller="Customer" asp-action="Create">New customer</a>
                         </div>
                     </div>
                     <div class="nav-item dropdown">

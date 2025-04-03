@@ -1,6 +1,6 @@
 using System.Diagnostics;
 using BankAppMVC.Models;
-using BankAppMVC.ViewModels;
+using BankAppMVC.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Services.Statistics;
 
@@ -15,12 +15,12 @@ namespace BankAppMVC.Controllers
             _statisticsService = statisticsService;
         }
 
-        public IActionResult Index()
+        public async Task< IActionResult >Index()
         {
             var swedenTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Central European Standard Time");
             var swedenTime = TimeZoneInfo.ConvertTimeFromUtc(DateTime.UtcNow, swedenTimeZone);
             ViewBag.SwedenTime = swedenTime; ;
-            var dtoList = _statisticsService.GetCountryStatistics();
+            var dtoList = await _statisticsService.GetCountryStatistics();
 
             var viewModelList = dtoList.Select(dto => new CountryStatsViewModel
             {

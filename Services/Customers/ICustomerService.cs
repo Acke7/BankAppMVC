@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DatabaseLayer.DTOs;
+using DatabaseLayer.Models;
 
-namespace Services.Statistics
+namespace Services.Customers
 {
-    public interface IStatisticsService
+    public interface ICustomerService
     {
-        Task< List<CountriesStatisticsDTO> >GetCountryStatistics();
+      public  Task<List<CustomerListDto>> GetAllCustomersAsync();
     }
 }
