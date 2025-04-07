@@ -10,6 +10,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc." />
 
+    <link rel="stylesheet" href="~/css/1.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/2.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/3.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/4.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/5.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/fonts/iconfonts.css" asp-append-version="true" />
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="./favicon/favicon.ico" type="image/x-icon" />
@@ -25,6 +31,9 @@
     <link rel="stylesheet" href="~/css/libs.bundle.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/theme.bundle.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+
+      
     <!-- Title -->
     <title>Dashbrd</title>
 </head>
@@ -168,9 +177,9 @@
                             </a>
                             <div class="collapse " id="customers">
                                 <nav class="nav nav-pills">
-                                    <a class="nav-link " href="./customers/customers.html">Customers</a>
-                                    <a class="nav-link " href="./customers/customer.html">Customer details</a>
-                                    <a class="nav-link " href="./customers/customer-new.html">New customer</a>
+                                    <a class="nav-link" asp-controller="Customer" asp-action="Index">Customers</a>
+                                    <a class="nav-link" asp-controller="Customer" asp-action="Details" asp-route-id="1">Customer details</a>
+                                    <a class="nav-link" asp-controller="Customer" asp-action="Create">New customer</a>
                                 </nav>
                             </div>
                         </div>
@@ -397,9 +406,9 @@
                             Customers
                         </a>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item " href="./customers/customers.html">Customers</a>
-                            <a class="dropdown-item " href="./customers/customer.html">Customer details</a>
-                            <a class="dropdown-item " href="./customers/customer-new.html">New customer</a>
+                            <a class="nav-link" asp-controller="Customer" asp-action="Index">Customers</a>
+                            <a class="nav-link" asp-controller="Customer" asp-action="Details" asp-route-id="1">Customer details</a>
+                            <a class="nav-link" asp-controller="Customer" asp-action="Create">New customer</a>
                         </div>
                     </div>
                     <div class="nav-item dropdown">
@@ -521,15 +530,24 @@
 
             <div class="row">
                 <div class="col">
+                    <div class="col p-3">
+
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <h4 class=" fs-md fw-normal text-body-secondary mb-7"> Hellow @User.Identity?.Name</h4>
+                        }
+
+                    </div>
+
 
                     <!-- Search -->
-                    <div class="input-group" style="max-width: 400px">
+                   @*  <div class="input-group" style="max-width: 400px">
                         <input class="form-control" id="topnavSearchInput" type="search" placeholder="Search" aria-label="Search" aria-describedby="navbarSearch" />
                         <span class="input-group-text" id="navbarSearch">
                             <kbd class="badge bg-body-secondary text-body">⌘</kbd>
                             <kbd class="badge bg-body-secondary text-body ms-1">K</kbd>
                         </span>
-                    </div>
+                    </div> *@
                 </div>
 
                
@@ -612,6 +630,13 @@
     <script src="~/js/vendor.bundle.js" asp-append-version="true"></script>
     <script src="~/js/theme.bundle.js" asp-append-version="true"></script>
     <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+
+
+  @*   <script src="~/js/1.js" asp-append-version="true"></script>
+    <script src="~/js/2.js" asp-append-version="true"></script>
+    <script src="~/js/3.js" asp-append-version="true"></script>
+    <script src="~/js/4.js" asp-append-version="true"></script>
+    <script src="~/js/5.js" asp-append-version="true"></script> *@
     @RenderSection("Scripts", required: false)
     <script>
         function applyThemeBackgroundClass() {

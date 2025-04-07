@@ -5,6 +5,7 @@ using DatabaseLayer.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Services;
+using Services.Customers;
 using Services.Statistics;
 
 namespace BankAppMVC
@@ -29,6 +30,7 @@ namespace BankAppMVC
             builder.Services.AddTransient<DataInitializer>();
             
             builder.Services.AddTransient<IStatisticsService, StatisticsService>();
+            builder.Services.AddTransient<ICustomerService, CustomerService>();
             var app = builder.Build();
 
 

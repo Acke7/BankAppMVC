@@ -18,9 +18,9 @@ namespace Services.Statistics
             _context = context;
         }
 
-        public List<CountriesStatisticsDTO> GetCountryStatistics()
+        public async Task< List<CountriesStatisticsDTO> >GetCountryStatistics()
         {
-            return _context.Customers
+            return await _context.Customers
                 .Include(c => c.Dispositions)
                     .ThenInclude(d => d.Account)
                 .GroupBy(c => c.Country)
@@ -37,7 +37,7 @@ namespace Services.Statistics
                                     .Distinct()
                                     .Sum(a => a.Balance)
                 })
-                .ToList();
+                  .ToListAsync();
         }
     }
 }
