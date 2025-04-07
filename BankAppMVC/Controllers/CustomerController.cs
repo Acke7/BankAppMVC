@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using BankAppMVC.Models;
 using Services.Customers;
+using Humanizer;
 
 
 namespace BankAppMVC.Controllers
@@ -80,7 +81,103 @@ namespace BankAppMVC.Controllers
 
             return View(vm);
         }
+
+
+        [HttpGet]
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                // Return the view without any model (clean search page)
+                return View(model: null);
+            }
+
+            var customer = await _customerService.GetCustomerProfileAsync(id.Value);
+            if (customer == null)
+            {
+                TempData["Error"] = $"Customer with ID {id.Value} not found.";
+                return View(model: null); // show just the search box
+            }
+
+            var vm = new CustomerProfileViewModel
+            {
+                CustomerId = customer.CustomerId,
+                Gender = customer.Gender,
+                Givenname = customer.Givenname,
+                Surname = customer.Surname,
+                Streetaddress = customer.Streetaddress,
+                City = customer.City,
+                Zipcode = customer.Zipcode,
+                Country = customer.Country,
+                CountryCode = customer.CountryCode,
+                Birthday = customer.Birthday,
+                NationalId = customer.NationalId,
+                Telephonecountrycode = customer.Telephonecountrycode,
+                Telephonenumber = customer.Telephonenumber,
+                Emailaddress = customer.Emailaddress,
+                Accounts = customer.Accounts.Select(a => new AccountViewModel
+                {
+                    AccountId = a.AccountId,
+                    Frequency = a.Frequency,
+                    Created = a.Created,
+                    Balance = a.Balance
+                }).ToList()
+            };
+
+            return View(vm); // same Details.cshtml
+        }
+
+
+
+        [HttpPost]
+        public async Task<IActionResult>  FindByCustomerId(int id)
+        {
+            if (id <= 0)
+            {
+                TempData["Error"] = "Please enter a valid customer ID.";
+                return View("Details"); // or a search page
+            }
+
+            var dto = await _customerService.GetCustomerProfileAsync(id);
+            if (dto == null)
+            {
+                TempData["Error"] = $"No customer found with ID {id}.";
+                return View("Details");
+            }
+
+            var viewModel = new CustomerProfileViewModel
+            {
+                CustomerId = dto.CustomerId,
+                Gender = dto.Gender,
+                Givenname = dto.Givenname,
+                Surname = dto.Surname,
+                Streetaddress = dto.Streetaddress,
+                City = dto.City,
+                Zipcode = dto.Zipcode,
+                Country = dto.Country,
+                CountryCode = dto.CountryCode,
+                Birthday = dto.Birthday,
+                NationalId = dto.NationalId,
+                Telephonecountrycode = dto.Telephonecountrycode,
+                Telephonenumber = dto.Telephonenumber,
+                Emailaddress = dto.Emailaddress,
+
+                Accounts = dto.Accounts.Select(a => new AccountViewModel
+                {
+                    AccountId = a.AccountId,
+                    Frequency = a.Frequency,
+                    Created = a.Created,
+                    Balance = a.Balance
+                }).ToList()
+            };
+
+            return RedirectToAction("Details", new { id });
+        }
+
     }
+
+
+
 
 }
 

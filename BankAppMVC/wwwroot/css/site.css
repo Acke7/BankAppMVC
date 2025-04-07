@@ -6,7 +6,7 @@
 }
 
 .bg-app-wrapper {
-    background-image: url('/img/backgrounds/1.jpg'); /* 🔁 Update this to your image */
+    background-image: url('/img/backgrounds/1.jpg') !important; /* 🔁 Update this to your image */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -24,4 +24,99 @@
     z-index: 0;
     min-height: 100vh;
 }
-   
+.dtr-pricing {
+    background: rgba(255, 255, 255, 0.1) !important; /* Light transparent background */
+    backdrop-filter: blur(10px) !important; /* Apply blur to background */
+    -webkit-backdrop-filter: blur(10px) !important; /* Safari support */
+    border-radius: 15px; /* Optional: rounded corners */
+    border: 1px solid rgba(255, 255, 255, 0.2) !important; /* Optional: subtle border */
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1) !important; /* Optional: depth effect */
+}
+
+.glass-effect {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(1px);
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    min-height: 460px;
+}
+
+.flag-banner {
+    width: 100%;
+    height: 120px;
+    overflow: hidden;
+    border-radius:2px;
+}
+
+.flag-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+@media (max-width: 576px) {
+    .flag-banner {
+        width: 200px;
+        height: 100px;
+       margin-left: 100px
+    }
+
+
+    /* Make saldo text smaller */
+    .card-body h4:last-of-type {
+        font-size: 1.7rem !important;
+    }
+}
+@media (max-width: 720px) {
+    .flag-banner {
+        width: 200px;
+        height: 100px;
+        
+    }
+
+
+    /* Make saldo text smaller */
+    .card-body h4:last-of-type {
+        font-size: 1.7rem !important;
+
+    }
+}
+
+.display-6 {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.fs-sm {
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+}
+
+.gx-4 {
+    --bs-gutter-x: 1.5rem;
+}
+
+.gy-4 {
+    --bs-gutter-y: 1.5rem;
+}
+
+.bg-gradient-primary {
+    background: linear-gradient(to right, #4e54c8, #8f94fb);
+}
+
+.bg-gradient-success {
+    background: linear-gradient(to right, #56ab2f, #a8e063);
+}
+
+.bg-gradient-dark {
+    background: linear-gradient(to right, #434343, #000000);
+}
+
+.card-title {
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    opacity: 0.85;
+}

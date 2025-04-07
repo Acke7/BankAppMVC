@@ -39,45 +39,51 @@
                 </div>
                 <div class="col-12 col-md order-md-0 text-center text-md-start">
 
-                <div class="col p-3">
-
-                    @if (SignInManager.IsSignedIn(User))
-                    {
-                        <h4 class=" fs-md fw-normal text-body-secondary mb-7"> Hellow @User.Identity?.Name</h4>
-                    }
-
-                </div>
-
-                    
-                </div>
+             
             </div>
-            <div id="statstic-section">
-            <div class="row ">
-                <h2 class="fs-lg text-body-secondary mb-0">Here's a summary of bank activity.</h2>
-                @foreach (var item in Model)
-                {
-                    
-                    <div class="col-md-3 mb-4 p-5">
-                        <div class="card border-info shadow h-100" >
-                            <div class=" card-header bg-info text-white d-flex align-items-center ">
-                                <img src="@GetFlagImagePath(item.Country)" alt="@item.Country Flag" width="24" height="16" class="me-2" />
-                                <h3 class="fs-6 mb-0">@item.Country</h3>
-                            </div>
-                            <div class="card-body text-dark">
-                            <h4 class=" fs-base fw-normal text-body-secondary mb-7">👥 Customers: @item.Customers</h4>
-                            <h4 class=" fs-base fw-normal text-body-secondary mb-7">🏦 Accounts: @item.Accounts</h4>
-                             <h4 class=" fs-base fw-normal text-body-secondary mb-7">💰 Total Saldo: @item.TotalSaldo.ToString("C")</h4>
-                                
+       
+
+
+        <div id="statstic-section" class="dtr-section dtr-pt-100">
+            <div class="container">
+                @* <div class="text-center mb-5">
+                    <p class="dtr-tagline color-red">Overview</p>
+                    <h2 class="dtr-section-heading">Bank Activity Summary</h2>
+                </div> *@
+
+                <div class="row dtr-mt-80 gx-4 gy-4 m-lg-1">
+                    @foreach (var item in Model)
+                    {
+                        <div class="col-12 col-sm-6 col-xl-3">
+                            <div class="dtr-pricing glass-effect d-flex flex-column justify-content-start h-100 text-center">
+
+                                <!-- Full-width flag banner -->
+                                <div class="flag-banner">
+                                    <img src="@GetFlagImagePath(item.Country)" alt="@item.Country Flag" class="flag-img" />
+                                </div>
+
+                                <!-- Statistics -->
+                                <div class="card-body px-4 py-4">
+                                    <p class="fs-sm text-uppercase text-muted mb-1">Customers</p>
+                                    <h4 class="display-6 fw-bold text-body-secondary mb-4">@item.Customers</h4>
+
+                                    <p class="fs-sm text-uppercase text-muted mb-1">Accounts</p>
+                                    <h4 class="display-6 fw-bold text-body-secondary mb-4">@item.Accounts</h4>
+
+                                    <p class="fs-sm text-uppercase text-muted mb-1">Total Saldo</p>
+                                    <h4 class="display-6 fw-bold text-body-secondary">@item.TotalSaldo.ToString("C")</h4>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                }
+                    }
+                </div>
             </div>
-            </div>
-                        
-                
-         
-     
+        </div>
+
+
+
+
+
 
         <!-- Divider -->
         <hr class="my-8" />

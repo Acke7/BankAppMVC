@@ -11,5 +11,7 @@ namespace Services.Customers
     public interface ICustomerService
     {
       public  Task<List<CustomerListDto>> GetAllCustomersAsync();
+      public  Task<CustomerProfileDto> GetCustomerProfileAsync(int customerId);
+        Task<CustomerProfileDto?> GetCustomerByNationalIdAsync(int id);
     }
 }
