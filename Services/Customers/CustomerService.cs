@@ -29,6 +29,15 @@ namespace Services.Customers
                     StreetAddress = c.Streetaddress,
                     NationalId = c.NationalId
                 })
+                .ToListAsync();  return await _context.Customers
+                .Select(c => new CustomerListDto
+                {
+                    CustomerId = c.CustomerId,
+                    FullName = c.Givenname + " " + c.Surname,
+                    City = c.City,
+                    StreetAddress = c.Streetaddress,
+                    NationalId = c.NationalId
+                })
                 .ToListAsync();
         }
 

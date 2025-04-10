@@ -39,7 +39,9 @@
             <!-- Page content -->
             <div class="row">
                 <div class="col-12 col-xxl-4">
+
                     <div class="position-sticky mb-8" style="top: 40px">
+
                         <!-- Card -->
                         <div class="card bg-body mb-3">
                             <!-- Image -->
@@ -109,7 +111,9 @@
                                     <div class="card-body py-5 px-5 fs-5 d-flex flex-column justify-content-around h-100">
                                         <!-- Bigger padding and font -->
                                         <p class="fs-sm text-uppercase text-muted mb-1">Account ID</p>
-                                        <h4 class="fw-bold text-body-secondary mb-4">@acc.AccountId</h4>
+                                        <a asp-controller="Account" asp-action="Details" asp-route-accountId="@acc.AccountId" class="btn btn-outline-primary fw-bold mb-4">
+                                            @acc.AccountId
+                                        </a>
 
                                         <p class="fs-sm text-uppercase text-muted mb-1">Frequency</p>
                                         <h4 class="fw-bold text-body-secondary mb-4">@acc.Frequency</h4>

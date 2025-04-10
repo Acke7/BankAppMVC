@@ -1,0 +1,32 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+    @model IEnumerable<BankAppMVC.Models.ViewModels.AccountTransactionsViewModel>
+
+@foreach (var transaction in Model)
+{
+    <tr>
+        <td style="width: 0px">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" />
+                <label class="form-check-label"></label>
+            </div>
+        </td>
+        <td>
+            <div class="d-flex align-items-center">
+                <div class="ms-4">
+                    <div>@transaction.Date.ToShortDateString()</div>
+                </div>
+            </div>
+        </td>
+        <td>@transaction.Type</td>
+        <td>@transaction.Operation</td>
+        <td>@transaction.Amount.ToString("C")</td>
+        <td>@transaction.Balance.ToString("C")</td>
+        <td>@transaction.Symbol</td>
+        <td>@transaction.Bank</td>
+        <td>@transaction.Account</td>
+    </tr>
+}
