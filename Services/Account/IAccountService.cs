@@ -1,4 +1,4 @@
-﻿using DatabaseLayer.DTOs;
+﻿using DatabaseLayer.DTOs.Account;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,9 @@ namespace Services.Account
 {
     public interface IAccountService
     {
-        public  Task<List<AccountTransaktionDto>> GetTransactionByAccountId(int accountId);
+        public  Task<List<AccountTransaktionDto>> GetTransactionsByAccountNumber(int accountId);
         public Task<decimal> GetBalanceByAccountId(int accountId);
+        
+      
     }
 }

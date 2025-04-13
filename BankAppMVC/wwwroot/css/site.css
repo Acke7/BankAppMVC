@@ -120,3 +120,8 @@
     text-transform: uppercase;
     opacity: 0.85;
 }
+
+.bg-profile {
+    background: url('/img/backgrounds/background-1.jpg') no-repeat center center;  
+       background-size: cover;
+}

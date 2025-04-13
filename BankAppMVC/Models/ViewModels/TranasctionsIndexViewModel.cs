@@ -1,4 +1,4 @@
-﻿using DatabaseLayer.DTOs;
+﻿using DatabaseLayer.DTOs.Account;
 
 namespace BankAppMVC.Models.ViewModels
 {

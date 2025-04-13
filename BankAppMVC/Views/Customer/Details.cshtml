@@ -45,7 +45,7 @@
                         <!-- Card -->
                         <div class="card bg-body mb-3">
                             <!-- Image -->
-                            <div class="card-img-top pb-13" style="background: no-repeat url('/img/backgrounds/background-1.jpg') center center / cover;"></div>
+                            <div class="card-img-top pb-13 bg-profile " ></div>
 
                             <!-- Avatar -->
                             <div class="avatar avatar-xl rounded-circle mt-n7 mx-auto">
@@ -110,9 +110,9 @@
                                     <!-- Taller card -->
                                     <div class="card-body py-5 px-5 fs-5 d-flex flex-column justify-content-around h-100">
                                         <!-- Bigger padding and font -->
-                                        <p class="fs-sm text-uppercase text-muted mb-1">Account ID</p>
-                                        <a asp-controller="Account" asp-action="Details" asp-route-accountId="@acc.AccountId" class="btn btn-outline-primary fw-bold mb-4">
-                                            @acc.AccountId
+                                        <p class="fs-sm text-uppercase text-muted mb-1">Account Number</p>
+                                        <a asp-controller="Account" asp-action="Details" asp-route-AccountNumber="@acc.AccountNumber" class="btn btn-outline-primary fw-bold mb-4">
+                                            @acc.AccountNumber
                                         </a>
 
                                         <p class="fs-sm text-uppercase text-muted mb-1">Frequency</p>
@@ -130,6 +130,7 @@
                     </div>
                 </div>
 
+            </div>
         </div>
     </main>
 }

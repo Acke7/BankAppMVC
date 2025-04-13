@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DatabaseLayer.DTOs
+namespace DatabaseLayer.DTOs.Account
 {
     public class AccountTransaktionDto
     {
-         public int AccountNumber { get; set; }
+       
         public DateOnly Date { get; set; }
 
         public string Type { get; set; } = null!;

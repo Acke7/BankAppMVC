@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Services;
 using Services.Account;
-using Services.Account.Services.Account;
+
 using Services.Customers;
 using Services.Statistics;
 

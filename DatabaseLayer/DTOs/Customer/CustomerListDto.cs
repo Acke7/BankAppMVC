@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DatabaseLayer.DTOs
+namespace DatabaseLayer.DTOs.Customer
 {
     public class CustomerListDto
     {

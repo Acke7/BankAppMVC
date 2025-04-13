@@ -1,4 +1,5 @@
-﻿using DatabaseLayer.DTOs;
+﻿using DatabaseLayer.DTOs.Account;
+using DatabaseLayer.DTOs.Customer;
 using DatabaseLayer.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -29,17 +30,7 @@ namespace Services.Customers
                     StreetAddress = c.Streetaddress,
                     NationalId = c.NationalId
                 })
-                .ToListAsync();  return await _context.Customers
-                .Select(c => new CustomerListDto
-                {
-                    CustomerId = c.CustomerId,
-                    FullName = c.Givenname + " " + c.Surname,
-                    City = c.City,
-                    StreetAddress = c.Streetaddress,
-                    NationalId = c.NationalId
-                })
-                .ToListAsync();
-        }
+                .ToListAsync();          }
 
         public async Task<CustomerProfileDto> GetCustomerProfileAsync(int customerId)
         {
@@ -71,7 +62,8 @@ namespace Services.Customers
                     .Where(d => d.Account != null)
                     .Select(d => new AccountDTO
                     {
-                        AccountId = d.Account.AccountId,
+                        //AccountId = d.Account.AccountId,
+                        AccountNumber=d.Account.AccountNumber,
                         Frequency = d.Account.Frequency,
                         Created = d.Account.Created,
                         Balance = d.Account.Balance
@@ -109,7 +101,8 @@ namespace Services.Customers
                     .Where(d => d.Account != null)
                     .Select(d => new AccountDTO
                     {
-                        AccountId = d.Account.AccountId,
+                        //AccountId = d.Account.AccountId,
+                        AccountNumber=d.Account.AccountNumber,
                         Frequency = d.Account.Frequency,
                         Created = d.Account.Created,
                         Balance = d.Account.Balance

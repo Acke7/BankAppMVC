@@ -17,22 +17,22 @@ namespace BankAppMVC.Controllers
         {
             _accountService = accountService;
         }
-         
-        public async Task<IActionResult> GetBalance(int accountId)
-        {
-            var balance = await _accountService.GetBalanceByAccountId(accountId);
-            var vm = new AccountViewModel()
-            {
-                Balance = balance
-            };
-            return View(vm);
-        }
+
+        //public async Task<IActionResult> GetBalance(int accountNumber)
+        //{
+        //    var balance = await _accountService.GetBalanceByAccountId(accountNumber);
+        //    var vm = new AccountViewModel()
+        //    {
+        //        Balance = balance
+        //    };
+        //    return View(vm);
+        //}
 
         //[HttpGet]
-        public async Task<IActionResult> LoadMoreTransactions(int accountId, int skip)
+        public async Task<IActionResult> LoadMoreTransactions(int AccountNumber, int skip)
         {
            
-            var transactions = await _accountService.GetTransactionByAccountId(accountId);
+            var transactions = await _accountService.GetTransactionsByAccountNumber(AccountNumber);
             var next20 = transactions.Skip(skip).Take(20).Select(t => new AccountTransactionsViewModel
             {
                 
@@ -51,10 +51,11 @@ namespace BankAppMVC.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details(int accountId)
+        public async Task<IActionResult> Details(int AccountNumber)
         {
-            var transactions = await _accountService.GetTransactionByAccountId(accountId);
-            var accountBalance = await _accountService.GetBalanceByAccountId(accountId);
+            var transactions = await _accountService.GetTransactionsByAccountNumber(AccountNumber);
+            var accountBalance = await _accountService.GetBalanceByAccountId(AccountNumber);
+         
             var viewModel = transactions
                 .OrderByDescending(t => t.Date) // Order transactions by date from newest
                 .Select(t => new AccountTransactionsViewModel
@@ -68,10 +69,10 @@ namespace BankAppMVC.Controllers
                     Symbol = t.Symbol,
                     Bank = t.Bank,
                     Account = t.Account,
-                    AccountNumber = t.AccountNumber
+                    AccountNumber = AccountNumber
                 }).ToList();
 
-            ViewBag.AccountId = accountId;
+            ViewBag.AccountNumber = AccountNumber;
             return View(viewModel);
         }
 
