@@ -1,4 +1,4 @@
-﻿using DatabaseLayer.DTOs;
+﻿using DatabaseLayer.DTOs.Customer;
 
 namespace BankAppMVC.Models.ViewModels
 {

@@ -117,7 +117,8 @@ namespace BankAppMVC.Controllers
                 Emailaddress = customer.Emailaddress,
                 Accounts = customer.Accounts.Select(a => new AccountViewModel
                 {
-                    AccountId = a.AccountId,
+                   
+                    AccountNumber = a.AccountNumber,
                     Frequency = a.Frequency,
                     Created = a.Created,
                     Balance = a.Balance
@@ -164,7 +165,7 @@ namespace BankAppMVC.Controllers
 
                 Accounts = dto.Accounts.Select(a => new AccountViewModel
                 {
-                    AccountId = a.AccountId,
+                  
                     Frequency = a.Frequency,
                     Created = a.Created,
                     Balance = a.Balance

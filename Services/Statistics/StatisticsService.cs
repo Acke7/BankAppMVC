@@ -1,4 +1,4 @@
-﻿using DatabaseLayer.DTOs;
+﻿using DatabaseLayer.DTOs.Customer;
 using DatabaseLayer.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
