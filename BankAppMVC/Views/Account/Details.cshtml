@@ -16,6 +16,7 @@
     }
 </style>
 
+
 <main class="main px-lg-6">
     <div class="container-lg">
         <div class="row mb-8">
@@ -67,28 +68,45 @@
 
                 <div class="ms-md-5 mt-5">
                     <!-- Moves the entire group to the right -->
-                    <div class="d-flex justify-content-start text-center gap-13" style="
+                    <div class="d-flex justify-content-start text-center gap-10" style="
     margin-left: 90px;
 ">
 
                         <div>
-                            <button class="btn btn-danger rounded-circle p-4">
+                              <a asp-controller="Account"
+                               asp-action="Withdraw"
+                               asp-route-AccountNumber="@ViewBag.AccountNumber" 
+                             class="btn btn-danger rounded-circle p-4">
                                 <i class="fas fa-money-bill-wave fa-lg text-white"></i>
-                            </button>
+                                </a>
+                          
                             <div class="mt-2 fw-semibold">Withdraw</div>
                         </div>
 
                         <div>
-                            <button class="btn btn-success rounded-circle p-4">
-                                <i class="fas fa-coins fa-lg text-white"></i>
-                            </button>
-                            <div class="mt-2 fw-semibold">Deposit</div>
+                            <div>
+                                <div>
+                                   <a asp-controller="Account" 
+                                      asp-action="Deposit" 
+                                      asp-route-AccountNumber="@ViewBag.AccountNumber" 
+                                      class="btn btn-success rounded-circle p-4">
+                                       <i class="fas fa-coins fa-lg text-white"></i>
+                                   </a>
+                                   <div class="mt-2 fw-semibold">Deposit</div>
+                                </div>
+                               
+                               
+                            </div>
+                           
                         </div>
 
                         <div>
-                            <button class="btn btn-primary rounded-circle p-4">
+                             <a asp-controller="Account"
+                               asp-action="Transfer"
+                               asp-route-AccountNumber="@ViewBag.AccountNumber"
+                             class="btn btn-primary rounded-circle p-4">
                                 <i class="fas fa-exchange-alt fa-lg text-white"></i>
-                            </button>
+                               </a>
                             <div class="mt-2 fw-semibold">Transfer</div>
                         </div>
 
@@ -147,7 +165,7 @@
                 data-AccountNumber="@ViewBag.AccountNumber">
             Load more
         </button>
-    </div>
+   
 </main>
 
 @section Scripts {
@@ -166,5 +184,21 @@
                 }
             });
         });
+    </script>
+}
+@if (TempData["SuccessMessage"] != null)
+{
+    <div id="successBadge" class="alert alert-success shadow-lg fw-bold fs-5 position-fixed top-0 end-0 m-4 rounded-3 fade show"
+         role="alert" style="z-index: 9999; max-width: 400px;">
+        <i class="bi bi-check-circle-fill me-2"></i> @TempData["SuccessMessage"]
+    </div>
+
+    <script>
+        setTimeout(function () {
+            var badge = document.getElementById('successBadge');
+            if (badge) {
+                badge.remove();
+            }
+        }, 5000);
     </script>
 }

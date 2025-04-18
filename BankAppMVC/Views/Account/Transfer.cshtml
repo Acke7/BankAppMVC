@@ -1,0 +1,33 @@
+﻿@using BankAppMVC.Models.ViewModels
+@model TransferViewModel
+
+<form asp-action="Transfer" method="post">
+    <!-- To Account Number -->
+    <input type="hidden" name="AccountNumber" value="@Model.FromAccountNumber" />
+    <div class="mb-4">
+        <label class="form-label" asp-for="ToAccountNumber">To Account Number</label>
+        <input class="form-control" asp-for="ToAccountNumber" type="number" required />
+        <span asp-validation-for="ToAccountNumber" class="text-danger"></span>
+    </div>
+
+    <!-- Amount -->
+    <div class="mb-4">
+        <label class="form-label" asp-for="Amount">Amount</label>
+        <input class="form-control" asp-for="Amount" type="number" step="0.01" required />
+        <span asp-validation-for="Amount" class="text-danger"></span>
+    </div>
+
+    <!-- Symbol -->
+    <div class="mb-4">
+        <label class="form-label" asp-for="Symbol">Symbol</label>
+        <input class="form-control" asp-for="Symbol" type="text" required />
+        <span asp-validation-for="Symbol" class="text-danger"></span>
+    </div>
+
+    <!-- Operation (Hidden) -->
+    <input asp-for="Operation" type="hidden" value="Transfer" />
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-primary">Transfer</button>
+</form>
+@Html.ValidationSummary()

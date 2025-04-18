@@ -18,38 +18,39 @@ namespace Services.Account
                 _context = context;
             }
 
-            public async Task<List<AccountTransaktionDto>> GetTransactionsByAccountNumber(int accountNumber)
+        public async Task<List<AccountTransaktionDto>> GetTransactionsByAccountNumber(int accountNumber)
+        {
+            // 1. Try to find the account
+            var account = await _context.Accounts
+                .FirstOrDefaultAsync(a => a.AccountNumber == accountNumber);
+
+            if (account == null)
             {
-                // 1. Try to find the account
-                var account = await _context.Accounts
-                    .FirstOrDefaultAsync(a => a.AccountNumber == accountNumber); 
-
-                if (account == null)
-                {
-                    // Return empty list or throw an error
-                    return new List<AccountTransaktionDto>();
-                }
-
-                // 2. Now get transactions by AccountId
-                var transactions = await _context.Transactions
-                    .Where(t => t.AccountId == account.AccountId)
-                    .Select(t => new AccountTransaktionDto
-                    {
-                        Date = DateOnly.FromDateTime(t.Date.ToDateTime(TimeOnly.MinValue)),
-                        Type = t.Type,
-                        Operation = t.Operation,
-                        Amount = t.Amount,
-                        Balance = t.Balance,
-                        Symbol = t.Symbol,
-                        Bank = t.Bank,
-                        Account = t.Account
-                    })
-                    .ToListAsync();
-
-                return transactions;
+                return new List<AccountTransaktionDto>();
             }
 
-            public async Task<decimal> GetBalanceByAccountId(int accountNumber)
+            // 2. Get and sort transactions before projecting to DTO
+            var transactions = await _context.Transactions
+                .Where(t => t.AccountId == account.AccountId)
+                .OrderByDescending(t => t.Date)
+                .ThenByDescending(t => t.TransactionId) // use TransactionId only here
+                .Select(t => new AccountTransaktionDto
+                {
+                    Date = t.Date,
+                    Type = t.Type,
+                    Operation = t.Operation,
+                    Amount = t.Amount,
+                    Balance = t.Balance,
+                    Symbol = t.Symbol,
+                    Bank = t.Bank,
+                    Account = t.Account
+                })
+                .ToListAsync();
+
+            return transactions;
+        }
+
+        public async Task<decimal> GetBalanceByAccountId(int accountNumber)
             {
                 var balance = await _context.Accounts
                     .Where(a => a.AccountNumber == accountNumber)

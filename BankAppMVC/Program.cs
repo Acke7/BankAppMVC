@@ -9,6 +9,7 @@ using Services.Account;
 
 using Services.Customers;
 using Services.Statistics;
+using Services.Transactions;
 
 namespace BankAppMVC
 {
@@ -34,7 +35,8 @@ namespace BankAppMVC
             builder.Services.AddTransient<IStatisticsService, StatisticsService>();
             builder.Services.AddTransient<ICustomerService, CustomerService>();
             builder.Services.AddScoped<IAccountService, AccountService>();
-            var app = builder.Build();
+            builder.Services.AddScoped<ITransactionService, TransactionService>();
+           var app = builder.Build();
 
 
             //using (var scope = app.Services.CreateScope())
