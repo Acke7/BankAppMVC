@@ -11,7 +11,7 @@
     <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc." />
 
     <link rel="stylesheet" href="~/css/1.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/2.css" asp-append-version="true" />
+  @*   <link rel="stylesheet" href="~/css/2.css" asp-append-version="true" /> *@
     <link rel="stylesheet" href="~/css/3.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/4.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/5.css" asp-append-version="true" />
@@ -39,6 +39,7 @@
 </head>
 
 <body id="app-body">
+
     <!-- Sidenav -->
     <!-- Sidenav (sm) -->
     <aside class="aside aside-sm d-none d-xl-flex" id="sidenav-sm" style="z-index: 1">
@@ -632,37 +633,12 @@
     <script src="~/js/vendor.bundle.js" asp-append-version="true"></script>
     <script src="~/js/theme.bundle.js" asp-append-version="true"></script>
     <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
 
 
-  @*   <script src="~/js/1.js" asp-append-version="true"></script>
-    <script src="~/js/2.js" asp-append-version="true"></script>
-    <script src="~/js/3.js" asp-append-version="true"></script>
-    <script src="~/js/4.js" asp-append-version="true"></script>
-    <script src="~/js/5.js" asp-append-version="true"></script> *@
-    @RenderSection("Scripts", required: false)
-    <script>
-        function applyThemeBackgroundClass() {
-            const theme = document.documentElement.getAttribute("data-bs-theme");
-            const body = document.getElementById("app-body");
+    @await RenderSectionAsync("Scripts", required: false)
 
-            body.classList.remove("bg-app-wrapper", "bg-app-wrapper-light");
+    
 
-            if (theme === "dark") {
-                body.classList.add("bg-app-wrapper");
-            } else if (theme === "light") {
-                body.classList.add("bg-app-wrapper-light");
-            }
-        }
-
-        // Run on page load
-        applyThemeBackgroundClass();
-
-        // Watch for theme changes
-        const observer = new MutationObserver(applyThemeBackgroundClass);
-        observer.observe(document.documentElement, {
-            attributes: true,
-            attributeFilter: ["data-bs-theme"]
-        });
-    </script>>
 </body>
 </html>

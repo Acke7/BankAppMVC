@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using BankAppMVC.Models;
 using Services.Customers;
 using Humanizer;
+using BankAppMVC.Models.ViewModels.Paging;
+using BankAppMVC.Models.ViewModels.CustomerVm;
+using BankAppMVC.Models.ViewModels.AccountVm;
 
 
 namespace BankAppMVC.Controllers
@@ -21,7 +24,7 @@ namespace BankAppMVC.Controllers
             int pageSize = 50;
 
             var allCustomers = await _customerService.GetAllCustomersAsync();
-            // 🔍 Filter by name
+            // Filter by name
             if (!string.IsNullOrWhiteSpace(name))
             {
                 allCustomers = allCustomers

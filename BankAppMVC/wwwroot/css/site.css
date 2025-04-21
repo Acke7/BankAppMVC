@@ -125,3 +125,14 @@
     background: url('/img/backgrounds/background-1.jpg') no-repeat center center;  
        background-size: cover;
 }
+.btn-danger {
+    background-color: rgba(120, 15, 15, 0.8) ;
+}
+
+.btn-success {
+    background-color :rgba(6, 121, 27, 0.8) ;
+}
+
+.btn-primary {
+    background-color: rgb(23, 34, 196);
+}

@@ -1,0 +1,29 @@
+﻿@using BankAppMVC.Models.ViewModels
+@using BankAppMVC.Models.ViewModels.AccountVm
+@model DepositViewModel
+
+<form asp-action="Deposit" method="post">
+    <!-- Account Number (Hidden) -->
+    <input asp-for="AccountNumber" type="hidden" />
+
+    <!-- Amount -->
+    <div class="mb-4">
+        <label class="form-label" asp-for="Amount">Amount</label>
+        <input class="form-control" asp-for="Amount" type="number" step="0.01" required />
+    </div>
+
+    <!-- Symbol -->
+    <div class="mb-4">
+        <label class="form-label" asp-for="Symbol">Symbol</label>
+        <input class="form-control" asp-for="Symbol" type="text" required />
+    </div>
+
+    <!-- Operation (Hidden) -->
+    <input asp-for="Operation" type="hidden" value="Deposit" />
+
+    <!-- Submit Button -->
+    <button type="submit" class="btn btn-primary">Deposit</button>
+   
+</form>
+
+@Html.ValidationSummary()

@@ -23,7 +23,7 @@ namespace BankAppMVC.Controllers
             ViewBag.SwedenTime = swedenTime; ;
             var dtoList = await _statisticsService.GetCountryStatistics();
 
-            var viewModelList = dtoList.Select(dto => new CountryStatsViewModel
+            var viewModelList = dtoList.Select(dto => new CountryStatsticsViewModel
             {
                 Country = dto.Country,
                 Customers = dto.CustomerCount,
