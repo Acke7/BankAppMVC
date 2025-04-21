@@ -1,6 +1,6 @@
 ﻿using DatabaseLayer.DTOs.Account;
 
-namespace BankAppMVC.Models.ViewModels
+namespace BankAppMVC.Models.ViewModels.ShowMoreModel
 {
     public class TranasctionsIndexViewModel
     {

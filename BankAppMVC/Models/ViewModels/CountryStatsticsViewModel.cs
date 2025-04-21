@@ -1,6 +1,6 @@
 ﻿namespace BankAppMVC.Models.ViewModels
 {
-    public class CountryStatsViewModel
+    public class CountryStatsticsViewModel
     {
         public string Country { get; set; } = null!;
         public int Customers { get; set; }

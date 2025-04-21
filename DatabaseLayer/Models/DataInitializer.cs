@@ -23,7 +23,29 @@ namespace DatabaseLayer.Models
             _dbContext.Database.Migrate();
             SeedRoles();
             SeedUsers();
+            
+            SeedAccountNumber();
         }
+        public void SeedAccountNumber()
+        {
+            var random = new Random();
+
+            var accounts = _dbContext.Accounts
+                .Where(a => a.AccountNumber == 0) // Only those that still need a number
+
+                .ToList();
+
+
+            foreach (var account in accounts)
+            {
+                account.AccountNumber = random.Next(100000, 999999);
+            }
+
+
+
+        }
+
+      
 
         // Här finns möjlighet att uppdatera dina användares loginuppgifter
         private void SeedUsers()

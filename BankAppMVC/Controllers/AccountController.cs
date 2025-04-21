@@ -1,4 +1,4 @@
-﻿using BankAppMVC.Models.ViewModels;
+﻿using BankAppMVC.Models.ViewModels.AccountVm;
 using DatabaseLayer.DTOs;
 using DatabaseLayer.DTOs.Transaktion;
 using Microsoft.AspNetCore.Mvc;
@@ -21,42 +21,12 @@ namespace BankAppMVC.Controllers
             _accountService = accountService;
             _transactionService = transactionService;
         }
-
-        //public async Task<IActionResult> GetBalance(int accountNumber)
-        //{
-        //    var balance = await _accountService.GetBalanceByAccountId(accountNumber);
-        //    var vm = new AccountViewModel()
-        //    {
-        //        Balance = balance
-        //    };
-        //    return View(vm);
-        //}
-
-        //[HttpGet]
-        public async Task<IActionResult> LoadMoreTransactions(int AccountNumber, int skip)
-        {
-           
-            var transactions = await _accountService.GetTransactionsByAccountNumber(AccountNumber);
-            var next20 = transactions.Skip(skip).Take(20).Select(t => new AccountTransactionsViewModel
-            {
-                
-                Date = t.Date,
-                Type = t.Type,
-                Operation = t.Operation,
-                Amount = t.Amount,
-                Balance = t.Balance,
-                Symbol = t.Symbol,
-                Bank = t.Bank,
-                Account = t.Account
-
-            }).ToList();
-
-            return PartialView("_TransactionRows", next20);
-        }
-
+        
+      
         [HttpGet]
         public async Task<IActionResult> Details(int AccountNumber)
         {
+
             var transactions = await _accountService.GetTransactionsByAccountNumber(AccountNumber);
             var accountBalance = await _accountService.GetBalanceByAccountId(AccountNumber);
          
@@ -189,5 +159,27 @@ namespace BankAppMVC.Controllers
                 _ => "Unknown error"
             };
         }
+
+        public async Task<IActionResult> LoadMoreTransactions(int AccountNumber, int skip)
+        {
+
+            var transactions = await _accountService.GetTransactionsByAccountNumber(AccountNumber);
+            var next20 = transactions.Skip(skip).Take(20).Select(t => new AccountTransactionsViewModel
+            {
+
+                Date = t.Date,
+                Type = t.Type,
+                Operation = t.Operation,
+                Amount = t.Amount,
+                Balance = t.Balance,
+                Symbol = t.Symbol,
+                Bank = t.Bank,
+                Account = t.Account
+
+            }).ToList();
+
+            return PartialView("_TransactionRows", next20);
+        }
+
     }
 }

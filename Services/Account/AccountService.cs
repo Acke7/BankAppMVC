@@ -18,6 +18,8 @@ namespace Services.Account
                 _context = context;
             }
 
+
+
         public async Task<List<AccountTransaktionDto>> GetTransactionsByAccountNumber(int accountNumber)
         {
             // 1. Try to find the account
@@ -61,7 +63,10 @@ namespace Services.Account
             }
 
 
-        }
+       
+
+
+    }
     }
 
 

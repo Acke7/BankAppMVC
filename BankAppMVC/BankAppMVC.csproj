@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\img\flags\" />
+    <Folder Include="wwwroot\olddata\js\" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,6 @@
-﻿namespace BankAppMVC.Models.ViewModels
+﻿using BankAppMVC.Models.ViewModels.AccountVm;
+
+namespace BankAppMVC.Models.ViewModels.CustomerVm
 {
     public class CustomerProfileViewModel
     {

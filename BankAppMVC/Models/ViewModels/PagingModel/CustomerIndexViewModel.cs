@@ -1,6 +1,6 @@
 ﻿using DatabaseLayer.DTOs.Customer;
 
-namespace BankAppMVC.Models.ViewModels
+namespace BankAppMVC.Models.ViewModels.Paging
 {
     public class CustomerIndexViewModel
     {

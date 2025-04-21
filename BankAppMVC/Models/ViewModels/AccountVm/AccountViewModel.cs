@@ -1,4 +1,4 @@
-﻿namespace BankAppMVC.Models.ViewModels
+﻿namespace BankAppMVC.Models.ViewModels.AccountVm
 {
     public class AccountViewModel
     {
