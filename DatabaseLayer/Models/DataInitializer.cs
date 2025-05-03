@@ -23,8 +23,9 @@ namespace DatabaseLayer.Models
             _dbContext.Database.Migrate();
             SeedRoles();
             SeedUsers();
-            
+
             SeedAccountNumber();
+           
         }
         public void SeedAccountNumber()
         {
@@ -32,19 +33,27 @@ namespace DatabaseLayer.Models
 
             var accounts = _dbContext.Accounts
                 .Where(a => a.AccountNumber == 0) // Only those that still need a number
-
                 .ToList();
 
+            var existingAccountNumbers = _dbContext.Accounts
+                .Select(a => a.AccountNumber)
+                .ToHashSet();
 
             foreach (var account in accounts)
             {
-                account.AccountNumber = random.Next(100000, 999999);
+                int newAccountNumber;
+                do
+                {
+                    newAccountNumber = random.Next(10000000, 99999999);
+                } while (existingAccountNumbers.Contains(newAccountNumber));
+
+                account.AccountNumber = newAccountNumber;
+                existingAccountNumbers.Add(newAccountNumber);
             }
 
-
-
+            _dbContext.SaveChanges();
         }
-
+      
       
 
         // Här finns möjlighet att uppdatera dina användares loginuppgifter
@@ -84,5 +93,6 @@ namespace DatabaseLayer.Models
             _userManager.CreateAsync(user, password).Wait();
             _userManager.AddToRolesAsync(user, roles).Wait();
         }
+       
     }
 }

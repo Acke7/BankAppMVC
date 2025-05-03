@@ -4,6 +4,7 @@ using DatabaseLayer.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DatabaseLayer.Migrations
 {
     [DbContext(typeof(BankAppDataContext))]
-    partial class BankAppDataContextModelSnapshot : ModelSnapshot
+    [Migration("20250422194003_IsActiveCustomerAdded")]
+    partial class IsActiveCustomerAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,9 +46,6 @@ namespace DatabaseLayer.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
 
                     b.HasKey("AccountId")
                         .HasName("PK_account");

@@ -62,12 +62,77 @@ namespace Services.Account
                 return balance;
             }
 
+        public async Task<AccountDTO> GetAccountByAccountNumber(int accountNumber)
+        {
+            var account = await _context.Accounts
+               .FirstOrDefaultAsync(a => a.AccountNumber == accountNumber);
+            if (account == null) return null;
 
-       
+            return new AccountDTO
+            {
+                AccountId = account.AccountId,
+                Frequency = account.Frequency,
+                Balance = account.Balance,
+                IsActive = account.IsActive,
+                AccountNumber = account.AccountNumber
+            };
+        }
+        public async Task CreateAccount(CreateAccountDto dto)
+        {
+            var newAccount = new DatabaseLayer.Models.Account
+            {
+                Frequency = dto.Frequency,
+                Balance = dto.Balance,
+                Created = DateOnly.FromDateTime(DateTime.UtcNow),
+                AccountNumber = new Random().Next(10000000, 99999999), // generate random number (better generate safer)
+                IsActive = true
+            };
 
+            _context.Accounts.Add(newAccount);
+            await _context.SaveChangesAsync();
 
+            // Now create Disposition to link Account to Customer
+            var newDisposition = new Disposition
+            {
+                AccountId = newAccount.AccountId,
+                CustomerId = dto.CustomerId,
+                Type = "OWNER"
+            };
+            _context.Dispositions.Add(newDisposition);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateAccount(int accountNumber, UpdateAccountDto dto)
+        {
+            var account = await _context.Accounts
+               .FirstOrDefaultAsync(a => a.AccountNumber == accountNumber);
+            if (account == null) return;
+
+            account.Frequency = dto.Frequency;
+          
+
+            _context.Accounts.Update(account);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteAccount(int accountNumber)
+        {
+            var account = await _context.Accounts
+                .FirstOrDefaultAsync(a => a.AccountNumber == accountNumber);
+            if (account == null) return;
+
+            // Mark account as inactive instead of deleting
+            account.IsActive = false;
+
+            // Update the account in the database
+            _context.Accounts.Update(account);
+            await _context.SaveChangesAsync();
+        }
     }
-    }
 
+
+
+}
+    
 
 
