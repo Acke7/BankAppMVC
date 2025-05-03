@@ -132,6 +132,9 @@
                 <tbody>
                     @foreach (var customer in Model.Customers)
                     {
+                        var rand = new Random();
+                        int avatarId = rand.Next(1, 99);
+                        string avatarUrl = $"https://ui-avatars.com/api/?name={Uri.EscapeDataString(@customer.FullName)}&background=random&color=fff&size=128";
                         <tr>
                             <td style="width: 0px">
                                 <div class="form-check">
@@ -142,7 +145,7 @@
                             <td>
                                 <div class="d-flex align-items-center">
                                     <div class="avatar">
-                                        <img class="avatar-img" src="/img/photos/photo-1.jpg" alt="avatar" />
+                                        <img class="avatar-img" src="@avatarUrl" alt="avatar" />
                                     </div>
                                     <div class="ms-4">
                                         <div>@customer.FullName</div>

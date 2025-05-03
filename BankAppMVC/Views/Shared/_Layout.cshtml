@@ -11,7 +11,7 @@
     <meta name="description" content="A fully featured admin theme which can be used to build CRM, CMS, etc." />
 
     <link rel="stylesheet" href="~/css/1.css" asp-append-version="true" />
-  @*   <link rel="stylesheet" href="~/css/2.css" asp-append-version="true" /> *@
+    @*   <link rel="stylesheet" href="~/css/2.css" asp-append-version="true" /> *@
     <link rel="stylesheet" href="~/css/3.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/4.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/5.css" asp-append-version="true" />
@@ -33,7 +33,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 
 
-      
+
     <!-- Title -->
     <title>Dashbrd</title>
 </head>
@@ -97,8 +97,8 @@
                 <!-- Brand -->
                 <a class="navbar-brand fs-5 fw-bold px-xl-3 mb-xl-4" href="./index.html">
                     <a href="~/">
-                                           <i class="fs-4 text-secondary me-1" data-duoicon="box-2"></i> Dashbrd
-                                       </a>
+                        <i class="fs-4 text-secondary me-1" data-duoicon="box-2"></i> Dashbrd
+                    </a>
                 </a>
                 <partial name="_LoginPartial"/>
                 <!-- User -->
@@ -182,28 +182,32 @@
                                 <nav class="nav nav-pills">
                                     <a class="nav-link" asp-controller="Customer" asp-action="Index">Customers</a>
                                     <a class="nav-link" asp-controller="Customer" asp-action="Details" asp-route-id="1">Customer details</a>
-                                    <a class="nav-link" asp-controller="Customer" asp-action="Create">New customer</a>
+                              
                                 </nav>
                             </div>
                         </div>
-                        <div class="nav-item">
-                            <a class="nav-link "
-                            href="#"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#projects"
-                            role="button"
-                            aria-expanded="false"
-                            aria-controls="projects">
-                                <span class="material-symbols-outlined me-3">list_alt</span> Projects
-                            </a>
-                            <div class="collapse " id="projects">
-                                <nav class="nav nav-pills">
-                                    <a class="nav-link " href="./projects/projects.html">Projects</a>
-                                    <a class="nav-link " href="./projects/project.html">Project overview</a>
-                                    <a class="nav-link " href="./projects/project-new.html">New project</a>
-                                </nav>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <div class="nav-item">
+                                <a class="nav-link "
+                                   href="#"
+                                   data-bs-toggle="collapse"
+                                   data-bs-target="#projects"
+                                   role="button"
+                                   aria-expanded="false"
+                                   aria-controls="projects">
+                                    <span class="material-symbols-outlined me-3">list_alt</span> Users
+                                </a>
+
+                                <div class="collapse " id="projects">
+                                    <nav class="nav nav-pills">
+                                        <a class="nav-link" asp-controller="User" asp-action="Index">Users Manger</a>
+                           
+                                    </nav>
+                                </div>
                             </div>
-                        </div>
+                        }
+                       
                         <div class="nav-item">
                             <a class="nav-link "
                             href="#"
@@ -414,16 +418,20 @@
                             <a class="nav-link" asp-controller="Customer" asp-action="Create">New customer</a>
                         </div>
                     </div>
-                    <div class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Projects
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item " href="./projects/projects.html">Projects</a>
-                            <a class="dropdown-item " href="./projects/project.html">Project overview</a>
-                            <a class="dropdown-item " href="./projects/project-new.html">New project</a>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <div class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Users
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="nav-link" asp-controller="User" asp-action="Index">Users Manger</a>
+                                
+                            </div>
                         </div>
-                    </div>
+                   
+                    }
+                   
                     <div class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle  " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Account
@@ -559,9 +567,12 @@
                     <div class="dropdown my-n2">
                         @if (SignInManager.IsSignedIn(User))
                         {
+                            var rand = new Random();
+                            int avatarId = rand.Next(1, 99);
+                            string avatarUrl = $"https://ui-avatars.com/api/?name={Uri.EscapeDataString(User.Identity.Name)}&background=random&color=fff&size=128";
                             <a class="btn btn-link d-inline-flex align-items-center dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <span class="avatar avatar-sm avatar-status avatar-status-success me-3">
-                                    <img class="avatar-img" src="./img/photos/photo-6.jpg" alt="..." />
+                                    <img class="avatar-img" src="@avatarUrl" alt="avatar" />
                                 </span>
                             </a> <!-- CLOSE the <a> here -->
 
