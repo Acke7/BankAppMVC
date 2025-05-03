@@ -1,5 +1,6 @@
 ﻿using BankAppMVC.Models.ViewModels.AccountVm;
 using DatabaseLayer.DTOs;
+using DatabaseLayer.DTOs.Account;
 using DatabaseLayer.DTOs.Transaktion;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
@@ -21,17 +22,16 @@ namespace BankAppMVC.Controllers
             _accountService = accountService;
             _transactionService = transactionService;
         }
-        
-      
+
+
         [HttpGet]
         public async Task<IActionResult> Details(int AccountNumber)
         {
-
             var transactions = await _accountService.GetTransactionsByAccountNumber(AccountNumber);
             var accountBalance = await _accountService.GetBalanceByAccountId(AccountNumber);
-         
+
             var viewModel = transactions
-                 
+
                 /*.ThenByDescending( t => transactions.)*/ // Order transactions by date from newest
                 .Select(t => new AccountTransactionsViewModel
                 {
@@ -66,7 +66,7 @@ namespace BankAppMVC.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Deposit(DepositViewModel viewModel ,int AccountNumber)
+        public async Task<IActionResult> Deposit(DepositViewModel viewModel, int AccountNumber)
         {
             if (!ModelState.IsValid)
             {
@@ -78,7 +78,7 @@ namespace BankAppMVC.Controllers
                 AccountNumber = AccountNumber,
                 Amount = viewModel.Amount,
                 Operation = viewModel.Operation,
-               Symbol=viewModel.Symbol
+                Symbol = viewModel.Symbol
             };
 
             var result = await _transactionService.DepositAsync(dto);
@@ -99,7 +99,7 @@ namespace BankAppMVC.Controllers
                 AccountNumber = AccountNumber,
                 Amount = viewModel.Amount,
                 Operation = viewModel.Operation,
-                   Symbol = viewModel.Symbol
+                Symbol = viewModel.Symbol
             };
 
             var result = await _transactionService.WithdrawAsync(dto);
@@ -121,7 +121,7 @@ namespace BankAppMVC.Controllers
                 ToAccountNumber = viewModel.ToAccountNumber,
                 Amount = viewModel.Amount,
                 Operation = viewModel.Operation,
-                Symbol=viewModel.Symbol
+                Symbol = viewModel.Symbol
 
             };
 
@@ -160,6 +160,82 @@ namespace BankAppMVC.Controllers
             };
         }
 
+        // GET: /Account/Create?customerId=5
+        public IActionResult Create(int customerId)
+        {
+            var model = new CreateAccountViewModel { CustomerId = customerId };
+            return View(model);
+        }
+
+        // POST: /Account/Create
+        [HttpPost]
+        public async Task<IActionResult> Create(CreateAccountViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var dto = new CreateAccountDto
+            {
+                CustomerId = model.CustomerId,
+                Frequency = model.Frequency,
+                Balance = model.Balance
+            };
+
+            await _accountService.CreateAccount(dto);
+            TempData["SuccessMessage"] = "Account  Created successfully!";
+
+            return RedirectToAction("Details", "Customer", new { id = model.CustomerId });
+        }
+
+        // GET: /Account/Edit/5
+        public async Task<IActionResult> Edit(int AccountNumber, int customerID)
+        {
+            var account = await _accountService.GetAccountByAccountNumber(AccountNumber);
+            if (account == null)
+                return NotFound();
+
+            var model = new UpdateAccountViewModel
+            {
+                CustomerId = customerID,
+                AccountId = account.AccountId,
+                Frequency = account.Frequency,
+                Balance = account.Balance,
+                AccountNumber = AccountNumber
+            };
+
+            return View(model);
+        }
+
+        // POST: /Account/Edit/5
+        [HttpPost]
+        public async Task<IActionResult> Edit(UpdateAccountViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View(model);
+
+            var dto = new UpdateAccountDto
+            {
+                AccountId = model.AccountId,
+                Frequency = model.Frequency,
+                Balance = model.Balance,
+                AccountNumber = model.AccountNumber
+            };
+
+            await _accountService.UpdateAccount(model.AccountNumber, dto);
+            TempData["SuccessMessage"] = "Account  Edited successfully!";
+
+            return RedirectToAction("Details", "Customer", new { id = model.CustomerId });
+        }
+
+        // POST: /Account/Delete/5
+        [HttpPost]
+        public async Task<IActionResult> Delete(int AccountNumber, int customerId)
+        {
+            await _accountService.DeleteAccount(AccountNumber);
+            TempData["SuccessMessage"] = "Account Deactivated successfully!";
+            return RedirectToAction("Details", "Customer", new { id = customerId });
+        }
+
         public async Task<IActionResult> LoadMoreTransactions(int AccountNumber, int skip)
         {
 
@@ -180,6 +256,7 @@ namespace BankAppMVC.Controllers
 
             return PartialView("_TransactionRows", next20);
         }
-
     }
+
 }
+

@@ -14,6 +14,8 @@ public partial class Account
 
     public decimal Balance { get; set; }
 
+    public bool IsActive { get; set; } = true;
+
     public virtual ICollection<Disposition> Dispositions { get; set; } = new List<Disposition>();
 
     public virtual ICollection<Loan> Loans { get; set; } = new List<Loan>();

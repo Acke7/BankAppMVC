@@ -18,34 +18,26 @@ namespace BankAppMVC
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
             // Add services to the container.
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
             builder.Services.AddDbContext<BankAppDataContext>(options =>
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-
             builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<BankAppDataContext>();
             builder.Services.AddRazorPages();
-
             builder.Services.AddTransient<DataInitializer>();
-            
             builder.Services.AddTransient<IStatisticsService, StatisticsService>();
             builder.Services.AddTransient<ICustomerService, CustomerService>();
             builder.Services.AddScoped<IAccountService, AccountService>();
             builder.Services.AddScoped<ITransactionService, TransactionService>();
            var app = builder.Build();
-
-
+            // I lOve this one
             using (var scope = app.Services.CreateScope())
             {
                 scope.ServiceProvider.GetService<DataInitializer>().SeedData();
             }
-
-
-
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
@@ -58,12 +50,9 @@ namespace BankAppMVC
                 app.UseHsts();
             }
             app.UseStaticFiles();
-
             app.UseHttpsRedirection();
             app.UseRouting();
-
             app.UseAuthorization();
-
             app.MapStaticAssets();
             app.MapControllerRoute(
                 name: "default",
@@ -71,7 +60,6 @@ namespace BankAppMVC
                 .WithStaticAssets();
             app.MapRazorPages()
                .WithStaticAssets();
-
             app.Run();
         }
     }

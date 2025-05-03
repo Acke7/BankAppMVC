@@ -10,12 +10,14 @@
     <div class="mb-4">
         <label class="form-label" asp-for="Amount">Amount</label>
         <input class="form-control" asp-for="Amount" type="number" step="0.01" required />
+        <span asp-validation-for="Amount" class="field-validation-error"></span>
     </div>
 
     <!-- Symbol -->
     <div class="mb-4">
         <label class="form-label" asp-for="Symbol">Symbol</label>
-        <input class="form-control" asp-for="Symbol" type="text" required />
+        <input class="form-control" asp-for="Symbol" type="text"  />
+        <span asp-validation-for="Symbol" class="field-validation-error"></span>
     </div>
 
     <!-- Operation (Hidden) -->

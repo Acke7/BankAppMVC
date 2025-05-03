@@ -31,8 +31,7 @@
 }
 
 
-
- @if (Model != null )
+@if (Model != null)
 {
     <main class="main px-lg-6">
         <!-- Content -->
@@ -46,7 +45,7 @@
                         <!-- Card -->
                         <div class="card bg-body mb-3">
                             <!-- Image -->
-                            <div class="card-img-top pb-13 bg-profile " ></div>
+                            <div class="card-img-top pb-13 bg-profile"></div>
 
                             <!-- Avatar -->
                             <div class="avatar avatar-xl rounded-circle mt-n7 mx-auto">
@@ -55,10 +54,8 @@
 
                             <!-- Body -->
                             <div class="card-body text-center">
-                                <!-- Heading -->
                                 <h1 class="card-title fs-5">@Model.FullName</h1>
 
-                                <!-- List -->
                                 <ul class="list-group list-group-flush mb-0">
                                     <li class="list-group-item d-flex align-items-center justify-content-between bg-body px-0">
                                         <span class="text-body-secondary">Gender</span>
@@ -92,42 +89,82 @@
                                             }
                                             @if (parts.Length > 2)
                                             {
-                                                <span>@parts[2]</span> <!-- Country (CountryCode) -->
+                                                <span>@parts[2]</span> <!-- Country -->
                                             }
                                         }
                                     </li>
                                 </ul>
                             </div>
                         </div>
+
                     </div>
+
                 </div>
-                <div class="col-12 col-xxl ms-xxl-13">
-                    <div class="row dtr-mt-80 gx-4 gy-4">
+
+                <div class="col-12 col-xxl-8">
+                    <div class="row row-cols-1 g-4">
+
+                        <!-- Nice Add Account Button -->
+                        <div class="mb-4">
+                            <a asp-controller="Account" asp-action="Create" asp-route-customerId="@Model.CustomerId" class="btn btn-primary btn-lg rounded-pill shadow-sm">
+                                ➕ Add New Account
+                            </a>
+                        </div>
+
                         @foreach (var acc in Model.Accounts)
                         {
-                            <div class="col-12 col-md-6 col-xl-8">
-                                <!-- Wider card -->
-                                <div class=" card h-100 shadow-lg rounded-4 bg-body text-center" style="min-height: 500px;">
-                                    <!-- Taller card -->
-                                    <div class="card-body py-5 px-5 fs-5 d-flex flex-column justify-content-around h-100">
-                                        <!-- Bigger padding and font -->
-                                        <p class="fs-sm text-uppercase text-muted mb-1">Account Number</p>
-                                        <a asp-controller="Account" asp-action="Details" asp-route-AccountNumber="@acc.AccountNumber" class="btn btn-outline-primary fw-bold mb-4">
-                                            @acc.AccountNumber
-                                        </a>
+                            <div class="col">
+                                <div class="card h-100 shadow-sm rounded-4 bg-body">
+                                    <div class="card-body p-5 d-flex flex-column flex-md-row justify-content-between align-items-center">
 
-                                        <p class="fs-sm text-uppercase text-muted mb-1">Frequency</p>
-                                        <h4 class="fw-bold text-body-secondary mb-4">@acc.Frequency</h4>
+                                        <div class="text-center text-md-start">
+                                            <p class="text-uppercase text-muted small mb-2">Account Number</p>
+                                            <a asp-controller="Account" asp-action="Details" asp-route-AccountNumber="@acc.AccountNumber" class="btn btn-link fw-bold text-decoration-none">
+                                                @acc.AccountNumber
+                                            </a>
+                                        </div>
 
-                                        <p class="fs-sm text-uppercase text-muted mb-1">Created Date</p>
-                                        <h4 class="fw-bold text-body-secondary mb-4">@acc.FormattedCreated</h4>
+                                        <div class="text-center text-md-start">
+                                            <p class="text-uppercase text-muted small mb-1">Frequency</p>
+                                            <h6 class="fw-semibold text-body-secondary">@acc.Frequency</h6>
+                                        </div>
 
-                                        <p class="fs-sm text-uppercase text-muted mb-1">Balance</p>
-                                        <h4 class="fw-bold text-body-secondary">@acc.FormattedBalance</h4>
+                                        <div class="text-center text-md-start">
+                                            <p class="text-uppercase text-muted small mb-1">Created Date</p>
+                                            <h6 class="fw-semibold text-body-secondary">@acc.FormattedCreated</h6>
+                                        </div>
+
+                                        <div class="text-center text-md-start">
+                                            <p class="text-uppercase text-muted small mb-1">Balance</p>
+                                            <h6 class="fw-bold text-success">@acc.FormattedBalance</h6>
+                                        </div>
+
+                                        <!-- Edit and Delete Buttons -->
+                                        <div class="d-flex flex-column gap-2">
+                                            <a asp-controller="Account" asp-action="Edit"
+                                               asp-route-AccountNumber="@acc.AccountNumber"
+                                               asp-route-customerId="@Model.CustomerId"
+                                               class="btn btn-outline-primary btn-sm rounded-pill">
+                                                ✏️ Edit
+                                            </a>
+                                      
+                                                <form asp-controller="Account" asp-action="Delete"
+                                                      asp-route-AccountNumber="@acc.AccountNumber"
+                                                      asp-route-customerId="@Model.CustomerId"
+                                                      method="post" class="d-inline">
+                                                    <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill">
+                                                        ❌ Delete
+                                                    </button>
+                                                </form>
+
+                                        </div>  
+                                        </div>
+
                                     </div>
                                 </div>
-                            </div>
+                           
                         }
+
                     </div>
                 </div>
 
@@ -135,7 +172,6 @@
         </div>
     </main>
 }
-
 
 
 

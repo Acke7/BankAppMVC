@@ -14,7 +14,10 @@ namespace Services.Account
         public  Task<List<AccountTransaktionDto>> GetTransactionsByAccountNumber(int accountId);
         public Task<decimal> GetBalanceByAccountId(int accountId);
 
-        
+        Task<AccountDTO> GetAccountByAccountNumber(int accountId);
+        Task CreateAccount(CreateAccountDto dto);
+        Task UpdateAccount(int accountId, UpdateAccountDto dto);
+        Task DeleteAccount(int accountId);
 
     }
 }

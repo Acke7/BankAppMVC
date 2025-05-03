@@ -21,6 +21,7 @@ namespace Services.Customers
         }
         public async Task<List<CustomerListDto>> GetAllCustomersAsync()
         {
+           
             return await _context.Customers
                 .Select(c => new CustomerListDto
                 {
@@ -29,6 +30,7 @@ namespace Services.Customers
                     City = c.City,
                     StreetAddress = c.Streetaddress,
                     NationalId = c.NationalId
+                    
                 })
                 .ToListAsync();          }
 
@@ -59,15 +61,16 @@ namespace Services.Customers
                 Telephonenumber = customer.Telephonenumber,
                 Emailaddress = customer.Emailaddress,
                 Accounts = customer.Dispositions
-                    .Where(d => d.Account != null)
+                    .Where(d => d.Account != null && d.Account.IsActive)
                     .Select(d => new AccountDTO
                     {
                         //AccountId = d.Account.AccountId,
-                        AccountNumber=d.Account.AccountNumber,
+                        AccountNumber = d.Account.AccountNumber,
                         Frequency = d.Account.Frequency,
                         Created = d.Account.Created,
                         Balance = d.Account.Balance
                     }).ToList()
+                
             };
         }
 

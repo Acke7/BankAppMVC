@@ -6,15 +6,10 @@ using System.Threading.Tasks;
 
 namespace DatabaseLayer.DTOs.Account
 {
-    public class AccountDTO
+    public class CreateAccountDto
     {
-
-        public int AccountId { get; set; }
-        public int AccountNumber { get; set; }
+        public int CustomerId { get; set; }  // Needed to find disposition
         public string Frequency { get; set; } = null!;
-        public DateOnly Created { get; set; }
         public decimal Balance { get; set; }
-
-        public bool IsActive { get; set; }
     }
 }
