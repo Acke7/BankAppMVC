@@ -6,17 +6,22 @@ using Humanizer;
 using BankAppMVC.Models.ViewModels.Paging;
 using BankAppMVC.Models.ViewModels.CustomerVm;
 using BankAppMVC.Models.ViewModels.AccountVm;
+using AutoMapper;
+using DatabaseLayer.DTOs.Customer;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 
 namespace BankAppMVC.Controllers
 {
+    [BindProperties]
     public class CustomerController : Controller
     {
         private readonly ICustomerService _customerService;
-
-        public CustomerController(ICustomerService customerService)
+        private readonly IMapper _mapper;
+        public CustomerController(ICustomerService customerService, IMapper mapper)
         {
             _customerService = customerService;
+            _mapper = mapper;
         }
 
         public async Task<IActionResult> Index(string sortOrder = "name_asc", int page = 1, string? name = null, string? city = null,string? search = null)
@@ -178,10 +183,47 @@ namespace BankAppMVC.Controllers
             return RedirectToAction("Details", new { id });
         }
 
+        //public async Task<IActionResult> Index()
+        //{
+        //    var dtos = await _customerService.GetAllActiveAsync();
+        //    var viewModels = _mapper.Map<List<CustomerViewModelCrud>>(dtos);
+        //    return View(viewModels);
+        //}
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            var dto = await _customerService.GetByIdAsync(id);
+            if (dto == null) return NotFound();
+
+            var vm = _mapper.Map<CustomerViewModelCrud>(dto);
+            ViewBag.GenderList = new SelectList(new[] { "Male", "Female" });
+            ViewBag.CountryList = new SelectList(new[] { "Sweden", "Denmark", "Norway", "Finland" });
+
+            return View(vm);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(CustomerViewModelCrud vm)
+        {
+            if (!ModelState.IsValid) return View(vm);
+
+            var dto = _mapper.Map<CustomerDto>(vm);
+            var result = await _customerService.UpdateAsync(dto);
+            if (!result) return NotFound();
+
+            TempData["ToastMessage"] = "Customer successfully Edited !";
+            TempData["ToastType"] = "warning"; // use 'success', 'warning', or 'danger'
+            return RedirectToAction("Index");
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _customerService.SoftDeleteAsync(id);
+           
+            TempData["ToastMessage"] = "Customer successfully deleted!";
+            TempData["ToastType"] = "danger"; // use 'success', 'warning', or 'danger'
+            return RedirectToAction("Index");
+        }
     }
-
-
-
-
 }
 

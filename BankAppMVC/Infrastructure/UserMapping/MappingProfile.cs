@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using BankAppMVC.Models.ViewModels.UsersVm;
+using DatabaseLayer.DTOs.Customer;
 using DatabaseLayer.DTOs.User;
+using DatabaseLayer.Models;
 using Microsoft.AspNetCore.Identity;
 
 namespace BankAppMVC.Infrastructure.UserMapping
@@ -19,6 +21,8 @@ namespace BankAppMVC.Infrastructure.UserMapping
                 // DTOs ↔ ViewModels
                 CreateMap<UserDto, UserViewModel>().ForMember(dest => dest.RoleList, opt => opt.MapFrom(src => src.Roles));
                 CreateMap<EditUserDto, EditUserViewModel>().ReverseMap();
-            }
+            CreateMap<Customer, CustomerDto>().ReverseMap();
+            CreateMap<CustomerDto, CustomerViewModelCrud>().ReverseMap();
+        }
         }
     }

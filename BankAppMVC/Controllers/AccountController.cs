@@ -182,7 +182,8 @@ namespace BankAppMVC.Controllers
             };
 
             await _accountService.CreateAccount(dto);
-            TempData["SuccessMessage"] = "Account  Created successfully!";
+            TempData["ToastMessage"] = "Account successfully Created!";
+            TempData["ToastType"] = "success"; // use 'success', 'warning', or 'danger'
 
             return RedirectToAction("Details", "Customer", new { id = model.CustomerId });
         }
@@ -222,7 +223,8 @@ namespace BankAppMVC.Controllers
             };
 
             await _accountService.UpdateAccount(model.AccountNumber, dto);
-            TempData["SuccessMessage"] = "Account  Edited successfully!";
+            TempData["ToastMessage"] = "Account successfully Edited!";
+            TempData["ToastType"] = "warning"; // use 'success', 'warning', or 'danger'
 
             return RedirectToAction("Details", "Customer", new { id = model.CustomerId });
         }
@@ -232,7 +234,8 @@ namespace BankAppMVC.Controllers
         public async Task<IActionResult> Delete(int AccountNumber, int customerId)
         {
             await _accountService.DeleteAccount(AccountNumber);
-            TempData["SuccessMessage"] = "Account Deactivated successfully!";
+            TempData["ToastMessage"] = "Account successfully 'Deleted'!";
+            TempData["ToastType"] = "danger"; // use 'success', 'warning', or 'danger'
             return RedirectToAction("Details", "Customer", new { id = customerId });
         }
 

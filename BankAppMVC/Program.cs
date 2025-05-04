@@ -38,6 +38,7 @@ namespace BankAppMVC
             builder.Services.AddAutoMapper(typeof(MappingProfile));
             builder.Services.AddScoped<IUserService, UserService>();
 
+
             var app = builder.Build();
             // I lOve this one
             using (var scope = app.Services.CreateScope())
