@@ -1,0 +1,114 @@
+﻿@model CustomerViewModelCrud
+
+@{
+    ViewData["Title"] = "Edit Customer";
+}
+
+<h2>Edit Customer</h2>
+
+<form asp-action="Edit" method="post">
+    <input type="hidden" asp-for="CustomerId" />
+
+    <!-- Gender Dropdown -->
+    <div class="form-group mb-3">
+        <label asp-for="Gender" class="form-label"></label>
+        <select asp-for="Gender" class="form-select" asp-items="ViewBag.GenderList">
+            <option value="">-- Select Gender --</option>
+        </select>
+        <span asp-validation-for="Gender" class="text-danger"></span>
+    </div>
+
+    <!-- Givenname -->
+    <div class="form-group mb-3">
+        <label asp-for="Givenname" class="form-label"></label>
+        <input asp-for="Givenname" class="form-control" />
+        <span asp-validation-for="Givenname" class="text-danger"></span>
+    </div>
+
+    <!-- Surname -->
+    <div class="form-group mb-3">
+        <label asp-for="Surname" class="form-label"></label>
+        <input asp-for="Surname" class="form-control" />
+        <span asp-validation-for="Surname" class="text-danger"></span>
+    </div>
+
+    <!-- Email -->
+    <div class="form-group mb-3">
+        <label asp-for="Emailaddress" class="form-label"></label>
+        <input asp-for="Emailaddress" class="form-control" />
+        <span asp-validation-for="Emailaddress" class="text-danger"></span>
+    </div>
+
+    <!-- Street Address -->
+    <div class="form-group mb-3">
+        <label asp-for="Streetaddress" class="form-label"></label>
+        <input asp-for="Streetaddress" class="form-control" />
+        <span asp-validation-for="Streetaddress" class="text-danger"></span>
+    </div>
+
+    <!-- City -->
+    <div class="form-group mb-3">
+        <label asp-for="City" class="form-label"></label>
+        <input asp-for="City" class="form-control" />
+        <span asp-validation-for="City" class="text-danger"></span>
+    </div>
+
+    <!-- Zipcode -->
+    <div class="form-group mb-3">
+        <label asp-for="Zipcode" class="form-label"></label>
+        <input asp-for="Zipcode" class="form-control" />
+        <span asp-validation-for="Zipcode" class="text-danger"></span>
+    </div>
+
+    <!-- Country Dropdown -->
+    <div class="form-group mb-3">
+        <label asp-for="Country" class="form-label"></label>
+        <select asp-for="Country" class="form-select" asp-items="ViewBag.CountryList">
+            <option value="">-- Select Country --</option>
+        </select>
+        <span asp-validation-for="Country" class="text-danger"></span>
+    </div>
+
+    <!-- Country Code -->
+    <div class="form-group mb-3">
+        <label asp-for="CountryCode" class="form-label"></label>
+        <input asp-for="CountryCode" class="form-control" />
+        <span asp-validation-for="CountryCode" class="text-danger"></span>
+    </div>
+
+    <!-- Birthday -->
+    <div class="form-group mb-3">
+        <label asp-for="Birthday" class="form-label"></label>
+        <input asp-for="Birthday" type="date" class="form-control" />
+        <span asp-validation-for="Birthday" class="text-danger"></span>
+    </div>
+
+    <!-- National ID -->
+    <div class="form-group mb-3">
+        <label asp-for="NationalId" class="form-label"></label>
+        <input asp-for="NationalId" class="form-control" />
+        <span asp-validation-for="NationalId" class="text-danger"></span>
+    </div>
+
+    <!-- Telephone Country Code -->
+    <div class="form-group mb-3">
+        <label asp-for="Telephonecountrycode" class="form-label"></label>
+        <input asp-for="Telephonecountrycode" class="form-control" />
+        <span asp-validation-for="Telephonecountrycode" class="text-danger"></span>
+    </div>
+
+    <!-- Telephone Number -->
+    <div class="form-group mb-3">
+        <label asp-for="Telephonenumber" class="form-label"></label>
+        <input asp-for="Telephonenumber" class="form-control" />
+        <span asp-validation-for="Telephonenumber" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

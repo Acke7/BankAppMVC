@@ -1,6 +1,7 @@
 
 
 
+using BankAppMVC.Infrastructure.UserMapping;
 using DatabaseLayer.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,8 @@ using Services.Account;
 using Services.Customers;
 using Services.Statistics;
 using Services.Transactions;
+using Services.Users.Services;
+using Services.Users;
 
 namespace BankAppMVC
 {
@@ -32,7 +35,11 @@ namespace BankAppMVC
             builder.Services.AddTransient<ICustomerService, CustomerService>();
             builder.Services.AddScoped<IAccountService, AccountService>();
             builder.Services.AddScoped<ITransactionService, TransactionService>();
-           var app = builder.Build();
+            builder.Services.AddAutoMapper(typeof(MappingProfile));
+            builder.Services.AddScoped<IUserService, UserService>();
+
+
+            var app = builder.Build();
             // I lOve this one
             using (var scope = app.Services.CreateScope())
             {
@@ -49,6 +56,7 @@ namespace BankAppMVC
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
             app.UseStaticFiles();
             app.UseHttpsRedirection();
             app.UseRouting();

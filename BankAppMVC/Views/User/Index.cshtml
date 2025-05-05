@@ -1,0 +1,113 @@
+﻿@using BankAppMVC.Models.ViewModels.UsersVm
+
+<h2>All Users</h2>
+
+
+
+<main class="main px-lg-6">
+    <div class="container-lg">
+        <!-- Page header -->
+        <div class="row align-items-center mb-7">
+            <div class="col-auto">
+                <div class="avatar avatar-xl rounded text-primary">
+                    <i class="fs-2" data-duoicon="user"></i>
+                </div>
+            </div>
+            <div class="col">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb mb-2">
+                        <li class="breadcrumb-item"><a class="text-body-secondary" href="#">Users</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">User List</li>
+                    </ol>
+                </nav>
+                <h1 class="fs-4 mb-0">All Users</h1>
+            </div>
+            <div class="col-12 col-sm-auto mt-4 mt-sm-0">
+                
+                <a class="btn btn-secondary d-block" asp-area="Identity" asp-page="/Account/Register">
+                   
+                    <span class="material-symbols-outlined me-1">add</span> Add User
+                </a>
+            </div>
+        </div>
+
+        <!-- Search -->
+        
+            <div class="card-body p-4">
+                <form asp-action="Index" method="get" class="row">
+                    <div class="col-12 col-lg-auto">
+                        <div class="input-group">
+                            <input type="text" name="search" class="form-control" placeholder="Search by email"
+                                   value="@Context.Request.Query["search"]" />
+                            <button class="btn btn-outline-secondary" type="submit">
+                                <span class="material-symbols-outlined">search</span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+     
+
+        <!-- User Table -->
+        <div class="table-responsive mb-7">
+            <table class="table table-selectable align-middle mb-0">
+                <thead>
+                    <tr>
+                        <th style="width: 0px">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="tableCheckAll" />
+                                <label class="form-check-label" for="tableCheckAll"></label>
+                            </div>
+                        </th>
+                        <th>Email</th>
+                        <th>Roles</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model)
+                    {
+                        var rand = new Random();
+                        int avatarId = rand.Next(1, 99);
+                        string avatarUrl = $"https://ui-avatars.com/api/?name={Uri.EscapeDataString(user.Email)}&background=random&color=fff&size=128";
+
+                        <tr>
+                            <td style="width: 0px">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" />
+                                    <label class="form-check-label"></label>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <div class="avatar">
+                                        <img class="avatar-img" src="@avatarUrl" alt="avatar" />
+                                    </div>
+                                    <div class="ms-4">
+                                        <div>@user.Email</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>@user.Roles</td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@user.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                                <a asp-action="Delete" asp-route-id="@user.Id" class="btn btn-sm btn-outline-danger">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+</main>
+@section Scripts {
+    @if (TempData["ToastMessage"] != null)
+    {
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                showToast('@TempData["ToastMessage"]', '@TempData["ToastType"]');
+            });
+        </script>
+    }
+}

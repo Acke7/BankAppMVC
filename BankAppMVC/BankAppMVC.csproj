@@ -25,7 +25,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Infrastructure\" />
     <Folder Include="wwwroot\img\flags\" />
     <Folder Include="wwwroot\olddata\js\" />
   </ItemGroup>

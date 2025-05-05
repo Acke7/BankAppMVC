@@ -113,6 +113,7 @@
 
                         @foreach (var acc in Model.Accounts)
                         {
+
                             <div class="col">
                                 <div class="card h-100 shadow-sm rounded-4 bg-body">
                                     <div class="card-body p-5 d-flex flex-column flex-md-row justify-content-between align-items-center">
@@ -175,3 +176,13 @@
 
 
 
+@section Scripts {
+    @if (TempData["ToastMessage"] != null)
+    {
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                showToast('@TempData["ToastMessage"]', '@TempData["ToastType"]');
+            });
+        </script>
+    }
+}

@@ -13,5 +13,9 @@ namespace DatabaseLayer.DTOs.Customer
         public string StreetAddress { get; set; } = null!;
         public string City { get; set; } = null!;
         public string? NationalId { get; set; }
+
+
+
+     
     }
 }
