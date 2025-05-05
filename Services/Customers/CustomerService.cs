@@ -154,6 +154,32 @@ namespace Services.Customers
             await _context.SaveChangesAsync();
             return true;
         }
+        public async Task<bool> CreateAsync(CustomerDto dto)
+        {
+            var customer = new Customer
+            {
+              
+                Gender = dto.Gender,
+                Givenname = dto.Givenname,
+                Surname = dto.Surname,
+                Streetaddress = dto.Streetaddress,
+                City = dto.City,
+                Zipcode = dto.Zipcode,
+                Country = dto.Country,
+                CountryCode = dto.CountryCode,
+                Birthday = dto.Birthday,
+                NationalId = dto.NationalId,
+                Telephonecountrycode = dto.Telephonecountrycode,
+                Telephonenumber = dto.Telephonenumber,
+                Emailaddress = dto.Emailaddress,
+                IsActive = true 
+            };
+
+            _context.Customers.Add(customer);
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
 
         public async Task<bool> SoftDeleteAsync(int id)
         {

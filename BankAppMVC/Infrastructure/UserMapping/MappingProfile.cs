@@ -23,6 +23,7 @@ namespace BankAppMVC.Infrastructure.UserMapping
                 CreateMap<EditUserDto, EditUserViewModel>().ReverseMap();
             CreateMap<Customer, CustomerDto>().ReverseMap();
             CreateMap<CustomerDto, CustomerViewModelCrud>().ReverseMap();
+
         }
-        }
+    }
     }

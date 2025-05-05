@@ -13,7 +13,7 @@ namespace Services.Customers
         public Task<List<CustomerListDto>> GetAllCustomersAsync();
         public Task<CustomerProfileDto> GetCustomerProfileAsync(int customerId);
         Task<CustomerProfileDto?> GetCustomerByNationalIdAsync(int id);
-
+        Task<bool> CreateAsync(CustomerDto dto);
         Task<List<CustomerDto>> GetAllActiveAsync();
         Task<CustomerDto?> GetByIdAsync(int id);
         Task<bool> UpdateAsync(CustomerDto dto);

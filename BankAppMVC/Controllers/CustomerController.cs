@@ -215,7 +215,38 @@ namespace BankAppMVC.Controllers
             TempData["ToastType"] = "warning"; // use 'success', 'warning', or 'danger'
             return RedirectToAction("Index");
         }
+        public IActionResult Create()
+        {
+            ViewBag.GenderList = new SelectList(new[] { "Male", "Female" });
+            ViewBag.CountryList = new SelectList(new[] { "Sweden", "Denmark", "Norway", "Finland" });
 
+            return View(new CustomerViewModelCrud());
+        }
+
+        [HttpPost]
+      
+        public async Task<IActionResult> Create(CustomerViewModelCrud vm)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewBag.GenderList = new SelectList(new[] { "Male", "Female" });
+                ViewBag.CountryList = new SelectList(new[] { "Sweden", "Denmark", "Norway", "Finland" });
+
+                return View(vm);
+            }
+
+            var dto = _mapper.Map<CustomerDto>(vm);
+            var result = await _customerService.CreateAsync(dto);
+
+            if (!result)
+            {
+                ModelState.AddModelError(string.Empty, "Failed to create customer.");
+                return View(vm);
+            }
+            TempData["ToastMessage"] = "Customer successfully Added!";
+            TempData["ToastType"] = "success"; // use 'success', 'warning', or 'danger'
+            return RedirectToAction(nameof(Index));
+        }
         public async Task<IActionResult> Delete(int id)
         {
             await _customerService.SoftDeleteAsync(id);
