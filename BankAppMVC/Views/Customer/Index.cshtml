@@ -23,18 +23,22 @@
                 </nav>
                 <h1 class="fs-4 mb-0">Customers</h1>
             </div>
-            <div class="col-12 col-sm-auto mt-4 mt-sm-0">
-                <a asp-controller="Customer" asp-action="Create" class="btn btn-secondary d-block">
-                    <span class="material-symbols-outlined me-1">add</span> New customer
-                </a>
-            </div>
+            @if (User.IsInRole("Admin") || User.IsInRole("Cashier"))
+            {
+                <div class="col-12 col-sm-auto mt-4 mt-sm-0">
+                    <a asp-controller="Customer" asp-action="Create" class="btn btn-secondary d-block">
+                        <span class="material-symbols-outlined me-1">add</span> New customer
+                    </a>
+                </div>
+            }
+          
         </div>
 
         <!-- Filters -->
         <div class="card card-line bg-body-tertiary border-transparent mb-7">
             <div class="card-body p-4">
                 <div class="row align-items-center">
-                  
+
                     <div class="col-12 col-lg">
                         <div class="row gx-3">
                             <div class="col col-lg-auto ms-auto">
@@ -108,7 +112,7 @@
             <table class="table table-selectable align-middle mb-0">
                 <thead>
                     <tr>
-               
+
                         <th>Full Name</th>
                         <th>Customer ID</th>
                         <th>National ID</th>
@@ -124,7 +128,7 @@
                         int avatarId = rand.Next(1, 99);
                         string avatarUrl = $"https://ui-avatars.com/api/?name={Uri.EscapeDataString(@customer.FullName)}&background=random&color=fff&size=128";
                         <tr>
-                        
+
                             <td>
                                 <div class="d-flex align-items-center">
                                     <div class="avatar">
@@ -143,14 +147,18 @@
                                 <a asp-controller="Customer" asp-action="Details" asp-route-id="@customer.CustomerId" class="btn btn-sm btn-outline-secondary me-1" title="View Details">
                                     <span class="material-symbols-outlined">visibility</span>
                                 </a>
-                                <a asp-controller="Customer" asp-action="Edit" asp-route-id="@customer.CustomerId" class="btn btn-sm btn-outline-primary me-1" title="Edit">
-                                    <span class="material-symbols-outlined">edit</span>
-                                </a>
-                                <form asp-controller="Customer" asp-action="Delete" asp-route-id="@customer.CustomerId"  class="d-inline" onsubmit="return confirm('Are you sure you want to delete this customer?');">
-                                    <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete">
-                                        <span class="material-symbols-outlined">delete</span>
-                                    </button>
-                                </form>
+                                @if (User.IsInRole("Admin") || User.IsInRole("Cashier"))
+                                {
+                                    <a asp-controller="Customer" asp-action="Edit" asp-route-id="@customer.CustomerId" class="btn btn-sm btn-outline-primary me-1" title="Edit">
+                                        <span class="material-symbols-outlined">edit</span>
+                                    </a>
+                                    <form asp-controller="Customer" asp-action="Delete" asp-route-id="@customer.CustomerId" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this customer?');">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete">
+                                            <span class="material-symbols-outlined">delete</span>
+                                        </button>
+                                    </form>
+                                }
+                            
                             </td>
                         </tr>
                     }

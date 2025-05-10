@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using BankAppMVC.Models;
 using BankAppMVC.Models.ViewModels;
+using BankAppMVC.Models.ViewModels.CustomerVm;
 using Microsoft.AspNetCore.Mvc;
 using Services.Statistics;
 
@@ -13,6 +14,23 @@ namespace BankAppMVC.Controllers
         public HomeController(IStatisticsService statisticsService)
         {
             _statisticsService = statisticsService;
+        }
+
+        [ResponseCache(Duration = 60, VaryByQueryKeys = new[] { "country" })]
+        [HttpGet("/TopCustomers/{country}")]
+        public async Task<IActionResult> TopCustomers(string country)
+        {
+            var dtoList = await _statisticsService.GetTopCustomersByCountryAsync(country);
+            var viewModels = dtoList.Select(x => new TopCustomerViewModel
+            {
+                CustomerId = x.CustomerId,
+                Givenname = x.Givenname,
+                Surname = x.Surname,
+                TotalBalance = x.TotalBalance
+            }).ToList();
+
+            ViewBag.Country = country;
+            return View(viewModels);
         }
 
 

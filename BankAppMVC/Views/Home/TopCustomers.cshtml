@@ -1,0 +1,27 @@
+﻿@using BankAppMVC.Models.ViewModels.CustomerVm
+@model List<TopCustomerViewModel>
+@{
+    ViewData["Title"] = "Top Customers in " + ViewBag.Country;
+}
+
+<h2 class="mb-4">Top 10 Customers in @ViewBag.Country</h2>
+
+<div class="table-responsive">
+    <table class="table table-hover">
+        <thead class="table-bordered">
+            <tr>
+                <th>Name</th>
+                <th>Total Balance</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var customer in Model)
+            {
+                <tr>
+                    <td>@customer.FullName</td>
+                    <td>@customer.TotalBalance.ToString("C")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
