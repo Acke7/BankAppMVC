@@ -55,6 +55,7 @@
                     @foreach (var item in Model)
                     {
                         <div class="col-12 col-sm-6 col-xl-3">
+                                <a href="@Url.Action("TopCustomers", "Home", new { country = item.Country })" class="text-decoration-none text-dark">
                             <div class="dtr-pricing glass-effect d-flex flex-column justify-content-start h-100 text-center">
 
                                 <!-- Full-width flag banner -->
@@ -74,7 +75,9 @@
                                     <h4 class="display-6 fw-bold text-body-secondary">@item.TotalSaldo.ToString("C")</h4>
                                 </div>
                             </div>
+                            </a>
                         </div>
+
                     }
                 </div>
             </div>

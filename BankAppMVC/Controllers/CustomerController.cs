@@ -91,6 +91,10 @@ namespace BankAppMVC.Controllers
         }
 
 
+
+
+
+
         [HttpGet]
         public async Task<IActionResult> Details(int? id)
         {

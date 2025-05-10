@@ -18,6 +18,32 @@ namespace Services.Statistics
             _context = context;
         }
 
+        public async Task<List<TopCustomerDTO>> GetTopCustomersByCountryAsync(string country)
+        {
+            var result = await _context.Customers
+                .Where(c => c.Country == country)
+                .SelectMany(c => c.Dispositions
+                    .Select(d => new
+                    {
+                        c.CustomerId,
+                        c.Givenname,
+                        c.Surname,
+                        AccountBalance = d.Account.Balance
+                    }))
+                .GroupBy(x => new { x.CustomerId, x.Givenname, x.Surname })
+                .Select(g => new TopCustomerDTO
+                {
+                    CustomerId = g.Key.CustomerId,
+                    Givenname = g.Key.Givenname,
+                    Surname = g.Key.Surname,
+                    TotalBalance = g.Sum(x => x.AccountBalance)
+                })
+                .OrderByDescending(dto => dto.TotalBalance)
+                .Take(10)
+                .ToListAsync();
+
+            return result;
+        }
         public async Task< List<CountriesStatisticsDTO> >GetCountryStatistics()
         {
             return await _context.Customers

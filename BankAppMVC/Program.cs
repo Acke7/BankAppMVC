@@ -38,7 +38,7 @@ namespace BankAppMVC
             builder.Services.AddAutoMapper(typeof(MappingProfile));
             builder.Services.AddScoped<IUserService, UserService>();
 
-
+            builder.Services.AddResponseCaching(); // ? Add this
             var app = builder.Build();
             // I lOve this one
             using (var scope = app.Services.CreateScope())
@@ -56,7 +56,7 @@ namespace BankAppMVC
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            app.UseResponseCaching();
             app.UseStaticFiles();
             app.UseHttpsRedirection();
             app.UseRouting();
