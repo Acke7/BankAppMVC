@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35913.81 d17.13
+VisualStudioVersion = 17.13.35913.81
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankAppMVC", "BankAppMVC\BankAppMVC.csproj", "{B1C471FA-37BC-4435-8901-6E7EC6B204D1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseLayer", "DatabaseLayer\DatabaseLayer.csproj", "{C2FF2C79-802B-46E5-861B-A3102D37C7F6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "Services\Services.csproj", "{C5C5C6AF-6C73-4376-9325-76BAE19F07D7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuspiciousTransactionScanner", "SuspiciousTransactionScanner\SuspiciousTransactionScanner.csproj", "{A119A602-2128-473B-A8FB-3007A06B6E7A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{C5C5C6AF-6C73-4376-9325-76BAE19F07D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C5C5C6AF-6C73-4376-9325-76BAE19F07D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C5C5C6AF-6C73-4376-9325-76BAE19F07D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A119A602-2128-473B-A8FB-3007A06B6E7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A119A602-2128-473B-A8FB-3007A06B6E7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A119A602-2128-473B-A8FB-3007A06B6E7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A119A602-2128-473B-A8FB-3007A06B6E7A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

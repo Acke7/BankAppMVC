@@ -21,6 +21,21 @@ namespace Services.Customers
             _context = context;
             _mapper = mapper;
         }
+
+        public async Task<List<string>> GetAllCountriesAsync()
+        {
+            return await _context.Customers
+                .Select(c => c.Country)
+                .Distinct()
+                .ToListAsync();
+        }
+
+        public async Task<List<Customer>> GetCustomersByCountryAsync(string country)
+        {
+            return await _context.Customers
+                .Where(c => c.Country == country)
+                .ToListAsync();
+        }
         public async Task<List<CustomerListDto>> GetAllCustomersAsync()
         {
 

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using DatabaseLayer.Models;
 
 
 namespace Services.Account
@@ -18,6 +18,7 @@ namespace Services.Account
         Task CreateAccount(CreateAccountDto dto);
         Task UpdateAccount(int accountId, UpdateAccountDto dto);
         Task DeleteAccount(int accountId);
+        Task<List<DatabaseLayer.Models.Account>> GetAccountsByCustomerIdAsync(int customerId);
 
     }
 }

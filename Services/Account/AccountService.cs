@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DatabaseLayer.Models;
 
 namespace Services.Account
     {
@@ -18,7 +19,12 @@ namespace Services.Account
                 _context = context;
             }
 
-
+        public async Task<List<DatabaseLayer.Models.Account>> GetAccountsByCustomerIdAsync(int customerId)
+        {
+            return await _context.Accounts
+                .Where(a => a.Dispositions.Any(d => d.CustomerId == customerId))
+                .ToListAsync();
+        }
 
         public async Task<List<AccountTransaktionDto>> GetTransactionsByAccountNumber(int accountNumber)
         {

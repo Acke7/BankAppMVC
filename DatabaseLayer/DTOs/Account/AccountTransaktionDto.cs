@@ -8,7 +8,8 @@ namespace DatabaseLayer.DTOs.Account
 {
     public class AccountTransaktionDto
     {
-       
+
+        public int TransactionId { get; set; }
         public DateOnly Date { get; set; }
 
         public string Type { get; set; } = null!;
