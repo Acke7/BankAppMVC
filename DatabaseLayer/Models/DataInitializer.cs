@@ -24,35 +24,9 @@ namespace DatabaseLayer.Models
             SeedRoles();
             SeedUsers();
 
-            SeedAccountNumber();
            
         }
-        public void SeedAccountNumber()
-        {
-            var random = new Random();
-
-            var accounts = _dbContext.Accounts
-                .Where(a => a.AccountNumber == 0) // Only those that still need a number
-                .ToList();
-
-            var existingAccountNumbers = _dbContext.Accounts
-                .Select(a => a.AccountNumber)
-                .ToHashSet();
-
-            foreach (var account in accounts)
-            {
-                int newAccountNumber;
-                do
-                {
-                    newAccountNumber = random.Next(10000000, 99999999);
-                } while (existingAccountNumbers.Contains(newAccountNumber));
-
-                account.AccountNumber = newAccountNumber;
-                existingAccountNumbers.Add(newAccountNumber);
-            }
-
-            _dbContext.SaveChanges();
-        }
+    
       
       
 

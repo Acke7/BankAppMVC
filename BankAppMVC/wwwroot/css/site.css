@@ -1,13 +1,36 @@
 ﻿@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600&display=swap');
 
-#statstic-section {
- 
-  
+
+
+.btn-primary {
+    background-color: rgb(83, 61, 224) !important
+}
+.btn-secondary {
+    background-color:rgb(220, 209, 121)
+    
 }
 
+    /* Custom style for .btn-secondary in light theme */
+    .btn-secondary.light-theme {
+        background-color: rgb(190, 166, 210);
+        border-color: rgb(190, 166, 210);
+        color: #000;
+    }
+
+        /* Lighter hover for light theme */
+        .btn-secondary.light-theme:hover {
+            background-color: rgb(210, 186, 230); /* lighter version */
+            border-color: rgb(210, 186, 230);
+            color: #000;
+        }
+
+body {
+    background-color: rgb(0, 0, 0);
+    color: white; /* Optional */
+}
 .bg-app-wrapper {
-    background-image: url('/img/backgrounds/5.jpg') !important; /* 🔁 Update this to your image */
-    background-size: cover;
+    background-image: url('/img/backgrounds/6.jpg') !important;  
+    background-size: cover; 
     background-position: center;
     background-repeat: no-repeat;
     position: relative;
@@ -16,7 +39,7 @@
 }
 
 .bg-app-wrapper-light {
-    background-image: url('/img/backgrounds/4.jpg'); /* 🔁 Update this to your image */
+    background-image: url('/img/backgrounds/13.jpg'); /* 🔁 Update this to your image */
     background-size: cover;
     background-position: center;
     background-repeat: repeat;

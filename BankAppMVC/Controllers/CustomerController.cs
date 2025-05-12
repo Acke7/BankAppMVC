@@ -130,7 +130,7 @@ namespace BankAppMVC.Controllers
                 Accounts = customer.Accounts.Select(a => new AccountViewModel
                 {
                    
-                    AccountNumber = a.AccountNumber,
+                    AccountId = a.AccountId,
                     Frequency = a.Frequency,
                     Created = a.Created,
                     Balance = a.Balance

@@ -83,8 +83,8 @@ namespace Services.Customers
                     .Where(d => d.Account != null && d.Account.IsActive)
                     .Select(d => new AccountDTO
                     {
-                        //AccountId = d.Account.AccountId,
-                        AccountNumber = d.Account.AccountNumber,
+                        AccountId = d.Account.AccountId,
+                       
                         Frequency = d.Account.Frequency,
                         Created = d.Account.Created,
                         Balance = d.Account.Balance
@@ -123,8 +123,8 @@ namespace Services.Customers
                     .Where(d => d.Account != null)
                     .Select(d => new AccountDTO
                     {
-                        //AccountId = d.Account.AccountId,
-                        AccountNumber = d.Account.AccountNumber,
+                        AccountId = d.Account.AccountId,
+
                         Frequency = d.Account.Frequency,
                         Created = d.Account.Created,
                         Balance = d.Account.Balance

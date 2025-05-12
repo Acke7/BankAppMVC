@@ -77,7 +77,7 @@ class Program
             if (newOnes.Any())
             {
                 var lines = newOnes.Select(s =>
-                   $"CustomerName: {s.FullName}, AccountNumber: {s.AccountId}, TransactionId: {s.TransactionId}, Amount {s.Amount},  Country: {s.Country}, DetectedAt: {s.DetectedAt}"
+                   $"CustomerName: {s.FullName}, accountId: {s.AccountId}, TransactionId: {s.TransactionId}, Amount {s.Amount},  Country: {s.Country}, DetectedAt: {s.DetectedAt}"
 );
                 File.WriteAllLines(reportFile, lines);
             }

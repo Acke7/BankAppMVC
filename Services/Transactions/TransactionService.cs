@@ -19,7 +19,7 @@ public class TransactionService : ITransactionService
             return ErrorCode.IncorrectAmount;
 
         var account =  _context.Accounts
-            .FirstOrDefault(a => a.AccountNumber == dto.AccountNumber);
+            .FirstOrDefault(a => a.AccountId == dto.AccountId);
 
         if (account == null)
             return ErrorCode.AccountNotFound;
@@ -51,7 +51,7 @@ public class TransactionService : ITransactionService
             return ErrorCode.IncorrectAmount;
 
         var account = _context.Accounts
-            .FirstOrDefault(a => a.AccountNumber == dto.AccountNumber);
+            .FirstOrDefault(a => a.AccountId == dto.AccountId);
 
         if (account == null)
             return ErrorCode.AccountNotFound;
@@ -85,14 +85,14 @@ public class TransactionService : ITransactionService
         if (dto.Amount <= 0)
             return ErrorCode.IncorrectAmount;
 
-        if (dto.FromAccountNumber == dto.ToAccountNumber)
+        if (dto.FromAccountId == dto.ToAccountId)
             return ErrorCode.YouCantTransferToSameAccount;
 
         var fromAccount = _context.Accounts
-            .FirstOrDefault(a => a.AccountNumber == dto.FromAccountNumber);
+            .FirstOrDefault(a => a.AccountId == dto.FromAccountId);
 
         var toAccount =  _context.Accounts
-            .FirstOrDefault(a => a.AccountNumber == dto.ToAccountNumber);
+            .FirstOrDefault(a => a.AccountId == dto.ToAccountId);
 
 
 
@@ -118,7 +118,7 @@ public class TransactionService : ITransactionService
             Balance = fromAccount.Balance,
             Symbol = dto.Symbol,
             Bank = dto.Bank,
-            Account = toAccount.AccountNumber.ToString()
+            Account = toAccount.AccountId.ToString()
         };
 
         var credit = new Transaction
@@ -131,7 +131,7 @@ public class TransactionService : ITransactionService
             Balance = toAccount.Balance,
             Symbol = dto.Symbol,
             Bank = dto.Bank,
-            Account = fromAccount.AccountNumber.ToString()
+            Account = fromAccount.AccountId.ToString()
         };
 
         _context.Transactions.AddRange(debit, credit);

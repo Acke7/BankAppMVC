@@ -7,14 +7,14 @@
 @model CustomerProfileViewModel?
 
 
-<form asp-action="FindByCustomerId" method="post" class="mb-4">
+@* <form asp-action="FindByCustomerId" method="post" class="mb-4">
     
         <div class="input-group">
             <input type="number" name="id" class="form-control" placeholder="Enter Customer ID..." required />
             <button type="submit" class="btn btn-primary">Search</button>
         </div>
     
-</form>
+</form> *@
 @if (TempData["Error"] != null)
 {
     <div class="alert alert-danger alert-dismissible fade show text-center mt-3" role="alert">
@@ -33,12 +33,18 @@
 
 @if (Model != null)
 {
+    var rand = new Random();
+    int avatarId = rand.Next(1, 99);
+    string avatarUrl = $"https://ui-avatars.com/api/?name={Uri.EscapeDataString(Model.FullName)}&background=random&color=fff&size=128";
     <main class="main px-lg-6">
         <!-- Content -->
         <div class="container-lg">
             <!-- Page content -->
             <div class="row">
                 <div class="col-12 col-xxl-4">
+                    <a asp-controller="Customer" asp-action="Index" class="btn btn-secondary mb-4">
+                        <i class="bi bi-arrow-left-circle me-1"></i> Back to Customers
+                    </a>
 
                     <div class="position-sticky mb-8" style="top: 40px">
 
@@ -49,7 +55,7 @@
 
                             <!-- Avatar -->
                             <div class="avatar avatar-xl rounded-circle mt-n7 mx-auto">
-                                <img class="avatar-img border border-white border-3" src="~/img/photos/photo-6.jpg" alt="..." />
+                                <img class="avatar-img" src="@avatarUrl" alt="avatar" />
                             </div>
 
                             <!-- Body -->
@@ -120,8 +126,8 @@
 
                                         <div class="text-center text-md-start">
                                             <p class="text-uppercase text-muted small mb-2">Account Number</p>
-                                            <a asp-controller="Account" asp-action="Details" asp-route-AccountNumber="@acc.AccountNumber" class="btn btn-link fw-bold text-decoration-none">
-                                                @acc.AccountNumber
+                                            <a asp-controller="Account" asp-action="Details" asp-route-AccountId="@acc.AccountId" class="btn btn-link fw-bold text-decoration-none">
+                                                @acc.AccountId
                                             </a>
                                         </div>
 
@@ -143,14 +149,14 @@
                                         <!-- Edit and Delete Buttons -->
                                         <div class="d-flex flex-column gap-2">
                                             <a asp-controller="Account" asp-action="Edit"
-                                               asp-route-AccountNumber="@acc.AccountNumber"
+                                               asp-route-AccountId="@acc.AccountId"
                                                asp-route-customerId="@Model.CustomerId"
                                                class="btn btn-outline-primary btn-sm rounded-pill">
                                                 ✏️ Edit
                                             </a>
                                       
                                                 <form asp-controller="Account" asp-action="Delete"
-                                                      asp-route-AccountNumber="@acc.AccountNumber"
+                                                  asp-route-AccountId="@acc.AccountId"
                                                       asp-route-customerId="@Model.CustomerId"
                                                       method="post" class="d-inline">
                                                     <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill">

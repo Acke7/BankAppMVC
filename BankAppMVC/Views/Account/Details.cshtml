@@ -1,9 +1,4 @@
 ﻿@using BankAppMVC.Models.ViewModels.AccountVm
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
 
 
 @{
@@ -22,6 +17,7 @@
     <div class="container-lg">
         <div class="row mb-8">
             <div class="col-12 col-md-6 col-xxl-3 mb-4 mb-xxl-0">
+             
                 <div class="card bg-body-tertiary border-transparent">
                     <div class="card-body">
                         <div class="row align-items-center">
@@ -51,7 +47,7 @@
                                 <h4 class="fs-sm fw-normal text-body-secondary mb-1">Account Number</h4>
 
                                 <!-- Text -->
-                                <div class="fs-4 fw-semibold"> @Model.FirstOrDefault()?.AccountNumber</div>
+                                <div class="fs-4 fw-semibold"> @Model.FirstOrDefault()?.AccountId</div>
                             </div>
                             <div class="col-auto">
                                 <!-- Avatar -->
@@ -59,11 +55,12 @@
                                     <i class="bi bi-credit-card"></i>
                                 </div>
                             </div>
+                            
                         </div>
                     </div>
                 </div>
             </div>
-
+            
 
             <div class="col-12 col-md-6 col-xxl-3 ms-md-5">
 
@@ -76,8 +73,8 @@
                         <div>
                               <a asp-controller="Account"
                                asp-action="Withdraw"
-                               asp-route-AccountNumber="@ViewBag.AccountNumber" 
-                             class="btn btn-danger rounded-circle p-4">
+                               asp-route-AccountId="@ViewBag.AccountId"
+                               class="btn btn-danger rounded-circle p-4">
                                 <i class="fas fa-money-bill-wave fa-lg text-white"></i>
                                 </a>
                           
@@ -88,9 +85,9 @@
                             <div>
                                 <div>
                                    <a asp-controller="Account" 
-                                      asp-action="Deposit" 
-                                      asp-route-AccountNumber="@ViewBag.AccountNumber" 
-                                      class="btn btn-success rounded-circle p-4">
+                                      asp-action="Deposit"
+                                       asp-route-AccountId="@ViewBag.AccountId"
+                                       class="btn btn-success rounded-circle p-4">
                                        <i class="fas fa-coins fa-lg text-white"></i>
                                    </a>
                                    <div class="mt-2 fw-semibold">Deposit</div>
@@ -104,7 +101,7 @@
                         <div>
                              <a asp-controller="Account"
                                asp-action="Transfer"
-                               asp-route-AccountNumber="@ViewBag.AccountNumber"
+                               asp-route-AccountId="@ViewBag.AccountId"
                              class="btn btn-primary rounded-circle p-4">
                                 <i class="fas fa-exchange-alt fa-lg text-white"></i>
                                </a>
@@ -163,29 +160,29 @@
 
         <button id="loadMoreBtn" class="btn btn-secondary d-block"
                 data-skip="20"
-                data-AccountNumber="@ViewBag.AccountNumber">
+            data-AccountId="@ViewBag.AccountId">
             Load more
         </button>
    
 </main>
 
 @section Scripts {
-    <script>
-        $('#loadMoreBtn').on('click', function () {
-            var button = $(this);
-            var skip = button.data('skip');
-            var accountNumber = button.data('accountnumber'); // lowercase key used in HTML
+<script>
+    $('#loadMoreBtn').on('click', function () {
+        var button = $(this);
+        var skip = button.data('skip');
+        var accountNumber = button.data('accountid'); // Ensure lowercase to match data-accountid
 
-            $.get('/Account/LoadMoreTransactions', { AccountNumber: accountNumber, skip: skip }, function (data) {
-                if (data.trim() !== '') {
-                    $('#transaction-body').append(data);
-                    button.data('skip', skip + 20);
-                } else {
-                    button.hide(); // No more transactions
-                }
-            });
+        $.get('/Account/LoadMoreTransactions', { AccountId: accountNumber, skip: skip }, function (data) {
+            if (data.trim() !== '') {
+                $('#transaction-body').append(data);
+                button.data('skip', skip + 20);
+            } else {
+                button.hide(); // No more transactions
+            }
         });
-    </script>
+    });
+</script>
 }
 @if (TempData["SuccessMessage"] != null)
 {

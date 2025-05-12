@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DatabaseLayer.Migrations
 {
     [DbContext(typeof(BankAppDataContext))]
-    [Migration("20250412115917_EditAccountNumber")]
-    partial class EditAccountNumber
+    [Migration("20250512021955_fixIssue2")]
+    partial class fixIssue2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,9 +33,6 @@ namespace DatabaseLayer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AccountId"));
 
-                    b.Property<int>("AccountNumber")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("Balance")
                         .HasColumnType("decimal(13, 2)");
 
@@ -46,6 +43,9 @@ namespace DatabaseLayer.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.HasKey("AccountId")
                         .HasName("PK_account");
@@ -142,6 +142,9 @@ namespace DatabaseLayer.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<string>("NationalId")
                         .HasMaxLength(20)
@@ -274,6 +277,36 @@ namespace DatabaseLayer.Migrations
                     b.HasIndex("AccountId");
 
                     b.ToTable("PermenentOrder", (string)null);
+                });
+
+            modelBuilder.Entity("DatabaseLayer.Models.SuspiciousTransaction", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DetectedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("TransactionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("TransactionId");
+
+                    b.ToTable("SuspiciousTransactions");
                 });
 
             modelBuilder.Entity("DatabaseLayer.Models.Transaction", b =>
@@ -612,6 +645,25 @@ namespace DatabaseLayer.Migrations
                         .HasConstraintName("FK_PermenentOrder_Accounts");
 
                     b.Navigation("Account");
+                });
+
+            modelBuilder.Entity("DatabaseLayer.Models.SuspiciousTransaction", b =>
+                {
+                    b.HasOne("DatabaseLayer.Models.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DatabaseLayer.Models.Transaction", "Transaction")
+                        .WithMany()
+                        .HasForeignKey("TransactionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Transaction");
                 });
 
             modelBuilder.Entity("DatabaseLayer.Models.Transaction", b =>

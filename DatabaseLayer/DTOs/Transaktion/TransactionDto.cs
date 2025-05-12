@@ -8,8 +8,9 @@ namespace DatabaseLayer.DTOs.Transaktion
 {
     public class TransactionDto
     {
+        public int AccountId { get; set; }
         public int TransactionId { get; set; } 
-        public int AccountNumber { get; set; }
+    
         public decimal Amount { get; set; }
         public string? Operation { get; set; } 
         public string? Symbol { get; set; }

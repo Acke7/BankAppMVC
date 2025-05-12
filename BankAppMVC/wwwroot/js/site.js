@@ -18,19 +18,21 @@
           });
       });
 
-    function applyThemeBackgroundClass() {
-            const theme = document.documentElement.getAttribute("data-bs-theme");
+function applyThemeBackgroundClass() {
+    const theme = document.documentElement.getAttribute("data-bs-theme");
     const body = document.getElementById("app-body");
+    const secondaryButtons = document.querySelectorAll(".btn-secondary");
 
     body.classList.remove("bg-app-wrapper", "bg-app-wrapper-light");
 
     if (theme === "dark") {
         body.classList.add("bg-app-wrapper");
-            } else if (theme === "light") {
+        secondaryButtons.forEach(btn => btn.classList.remove("light-theme"));
+    } else if (theme === "light") {
         body.classList.add("bg-app-wrapper-light");
-            }
-        }
-
+        secondaryButtons.forEach(btn => btn.classList.add("light-theme"));
+    }
+}
     // Run on page load
     applyThemeBackgroundClass();
 

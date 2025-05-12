@@ -4,7 +4,7 @@
 
 <form asp-action="Deposit" method="post">
     <!-- Account Number (Hidden) -->
-    <input asp-for="AccountNumber" type="hidden" />
+    <input asp-for="AccountId" type="hidden" />
 
     <!-- Amount -->
     <div class="mb-4">
@@ -25,6 +25,9 @@
 
     <!-- Submit Button -->
     <button type="submit" class="btn btn-primary">Deposit</button>
+    <a asp-controller="Account" asp-action="Details" asp-route-AccountId="@Model.AccountId" class="btn btn-secondary ">
+        Back To Accounts
+    </a>
    
 </form>
 
