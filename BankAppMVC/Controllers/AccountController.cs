@@ -73,7 +73,7 @@ namespace BankAppMVC.Controllers
                 return View(viewModel); // return with errors
             }
 
-            var dto = new TransactionDto
+            var vm = new TransactionDto
             {
                 AccountId = AccountId,
                 Amount = viewModel.Amount,
@@ -81,7 +81,7 @@ namespace BankAppMVC.Controllers
                 Symbol = viewModel.Symbol
             };
 
-            var result = await _transactionService.DepositAsync(dto);
+            var result = await _transactionService.DepositAsync(vm);
 
             if (result != ErrorCode.OK)
             {

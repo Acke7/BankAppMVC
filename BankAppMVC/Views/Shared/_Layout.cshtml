@@ -75,8 +75,8 @@
                             </a>
                         </div>
                     </div>
-                   
-                
+
+
                 </nav>
             </div>
         </nav>
@@ -90,7 +90,7 @@
                 <a class="navbar-brand fs-5 fw-bold" href="~/">
                     <i class="fs-2 text-secondary me-1 bi bi-bank m-lg-3"></i> Axion Bank
                 </a>
-                
+
                 <partial name="_LoginPartial"/>
                 <!-- User -->
                 @*     <div class="ms-auto d-xl-none">
@@ -124,10 +124,10 @@
                 </button>
 
                 <!-- Collapse -->
-                <div class="collapse navbar-collapse" id="sidenavLargeCollapse">
+                <nav class="collapse navbar-collapse" id="sidenavLargeCollapse">
                     <!-- Search -->
 
-                    <div class="input-group d-xl-none my-4 my-xl-0">
+                    @*     <div class="input-group d-xl-none my-4 my-xl-0">
                         <input class="form-control"
                         id="topnavSearchInputMobile"
                         type="search"
@@ -138,53 +138,60 @@
                             <span class="material-symbols-outlined"> search </span>
                         </span>
                     </div>
+ *@
 
                     <!-- Nav -->
                     <nav class="navbar-nav nav-pills mb-7">
-                       
-                        <div class="nav-item">
-                            <a class="nav-link "
-                            href="#"
-                            data-bs-toggle="collapse"
-                            data-bs-target="#customers"
-                            role="button"
-                            aria-expanded="false"
-                            aria-controls="customers">
-                                <span class="material-symbols-outlined me-3">group</span> Customers
-                            </a>
-                            <div class="collapse  " id="customers">
-                                <nav class="nav nav-pills">
-                                    <a class="nav-link" asp-controller="Customer" asp-action="Index">Customers</a>
-                                    <a class="nav-link" asp-controller="Customer" asp-action="Details" asp-route-id="1">Customer details</a>
-                              
-                                </nav>
+
+                        @if (User.IsInRole("Admin") || (User.IsInRole("Cashier")))
+                        {
+
+
+                            <div class="nav-item">
+                                <a class="nav-link "
+                                href="#"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#customers"
+                                role="button"
+                                aria-expanded="false"
+                                aria-controls="customers">
+                                    <span class="material-symbols-outlined me-3">group</span> Customers
+                                </a>
+                                <div class="collapse  " id="customers">
+                                    <nav class="nav nav-pills">
+                                        <a class="nav-link" asp-controller="Customer" asp-action="Index">Customers</a>
+                                        <a class="nav-link" asp-controller="Customer" asp-action="Details" asp-route-id="1">Customer details</a>
+
+                                    </nav>
+                                </div>
                             </div>
-                        </div>
+                        }
                         @if (User.IsInRole("Admin"))
                         {
                             <div class="nav-item">
                                 <a class="nav-link "
-                                   href="#"
-                                   data-bs-toggle="collapse"
-                                   data-bs-target="#projects"
-                                   role="button"
-                                   aria-expanded="false"
-                                   aria-controls="projects">
+                                href="#"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#projects"
+                                role="button"
+                                aria-expanded="false"
+                                aria-controls="projects">
                                     <span class="material-symbols-outlined me-3">list_alt</span> Users
                                 </a>
 
                                 <div class="collapse " id="projects">
                                     <nav class="nav nav-pills">
                                         <a class="nav-link" asp-controller="User" asp-action="Index">Users Manger</a>
-                           
+
                                     </nav>
                                 </div>
                             </div>
                         }
-                       
-                       
+                    </nav>
 
-                  
+
+
+
 
                     <!-- Nav -->
                     <nav class="navbar-nav nav-pills d-xl-none mb-7">
@@ -214,13 +221,13 @@
                                 </a>
                             </div>
                         </div>
-                       
-                      
+
+
                     </nav>
 
                     <!-- Card -->
-               
-                </div>
+
+            </div>
             </div>
         </nav>
     </aside>
@@ -239,23 +246,26 @@
 
             <partial name="_LoginPartial" />
 
-            
+
             <!-- Collapse -->
             <div class="collapse navbar-collapse" id="topnavLargeCollapse">
-              
+
                 <!-- Nav -->
                 <nav class="navbar-nav nav-pills mx-auto">
-                 
-                    <div class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Customers
-                        </a>
-                        <div class="dropdown-menu">
-                            <a class="nav-link" asp-controller="Customer" asp-action="Index">Customers</a>
-                            <a class="nav-link" asp-controller="Customer" asp-action="Details" asp-route-id="1">Customer details</a>
-                            <a class="nav-link" asp-controller="Customer" asp-action="Create">New customer</a>
+
+                    @if (User.IsInRole("Admin") || (User.IsInRole("Cashier")))
+                    {
+                        <div class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle " href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Customers
+                            </a>
+                            <div class="dropdown-menu">
+                                <a class="nav-link" asp-controller="Customer" asp-action="Index">Customers</a>
+                                <a class="nav-link" asp-controller="Customer" asp-action="Details" asp-route-id="1">Customer details</a>
+                                <a class="nav-link" asp-controller="Customer" asp-action="Create">New customer</a>
+                            </div>
                         </div>
-                    </div>
+                    }
                     @if (User.IsInRole("Admin"))
                     {
                         <div class="nav-item dropdown">
