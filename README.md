@@ -2,8 +2,8 @@
 
 ## Welcome to BankApp
 
-**BankApp** is a secure internal system for bank staff to manage customers, accounts, and transactions.  
-This system is for employees only, such as **Admins** and **Cashiers**, and **not for customers**.
+BankApp is a secure internal system for bank staff to manage customers, accounts, and transactions.  
+This system is for employees only, such as Admins and Cashiers, and not for customers.
 
 ---
 
@@ -20,14 +20,14 @@ This system is for employees only, such as **Admins** and **Cashiers**, and **no
 
 ## What You Can Do
 
-### As a **Cashier**:
+### As a Cashier:
 - Search for customers by name or city  
 - View customer details and accounts  
 - View transactions per account  
 - Make deposits, withdrawals, or transfers  
 - Add new customers (auto-creates an account)  
 
-### As an **Admin**:
+### As an Admin:
 - All cashier features  
 - Manage system users (Admins and Cashiers)  
 
@@ -67,3 +67,25 @@ It creates a **report per country**.
 
 Each file includes entries like:
 
+```
+CustomerID: 10125
+Account: 45872957
+Transaction: 99801
+Reason: Transaction over 15000 kr
+
+CustomerID: 10399
+Account: 48911340
+Transaction: 100122
+Reason: Total over 23000 kr in 72h
+```
+
+If no suspicious activity is found, the file will say:
+
+> **No new suspicious transactions found for [Country]**
+
+---
+
+## Visit Our Website
+
+- 🌐 [alolabi.site](https://alolabi.site)  
+- 🌐 [BankApp on Azure](https://bankappazue-exbzcdavfhb2bdck.swedencentral-01.azurewebsites.net)
