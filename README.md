@@ -3,7 +3,7 @@ Welcome to BankApp
 BankApp is a secure internal system for bank staff to manage customers, accounts, and transactioThis system is for employees only, such as Admins and Cashiers, and not for customers.
 How to Use the Website
 Login
-Visit the website: [https://bankappazue.azurewebsites.net/](https://bankappazue-exbzcdavfhb2bdck.swedencentral-01.azurewebsites.net/](https://bankappazue-exbzcdavfhb2bdck.swedencentral-01.azurewebsites.net/)
+Visit the website: bankappazue-exbzcdavfhb2bdck.swedencentral-01.azurewebsites.net
 Login credentials:
 - Admin: richard.chalk@admin.se / Abc123#
 - Cashier: richard.chalk@cashier.se / Abc123#
