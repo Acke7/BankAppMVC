@@ -25,10 +25,10 @@ namespace BankAppMVC.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> Details(int AccountNumber)
+        public async Task<IActionResult> Details(int AccountId)
         {
-            var transactions = await _accountService.GetTransactionsByAccountNumber(AccountNumber);
-            var accountBalance = await _accountService.GetBalanceByAccountId(AccountNumber);
+            var transactions = await _accountService.GetTransactionsByAccountNumber(AccountId);
+            var accountBalance = await _accountService.GetBalanceByAccountId(AccountId);
 
             var viewModel = transactions
 
@@ -44,29 +44,29 @@ namespace BankAppMVC.Controllers
                     Symbol = t.Symbol,
                     Bank = t.Bank,
                     Account = t.Account,
-                    AccountNumber = AccountNumber
+                    AccountId = AccountId
                 }).ToList();
 
-            ViewBag.AccountNumber = AccountNumber;
+            ViewBag.AccountId = AccountId;
             return View(viewModel);
         }
 
         [HttpGet]
-        public IActionResult Deposit(int AccountNumber)
+        public IActionResult Deposit(int AccountId)
         {
             return View(new DepositViewModel());
         }
-        public IActionResult Withdraw(int AccountNumber)
+        public IActionResult Withdraw(int AccountId)
         {
             return View(new WithdrawViewModel());
         }
-        public IActionResult Transfer(int AccountNumber)
+        public IActionResult Transfer(int AccountId)
         {
-            return View(new TransferViewModel { FromAccountNumber = AccountNumber });
+            return View(new TransferViewModel { FromAccountId = AccountId });
         }
 
         [HttpPost]
-        public async Task<IActionResult> Deposit(DepositViewModel viewModel, int AccountNumber)
+        public async Task<IActionResult> Deposit(DepositViewModel viewModel, int AccountId)
         {
             if (!ModelState.IsValid)
             {
@@ -75,7 +75,7 @@ namespace BankAppMVC.Controllers
 
             var dto = new TransactionDto
             {
-                AccountNumber = AccountNumber,
+                AccountId = AccountId,
                 Amount = viewModel.Amount,
                 Operation = viewModel.Operation,
                 Symbol = viewModel.Symbol
@@ -89,14 +89,14 @@ namespace BankAppMVC.Controllers
                 return View(viewModel);
             }
             TempData["SuccessMessage"] = "Deposit completed successfully!";
-            return RedirectToAction("Details", "Account", new { accountNumber = viewModel.AccountNumber });
+            return RedirectToAction("Details", "Account", new { AccountId = viewModel.AccountId });
         }
         [HttpPost]
-        public async Task<IActionResult> Withdraw(WithdrawViewModel viewModel, int AccountNumber)
+        public async Task<IActionResult> Withdraw(WithdrawViewModel viewModel, int AccountId)
         {
             var dto = new TransactionDto
             {
-                AccountNumber = AccountNumber,
+                AccountId = AccountId,
                 Amount = viewModel.Amount,
                 Operation = viewModel.Operation,
                 Symbol = viewModel.Symbol
@@ -109,16 +109,16 @@ namespace BankAppMVC.Controllers
                 return View(viewModel);
             }
             TempData["SuccessMessage"] = "Withdraw completed successfully!";
-            return HandleResult(result, viewModel.AccountNumber);
+            return HandleResult(result, viewModel.AccountId);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Transfer(TransferViewModel viewModel, int AccountNumber)
+        public async Task<IActionResult> Transfer(TransferViewModel viewModel, int AccountId)
         {
             var dto = new TransferDto
             {
-                FromAccountNumber = AccountNumber,
-                ToAccountNumber = viewModel.ToAccountNumber,
+                FromAccountId = AccountId,
+                ToAccountId = viewModel.ToAccountId,
                 Amount = viewModel.Amount,
                 Operation = viewModel.Operation,
                 Symbol = viewModel.Symbol
@@ -132,10 +132,10 @@ namespace BankAppMVC.Controllers
                 return View(viewModel);
             }
             TempData["SuccessMessage"] = "Transfer completed successfully!";
-            return HandleResult(result, AccountNumber);
+            return HandleResult(result, AccountId);
         }
 
-        private IActionResult HandleResult(ErrorCode result, int accountNumber)
+        private IActionResult HandleResult(ErrorCode result, int AccountId)
         {
             if (result != ErrorCode.OK)
             {
@@ -146,7 +146,7 @@ namespace BankAppMVC.Controllers
             // ✅ Set success message before redirecting
 
             TempData["SuccessMessage"] = "Transfer completed successfully!";
-            return RedirectToAction("Details", "Account", new { accountNumber });
+            return RedirectToAction("Details", "Account", new { AccountId });
         }
 
         private string GetErrorMessage(ErrorCode code)
@@ -189,9 +189,9 @@ namespace BankAppMVC.Controllers
         }
 
         // GET: /Account/Edit/5
-        public async Task<IActionResult> Edit(int AccountNumber, int customerID)
+        public async Task<IActionResult> Edit(int AccountId, int customerID)
         {
-            var account = await _accountService.GetAccountByAccountNumber(AccountNumber);
+            var account = await _accountService.GetAccountByAccountNumber(AccountId);
             if (account == null)
                 return NotFound();
 
@@ -201,7 +201,7 @@ namespace BankAppMVC.Controllers
                 AccountId = account.AccountId,
                 Frequency = account.Frequency,
                 Balance = account.Balance,
-                AccountNumber = AccountNumber
+                AccountNumber = account.AccountNumber
             };
 
             return View(model);
@@ -222,7 +222,7 @@ namespace BankAppMVC.Controllers
                 AccountNumber = model.AccountNumber
             };
 
-            await _accountService.UpdateAccount(model.AccountNumber, dto);
+            await _accountService.UpdateAccount(model.AccountId, dto);
             TempData["ToastMessage"] = "Account successfully Edited!";
             TempData["ToastType"] = "warning"; // use 'success', 'warning', or 'danger'
 
@@ -231,18 +231,18 @@ namespace BankAppMVC.Controllers
 
         // POST: /Account/Delete/5
         [HttpPost]
-        public async Task<IActionResult> Delete(int AccountNumber, int customerId)
+        public async Task<IActionResult> Delete(int AccountId, int customerId)
         {
-            await _accountService.DeleteAccount(AccountNumber);
+            await _accountService.DeleteAccount(AccountId);
             TempData["ToastMessage"] = "Account successfully 'Deleted'!";
             TempData["ToastType"] = "danger"; // use 'success', 'warning', or 'danger'
             return RedirectToAction("Details", "Customer", new { id = customerId });
         }
 
-        public async Task<IActionResult> LoadMoreTransactions(int AccountNumber, int skip)
+        public async Task<IActionResult> LoadMoreTransactions(int AccountId, int skip)
         {
 
-            var transactions = await _accountService.GetTransactionsByAccountNumber(AccountNumber);
+            var transactions = await _accountService.GetTransactionsByAccountNumber(AccountId);
             var next20 = transactions.Skip(skip).Take(20).Select(t => new AccountTransactionsViewModel
             {
 

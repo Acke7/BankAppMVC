@@ -1,188 +1,215 @@
-﻿@using BankAppMVC.Models.ViewModels.CustomerVm
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-@model CustomerProfileViewModel?
-
-
-<form asp-action="FindByCustomerId" method="post" class="mb-4">
-    
-        <div class="input-group">
-            <input type="number" name="id" class="form-control" placeholder="Enter Customer ID..." required />
-            <button type="submit" class="btn btn-primary">Search</button>
-        </div>
-    
-</form>
-@if (TempData["Error"] != null)
-{
-    <div class="alert alert-danger alert-dismissible fade show text-center mt-3" role="alert">
-        <strong>@TempData["Error"]</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-}
-@if (Model == null)
-{
-    <div class="text-center mt-5">
-        <h5 class="text-muted">Please enter a customer ID to view their profile.</h5>
-    </div>
-    return;
-}
-
-
-@if (Model != null)
-{
-    <main class="main px-lg-6">
-        <!-- Content -->
-        <div class="container-lg">
-            <!-- Page content -->
-            <div class="row">
-                <div class="col-12 col-xxl-4">
-
-                    <div class="position-sticky mb-8" style="top: 40px">
-
-                        <!-- Card -->
-                        <div class="card bg-body mb-3">
-                            <!-- Image -->
-                            <div class="card-img-top pb-13 bg-profile"></div>
-
-                            <!-- Avatar -->
-                            <div class="avatar avatar-xl rounded-circle mt-n7 mx-auto">
-                                <img class="avatar-img border border-white border-3" src="~/img/photos/photo-6.jpg" alt="..." />
-                            </div>
-
-                            <!-- Body -->
-                            <div class="card-body text-center">
-                                <h1 class="card-title fs-5">@Model.FullName</h1>
-
-                                <ul class="list-group list-group-flush mb-0">
-                                    <li class="list-group-item d-flex align-items-center justify-content-between bg-body px-0">
-                                        <span class="text-body-secondary">Gender</span>
-                                        <span>@(string.IsNullOrWhiteSpace(Model.Gender) ? "N/A" : Model.Gender)</span>
-                                    </li>
-                                    <li class="list-group-item d-flex align-items-center justify-content-between bg-body px-0">
-                                        <span class="text-body-secondary">Phone</span>
-                                        <span>@(string.IsNullOrWhiteSpace(Model.Phone) ? "Phone not available" : Model.Phone)</span>
-                                    </li>
-                                    <li class="list-group-item d-flex align-items-center justify-content-between bg-body px-0">
-                                        <span class="text-body-secondary">Email</span>
-                                        <span>@(string.IsNullOrWhiteSpace(Model.Emailaddress) ? "Email not provided" : Model.Emailaddress)</span>
-                                    </li>
-                                    <li class="list-group-item d-flex align-items-center justify-content-between bg-body px-0">
-                                        <span class="text-body-secondary">National ID</span>
-                                        <span>@(string.IsNullOrWhiteSpace(Model.NationalId) ? "N/A" : Model.NationalId)</span>
-                                    </li>
-                                    <li class="list-group-item d-flex flex-column align-items-start bg-body px-0">
-                                        <span class="text-body-secondary">Address</span>
-                                        @if (string.IsNullOrWhiteSpace(Model.FullAddress))
-                                        {
-                                            <span>Address not provided.</span>
-                                        }
-                                        else
-                                        {
-                                            var parts = Model.FullAddress.Split(",");
-                                            <span>@parts[0]</span> <!-- Street address -->
-                                            @if (parts.Length > 1)
-                                            {
-                                                <span>@parts[1]</span> <!-- Zip + City -->
-                                            }
-                                            @if (parts.Length > 2)
-                                            {
-                                                <span>@parts[2]</span> <!-- Country -->
-                                            }
-                                        }
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <div class="col-12 col-xxl-8">
-                    <div class="row row-cols-1 g-4">
-
-                        <!-- Nice Add Account Button -->
-                        <div class="mb-4">
-                            <a asp-controller="Account" asp-action="Create" asp-route-customerId="@Model.CustomerId" class="btn btn-primary btn-lg rounded-pill shadow-sm">
-                                ➕ Add New Account
-                            </a>
-                        </div>
-
-                        @foreach (var acc in Model.Accounts)
-                        {
-
-                            <div class="col">
-                                <div class="card h-100 shadow-sm rounded-4 bg-body">
-                                    <div class="card-body p-5 d-flex flex-column flex-md-row justify-content-between align-items-center">
-
-                                        <div class="text-center text-md-start">
-                                            <p class="text-uppercase text-muted small mb-2">Account Number</p>
-                                            <a asp-controller="Account" asp-action="Details" asp-route-AccountNumber="@acc.AccountNumber" class="btn btn-link fw-bold text-decoration-none">
-                                                @acc.AccountNumber
-                                            </a>
-                                        </div>
-
-                                        <div class="text-center text-md-start">
-                                            <p class="text-uppercase text-muted small mb-1">Frequency</p>
-                                            <h6 class="fw-semibold text-body-secondary">@acc.Frequency</h6>
-                                        </div>
-
-                                        <div class="text-center text-md-start">
-                                            <p class="text-uppercase text-muted small mb-1">Created Date</p>
-                                            <h6 class="fw-semibold text-body-secondary">@acc.FormattedCreated</h6>
-                                        </div>
-
-                                        <div class="text-center text-md-start">
-                                            <p class="text-uppercase text-muted small mb-1">Balance</p>
-                                            <h6 class="fw-bold text-success">@acc.FormattedBalance</h6>
-                                        </div>
-
-                                        <!-- Edit and Delete Buttons -->
-                                        <div class="d-flex flex-column gap-2">
-                                            <a asp-controller="Account" asp-action="Edit"
-                                               asp-route-AccountNumber="@acc.AccountNumber"
-                                               asp-route-customerId="@Model.CustomerId"
-                                               class="btn btn-outline-primary btn-sm rounded-pill">
-                                                ✏️ Edit
-                                            </a>
-                                      
-                                                <form asp-controller="Account" asp-action="Delete"
-                                                      asp-route-AccountNumber="@acc.AccountNumber"
-                                                      asp-route-customerId="@Model.CustomerId"
-                                                      method="post" class="d-inline">
-                                                    <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill">
-                                                        ❌ Delete
-                                                    </button>
-                                                </form>
-
-                                        </div>  
-                                        </div>
-
-                                    </div>
-                                </div>
-                           
-                        }
-
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </main>
-}
-
-
-
-@section Scripts {
-    @if (TempData["ToastMessage"] != null)
-    {
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                showToast('@TempData["ToastMessage"]', '@TempData["ToastType"]');
-            });
-        </script>
+﻿    @using BankAppMVC.Models.ViewModels.CustomerVm
+    @*
+        For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+    *@
+    @{
     }
-}
+    @model CustomerProfileViewModel?
+
+
+    @* <form asp-action="FindByCustomerId" method="post" class="mb-4">
+    
+            <div class="input-group">
+                <input type="number" name="id" class="form-control" placeholder="Enter Customer ID..." required />
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+    
+    </form> *@
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show text-center mt-3" role="alert">
+            <strong>@TempData["Error"]</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    @if (Model == null)
+    {
+        <div class="text-center mt-5">
+            <h5 class="text-muted">Please enter a customer ID to view their profile.</h5>
+        </div>
+        return;
+    }
+
+
+    @if (Model != null)
+    {
+        var rand = new Random();
+        int avatarId = rand.Next(1, 99);
+        string avatarUrl = $"https://ui-avatars.com/api/?name={Uri.EscapeDataString(Model.FullName)}&background=random&color=fff&size=128";
+        <main class="main px-lg-6">
+            <!-- Content -->
+            <div class="container-lg">
+                <!-- Page content -->
+                <div class="row">
+                    <div class="col-12 col-xxl-4">
+                        <a asp-controller="Customer" asp-action="Index" class="btn btn-secondary mb-4">
+                            <i class="bi bi-arrow-left-circle me-1"></i> Back to Customers
+                        </a>
+
+                        <div class="position-sticky mb-8" style="top: 40px">
+
+                            <!-- Card -->
+                            <div class="card bg-body mb-3">
+                                <!-- Image -->
+                                <div class="card-img-top pb-13 bg-profile"></div>
+
+                                <!-- Avatar -->
+                                <div class="avatar avatar-xl rounded-circle mt-n7 mx-auto">
+                                    <img class="avatar-img" src="@avatarUrl" alt="avatar" />
+                                </div>
+
+                                <!-- Body -->
+                                <div class="card-body text-center">
+                                    <h1 class="card-title fs-5">@Model.FullName</h1>
+
+                                    <ul class="list-group list-group-flush mb-0">
+                                        <li class="list-group-item d-flex align-items-center justify-content-between bg-body px-0">
+                                            <span class="text-body-secondary">Gender</span>
+                                            <span>@(string.IsNullOrWhiteSpace(Model.Gender) ? "N/A" : Model.Gender)</span>
+                                        </li>
+                                        <li class="list-group-item d-flex align-items-center justify-content-between bg-body px-0">
+                                            <span class="text-body-secondary">Phone</span>
+                                            <span>@(string.IsNullOrWhiteSpace(Model.Phone) ? "Phone not available" : Model.Phone)</span>
+                                        </li>
+                                        <li class="list-group-item d-flex align-items-center justify-content-between bg-body px-0">
+                                            <span class="text-body-secondary">Email</span>
+                                            <span>@(string.IsNullOrWhiteSpace(Model.Emailaddress) ? "Email not provided" : Model.Emailaddress)</span>
+                                        </li>
+                                        <li class="list-group-item d-flex align-items-center justify-content-between bg-body px-0">
+                                            <span class="text-body-secondary">National ID</span>
+                                            <span>@(string.IsNullOrWhiteSpace(Model.NationalId) ? "N/A" : Model.NationalId)</span>
+                                        </li>
+                                        <li class="list-group-item d-flex flex-column align-items-start bg-body px-0">
+                                            <span class="text-body-secondary">Address</span>
+                                            @if (string.IsNullOrWhiteSpace(Model.FullAddress))
+                                            {
+                                                <span>Address not provided.</span>
+                                            }
+                                            else
+                                            {
+                                                var parts = Model.FullAddress.Split(",");
+                                                <span>@parts[0]</span> <!-- Street address -->
+                                                @if (parts.Length > 1)
+                                                {
+                                                    <span>@parts[1]</span> <!-- Zip + City -->
+                                                }
+                                                @if (parts.Length > 2)
+                                                {
+                                                    <span>@parts[2]</span> <!-- Country -->
+                                                }
+                                            }
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-12 col-xxl-8">
+                        <div class="row row-cols-1 g-4">
+
+                            <!-- Nice Add Account Button -->
+                            <div class="mb-4">
+                                <a asp-controller="Account" asp-action="Create" asp-route-customerId="@Model.CustomerId" class="btn btn-primary btn-lg rounded-pill shadow-sm">
+                                    ➕ Add New Account
+                                </a>
+                            </div>
+
+                            @foreach (var acc in Model.Accounts)
+                            {
+
+                                <div class="col">
+                                    <div class="card h-100 shadow-sm rounded-4 bg-body">
+                                        <div class="card-body p-5 d-flex flex-column flex-md-row justify-content-between align-items-center">
+
+                                            <div class="text-center text-md-start">
+                                                <p class="text-uppercase text-muted small mb-2">Account Number</p>
+                                                <a asp-controller="Account" asp-action="Details" asp-route-AccountId="@acc.AccountId" class="btn btn-link fw-bold text-decoration-none">
+                                                    @acc.AccountId
+                                                </a>
+                                            </div>
+
+                                            <div class="text-center text-md-start">
+                                                <p class="text-uppercase text-muted small mb-1">Frequency</p>
+                                                <h6 class="fw-semibold text-body-secondary">@acc.Frequency</h6>
+                                            </div>
+
+                                            <div class="text-center text-md-start">
+                                                <p class="text-uppercase text-muted small mb-1">Created Date</p>
+                                                <h6 class="fw-semibold text-body-secondary">@acc.FormattedCreated</h6>
+                                            </div>
+
+                                            <div class="text-center text-md-start">
+                                                <p class="text-uppercase text-muted small mb-1">Balance</p>
+                                                <h6 class="fw-bold text-success">@acc.FormattedBalance</h6>
+                                            </div>
+
+                                            <!-- Edit and Delete Buttons -->
+                                            <div class="d-flex flex-column gap-2">
+                                                <a asp-controller="Account" asp-action="Edit"
+                                                   asp-route-AccountId="@acc.AccountId"
+                                                   asp-route-customerId="@Model.CustomerId"
+                                                   class="btn btn-outline-primary btn-sm rounded-pill">
+                                                    ✏️ Edit
+                                                </a>
+                                      
+                                                    <form asp-controller="Account" asp-action="Delete"
+                                                      asp-route-AccountId="@acc.AccountId"
+                                                          asp-route-customerId="@Model.CustomerId"
+                                                          method="post" class="d-inline">
+                                                        <button type="submit" class="btn btn-outline-danger btn-sm rounded-pill">
+                                                            ❌ Delete
+                                                        </button>
+                                                    </form>
+
+                                            </div>  
+                                            </div>
+
+                                        </div>
+                                    </div>
+                           
+                            }
+
+                        </div>
+                    </div>
+
+                @if (Model.LinkedCards != null && Model.LinkedCards.Any())
+                {
+                    <h4 class="fw-bold text-body mt-5 mb-3">Linked Cards</h4>
+                    <div class="row g-4">
+                        @foreach (var card in Model.LinkedCards)
+                        {
+                            <div class="col-md-4">
+                                <div class="real-card">
+                                    <div class="bank-name">Axion Bank</div>
+                                    <div class="chip"></div>
+                                    <div class="card-number">**** **** **** @card.Ccnumber[^4..]</div>
+                                    <div class="exp">VALID THRU: @($"{card.ExpM:D2}/{card.ExpY}")</div>
+                                    <div class="exp">ISSUED: @card.Issued.ToShortDateString()</div>
+                                    <div class="visa-logo">@card.Cctype.ToUpper()</div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+
+
+                </div>
+            </div>
+        </main>
+    }
+
+
+
+    @section Scripts {
+        @if (TempData["ToastMessage"] != null)
+        {
+            <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    showToast('@TempData["ToastMessage"]', '@TempData["ToastType"]');
+                });
+            </script>
+        }
+    }

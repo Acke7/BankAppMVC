@@ -33,7 +33,7 @@ namespace DatabaseLayer.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AccountId"));
 
-                    b.Property<int>("AccountNumber")
+                    b.Property<int>("accountId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("Balance")

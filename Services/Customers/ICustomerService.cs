@@ -18,5 +18,7 @@ namespace Services.Customers
         Task<CustomerDto?> GetByIdAsync(int id);
         Task<bool> UpdateAsync(CustomerDto dto);
         Task<bool> SoftDeleteAsync(int id);
+        Task<List<string>> GetAllCountriesAsync();
+        Task<List<Customer>> GetCustomersByCountryAsync(string country);
     }
 }

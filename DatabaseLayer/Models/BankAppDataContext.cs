@@ -31,14 +31,15 @@ public partial class BankAppDataContext : IdentityDbContext
     public virtual DbSet<Transaction> Transactions { get; set; }
 
     //public virtual DbSet<User> Users { get; set; }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-
-        => optionsBuilder.UseSqlServer("Server=localhost;Database=BankAppData;Trusted_Connection=True;TrustServerCertificate=true;");
+    public DbSet<SuspiciousTransaction> SuspiciousTransactions { get; set; }
+  
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
+
+
         modelBuilder.Entity<Account>(entity =>
         {
             entity.HasKey(e => e.AccountId).HasName("PK_account");
@@ -164,6 +165,15 @@ public partial class BankAppDataContext : IdentityDbContext
                 .HasMaxLength(64)
                 .IsFixedLength();
         });
+        modelBuilder.Entity<SuspiciousTransaction>()
+    .HasOne(st => st.Transaction)
+    .WithMany()
+    .HasForeignKey(st => st.TransactionId);
+
+        modelBuilder.Entity<SuspiciousTransaction>()
+            .HasOne(st => st.Customer)
+            .WithMany()
+            .HasForeignKey(st => st.CustomerId);
 
         OnModelCreatingPartial(modelBuilder);
     }

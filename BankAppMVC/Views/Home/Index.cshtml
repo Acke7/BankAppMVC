@@ -17,67 +17,49 @@
 @{
     DateTime? swedenTime = ViewBag.SwedenTime as DateTime?;
 }
+
+
+
 <!-- Main -->
 <main class="main px-lg-6">
-    <!-- Content -->
     <div class="container-lg">
-        <!-- Page content -->
-      
-            <div class="row align-items-center">
-                <div class="col-12 col-md-auto order-md-1 d-flex align-items-center justify-content-center mb-4 mb-md-0">
-                    <div class="avatar text-info me-2">
-                        <i class="fs-4" data-duoicon="world"></i>
-                    </div>
-                    @if (swedenTime.HasValue)
-                    {
-
-                        <div class="mb-4 text-muted">
-                            🇸🇪 Sweden – <time datetime="@swedenTime.Value.ToString("HH:mm")">@swedenTime.Value.ToString("h:mm tt")</time>
-                        </div>
-
-                    }
+        <div class="row align-items-center">
+            <div class="col-12 col-md-auto order-md-1 d-flex align-items-center justify-content-center mb-4 mb-md-0">
+                <div class="avatar text-info me-2">
+                    <i class="fs-4" data-duoicon="world"></i>
                 </div>
-                <div class="col-12 col-md order-md-0 text-center text-md-start">
-
-             
+                @if (swedenTime.HasValue)
+                {
+                    <div class="mb-4 text-muted">
+                        🇨🇪 Sweden – <time datetime="@swedenTime.Value.ToString("HH:mm")">@swedenTime.Value.ToString("h:mm tt")</time>
+                    </div>
+                }
             </div>
-       
+        </div>
 
-
-        <div id="statstic-section" class="dtr-section dtr-pt-100">
+        <div id="statstic-section" class="dtr-section dtr-pt-100 fade-in-up animate-delay-1" style="border-top-width: 0px; margin-top: 1px; bottom: 90px;">
             <div class="container">
-                @* <div class="text-center mb-5">
-                    <p class="dtr-tagline color-red">Overview</p>
-                    <h2 class="dtr-section-heading">Bank Activity Summary</h2>
-                </div> *@
-
                 <div class="row dtr-mt-80 gx-4 gy-4 m-lg-1">
-                    @foreach (var item in Model)
+                    @for (int i = 0; i < Model.Count; i++)
                     {
-                        <div class="col-12 col-sm-6 col-xl-3">
-                                <a href="@Url.Action("TopCustomers", "Home", new { country = item.Country })" class="text-decoration-none text-dark">
-                            <div class="dtr-pricing glass-effect d-flex flex-column justify-content-start h-100 text-center">
-
-                                <!-- Full-width flag banner -->
-                                <div class="flag-banner">
-                                    <img src="@GetFlagImagePath(item.Country)" alt="@item.Country Flag" class="flag-img" />
+                        var item = Model[i];
+                        <div class="col-12 col-sm-6 col-xl-3 fade-in-up animate-delay-@((i % 4) + 1)">
+                            <a href="@Url.Action("TopCustomers", "Home", new { country = item.Country })" class="text-decoration-none text-dark">
+                                <div class="dtr-pricing glass-effect d-flex flex-column justify-content-start h-100 text-center pulse-hover">
+                                    <div class="flag-banner">
+                                        <img src="@GetFlagImagePath(item.Country)" alt="@item.Country Flag" class="flag-img" />
+                                    </div>
+                                    <div class="card-body px-4 py-4">
+                                        <p class="fs-sm text-uppercase text-muted mb-1">Customers</p>
+                                        <h4 class="display-6 fw-bold text-body-secondary mb-4">@item.Customers</h4>
+                                        <p class="fs-sm text-uppercase text-muted mb-1">Accounts</p>
+                                        <h4 class="display-6 fw-bold text-body-secondary mb-4">@item.Accounts</h4>
+                                        <p class="fs-sm text-uppercase text-muted mb-1">Total Saldo</p>
+                                        <h4 class="display-6 fw-bold text-body-secondary">@item.TotalSaldo.ToString("C")</h4>
+                                    </div>
                                 </div>
-
-                                <!-- Statistics -->
-                                <div class="card-body px-4 py-4">
-                                    <p class="fs-sm text-uppercase text-muted mb-1">Customers</p>
-                                    <h4 class="display-6 fw-bold text-body-secondary mb-4">@item.Customers</h4>
-
-                                    <p class="fs-sm text-uppercase text-muted mb-1">Accounts</p>
-                                    <h4 class="display-6 fw-bold text-body-secondary mb-4">@item.Accounts</h4>
-
-                                    <p class="fs-sm text-uppercase text-muted mb-1">Total Saldo</p>
-                                    <h4 class="display-6 fw-bold text-body-secondary">@item.TotalSaldo.ToString("C")</h4>
-                                </div>
-                            </div>
                             </a>
                         </div>
-
                     }
                 </div>
             </div>
@@ -90,510 +72,439 @@
 
         <!-- Divider -->
         <hr class="my-8" />
-
-        <!-- Stats -->
-        <div class="row mb-8">
-            <div class="col-12 col-md-6 col-xxl-3 mb-4 mb-xxl-0">
-                <div class="card bg-body-tertiary border-transparent">
-                    <div class="card-body">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <!-- Heading -->
-                                <h4 class="fs-sm fw-normal text-body-secondary mb-1">Earned</h4>
-
-                                <!-- Text -->
-                                <div class="fs-4 fw-semibold">$1,250</div>
+       
+            <div class="row mb-8">
+                <!-- Total Balance -->
+                <div class="col-12 col-md-6 col-xxl-3 mb-4 mb-xxl-0">
+                    <div class="card bg-body-tertiary border-transparent shadow-sm">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h4 class="fs-sm fw-normal text-body-secondary mb-1">Highest Deposit </h4>
+                                    <div class="fs-4 fw-semibold text-success">kr 245000</div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="avatar avatar-lg bg-body text-success">
+                                        <i class="fs-4 bi bi-bank"></i>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-auto">
-                                <!-- Avatar -->
-                                <div class="avatar avatar-lg bg-body text-primary">
-                                    <i class="fs-4" data-duoicon="credit-card"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Active Customers -->
+                <div class="col-12 col-md-6 col-xxl-3 mb-4 mb-xxl-0">
+                    <div class="card bg-body-tertiary border-transparent shadow-sm">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h4 class="fs-sm fw-normal text-body-secondary mb-1">Active Customers</h4>
+                                    <div class="fs-4 fw-semibold text-primary">7,210</div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="avatar avatar-lg bg-body text-primary">
+                                        <i class="fs-4 bi bi-people"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Loans Issued -->
+                <div class="col-12 col-md-6 col-xxl-3 mb-4 mb-md-0">
+                    <div class="card bg-body-tertiary border-transparent shadow-sm">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h4 class="fs-sm fw-normal text-body-secondary mb-1">Loans Issued </h4>
+                                    <div class="fs-4 fw-semibold text-warning">682</div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="avatar avatar-lg bg-body text-warning">
+                                        <i class="fs-4 bi bi-cash-coin"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Suspicious Transactions -->
+                <div class="col-12 col-md-6 col-xxl-3">
+                    <div class="card bg-body-tertiary border-transparent shadow-sm">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h4 class="fs-sm fw-normal text-body-secondary mb-1">Suspicious Flags Today</h4>
+                                    <div class="fs-4 fw-semibold text-danger">56</div>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="avatar avatar-lg bg-body text-danger">
+                                        <i class="fs-4 bi bi-shield-exclamation"></i>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-6 col-xxl-3 mb-4 mb-xxl-0">
-                <div class="card bg-body-tertiary border-transparent">
-                    <div class="card-body">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <!-- Heading -->
-                                <h4 class="fs-sm fw-normal text-body-secondary mb-1">Hours logged</h4>
 
-                                <!-- Text -->
-                                <div class="fs-4 fw-semibold">35.5 hrs</div>
-                            </div>
-                            <div class="col-auto">
-                                <!-- Avatar -->
-                                <div class="avatar avatar-lg bg-body text-primary">
-                                    <i class="fs-4" data-duoicon="clock"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-xxl-3 mb-4 mb-md-0">
-                <div class="card bg-body-tertiary border-transparent">
-                    <div class="card-body">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <!-- Heading -->
-                                <h4 class="fs-sm fw-normal text-body-secondary mb-1">Avg. time</h4>
-
-                                <!-- Text -->
-                                <div class="fs-4 fw-semibold">2:55 hrs</div>
-                            </div>
-                            <div class="col-auto">
-                                <!-- Avatar -->
-                                <div class="avatar avatar-lg bg-body text-primary">
-                                    <i class="fs-4" data-duoicon="slideshow"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 col-xxl-3">
-                <div class="card bg-body-tertiary border-transparent">
-                    <div class="card-body">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <!-- Heading -->
-                                <h4 class="fs-sm fw-normal text-body-secondary mb-1">Weekly growth</h4>
-
-                                <!-- Text -->
-                                <div class="fs-4 fw-semibold">14.5%</div>
-                            </div>
-                            <div class="col-auto">
-                                <!-- Avatar -->
-                                <div class="avatar avatar-lg bg-body text-primary">
-                                    <i class="fs-4" data-duoicon="discount"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <div class="row">
             <div class="col-12 col-xxl-8">
-                <!-- Performance -->
-                <div class="card mb-6">
-                    <div class="card-header">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <h3 class="fs-6 mb-0">Performance</h3>
-                            </div>
-                            <div class="col-auto fs-sm me-n3">
-                                <span class="material-symbols-outlined text-primary me-1">circle</span>
-                                Total
-                            </div>
-                            <div class="col-auto fs-sm">
-                                <span class="material-symbols-outlined text-dark me-1">circle</span>
-                                Tracked
+                    <div class="card mb-6 shadow-sm">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h3 class="fs-6 mb-0 text-primary">Performance Metrics</h3>
+                            <div class="d-flex gap-3 fs-sm">
+                                <span class="d-flex align-items-center text-primary">
+                                    <i class="bi bi-circle-fill me-1"></i> Total
+                                </span>
+                                <span class="d-flex align-items-center text-dark">
+                                    <i class="bi bi-circle-fill me-1"></i> Tracked
+                                </span>
                             </div>
                         </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="chart">
-                            <canvas class="chart-canvas" id="userPerformanceChart"></canvas>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- Projects -->
-                <div class="card mb-6 mb-xxl-0">
-                    <div class="card-header">
-                        <div class="row align-items-center">
-                            <div class="col">
-                                <h3 class="fs-6 mb-0">Active projects</h3>
-                            </div>
-                            <div class="col-auto my-n3 me-n3">
-                                <a class="btn btn-sm btn-link" href="#!">
-                                    Browse all
-                                    <span class="material-symbols-outlined">arrow_right_alt</span>
-                                </a>
+                        <div class="card-body">
+                            <p class="text-muted small mb-4">
+                                This chart reflects core metrics such as transactions processed, loans approved, suspicious activities flagged, and system uptime. It helps track progress across customer operations.
+                            </p>
+
+                            <div class="chart">
+                                <canvas class="chart-canvas" id="userPerformanceChart"></canvas>
                             </div>
                         </div>
                     </div>
-                    <div class="table-responsive">
-                        <table class="table table-flush align-middle mb-0">
-                            <thead>
-                            <th class="fs-sm">Title</th>
-                            <th class="fs-sm">Status</th>
-                            <th class="fs-sm">Author</th>
-                            <th class="fs-sm">Team</th>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="avatar">
-                                                <img class="avatar-img" src="./img/projects/project-1.png" alt="..." />
+
+
+                    <div class="card mb-6 mb-xxl-0 shadow-sm">
+                        <div class="card-header">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <h3 class="fs-6 mb-0 text-primary">Bank Operations in Progress</h3>
+                                </div>
+                                <div class="col-auto my-n3 me-n3">
+                                    <a class="btn btn-sm btn-link" href="/Admin/Projects">
+                                        View All
+                                        <i class="bi bi-arrow-right-circle ms-1"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-flush align-middle mb-0">
+                                <thead>
+                                    <tr>
+                                        <th class="fs-sm">Project</th>
+                                        <th class="fs-sm">Status</th>
+                                        <th class="fs-sm">Owner</th>
+                                        <th class="fs-sm">Team</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="avatar text-info bg-light rounded-circle d-flex align-items-center justify-content-center">
+                                                    <i class="bi bi-credit-card-2-front fs-5"></i>
+                                                </div>
+                                                <div class="ms-3">
+                                                    <div>Launch Card Redesign</div>
+                                                    <div class="fs-sm text-body-secondary">Updated May 12, 2025</div>
+                                                </div>
                                             </div>
-                                            <div class="ms-4">
-                                                <div>Filters AI</div>
-                                                <div class="fs-sm text-body-secondary">Updated on Apr 10, 2024</div>
+                                        </td>
+                                        <td><span class="badge bg-success-subtle text-success">Ready to Deploy</span></td>
+                                        <td>
+                                            <div class="d-flex align-items-center text-nowrap">
+                                                <div class="avatar avatar-xs me-2"><img class="avatar-img" src="/img/admin.jpg" alt="..." /></div>
+                                                Ahmad Khalil
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span class="badge bg-success-subtle text-success">Ready to Ship</span>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex align-items-center text-nowrap">
-                                            <div class="avatar avatar-xs me-2">
-                                                <img class="avatar-img" src="./img/photos/photo-2.jpg" alt="..." />
+                                        </td>
+                                        <td>
+                                            <div class="avatar-group">
+                                                <div class="avatar avatar-xs"><img class="avatar-img" src="/img/photos/photo-3.jpg" alt="..." /></div>
+                                                <div class="avatar avatar-xs"><img class="avatar-img" src="/img/photos/photo-4.jpg" alt="..." /></div>
                                             </div>
-                                            Michael Johnson
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="avatar-group">
-                                            <div class="avatar avatar-xs">
-                                                <img class="avatar-img" src="./img/photos/photo-2.jpg" alt="..." />
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="avatar text-danger bg-light rounded-circle d-flex align-items-center justify-content-center">
+                                                    <i class="bi bi-shield-exclamation fs-5"></i>
+                                                </div>
+                                                <div class="ms-3">
+                                                    <div>Fraud Detection Algorithm</div>
+                                                    <div class="fs-sm text-body-secondary">Ongoing since Apr 30, 2025</div>
+                                                </div>
                                             </div>
-                                            <div class="avatar avatar-xs">
-                                                <img class="avatar-img" src="./img/photos/photo-3.jpg" alt="..." />
+                                        </td>
+                                        <td><span class="badge bg-warning-subtle text-warning">In Progress</span></td>
+                                        <td>
+                                            <div class="d-flex align-items-center text-nowrap">
+                                                <div class="avatar avatar-xs me-2"><img class="avatar-img" src="/img/photos/photo-2.jpg" alt="..." /></div>
+                                                Jessica Miller
                                             </div>
-                                            <div class="avatar avatar-xs">
-                                                <img class="avatar-img" src="./img/photos/photo-4.jpg" alt="..." />
+                                        </td>
+                                        <td>
+                                            <div class="avatar-group">
+                                                <div class="avatar avatar-xs"><img class="avatar-img" src="/img/photos/photo-4.jpg" alt="..." /></div>
+                                                <div class="avatar avatar-xs"><img class="avatar-img" src="/img/photos/photo-6.jpg" alt="..." /></div>
                                             </div>
-                                            <div class="avatar avatar-xs">
-                                                <img class="avatar-img" src="./img/photos/photo-5.jpg" alt="..." />
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="avatar text-primary bg-light rounded-circle d-flex align-items-center justify-content-center">
+                                                    <i class="bi bi-person-check fs-5"></i>
+                                                </div>
+                                                <div class="ms-3">
+                                                    <div>Customer Onboarding UX</div>
+                                                    <div class="fs-sm text-body-secondary">Started May 01, 2025</div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="avatar">
-                                                <img class="avatar-img" src="./img/projects/project-2.png" alt="..." />
+                                        </td>
+                                        <td><span class="badge bg-secondary-subtle text-secondary">In Testing</span></td>
+                                        <td>
+                                            <div class="d-flex align-items-center text-nowrap">
+                                                <div class="avatar avatar-xs me-2"><img class="avatar-img" src="/img/photos/photo-1.jpg" alt="..." /></div>
+                                                Michael Johnson
                                             </div>
-                                            <div class="ms-4">
-                                                <div>Design landing page</div>
-                                                <div class="fs-sm text-body-secondary">Created on Mar 05, 2024</div>
+                                        </td>
+                                        <td>
+                                            <div class="avatar-group">
+                                                <div class="avatar avatar-xs"><img class="avatar-img" src="/img/photos/photo-3.jpg" alt="..." /></div>
+                                                <div class="avatar avatar-xs"><img class="avatar-img" src="/img/photos/photo-5.jpg" alt="..." /></div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span class="badge bg-danger-subtle text-danger">Cancelled</span>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex align-items-center text-nowrap">
-                                            <div class="avatar avatar-xs me-2">
-                                                <img class="avatar-img" src="./img/photos/photo-1.jpg" alt="..." />
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="avatar text-success bg-light rounded-circle d-flex align-items-center justify-content-center">
+                                                    <i class="bi bi-graph-up fs-5"></i>
+                                                </div>
+                                                <div class="ms-3">
+                                                    <div>Analytics Dashboard Upgrade</div>
+                                                    <div class="fs-sm text-body-secondary">Updated May 10, 2025</div>
+                                                </div>
                                             </div>
-                                            Emily Thompson
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="avatar-group">
-                                            <div class="avatar avatar-xs">
-                                                <img class="avatar-img" src="./img/photos/photo-4.jpg" alt="..." />
+                                        </td>
+                                        <td><span class="badge bg-success-subtle text-success">Shipped</span></td>
+                                        <td>
+                                            <div class="d-flex align-items-center text-nowrap">
+                                                <div class="avatar avatar-xs me-2"><img class="avatar-img" src="/img/photos/photo-5.jpg" alt="..." /></div>
+                                                Emily Thompson
                                             </div>
-                                            <div class="avatar avatar-xs">
-                                                <img class="avatar-img" src="./img/photos/photo-5.jpg" alt="..." />
+                                        </td>
+                                        <td>
+                                            <div class="avatar-group">
+                                                <div class="avatar avatar-xs"><img class="avatar-img" src="/img/photos/photo-1.jpg" alt="..." /></div>
+                                                <div class="avatar avatar-xs"><img class="avatar-img" src="/img/photos/photo-3.jpg" alt="..." /></div>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="avatar text-primary">
-                                                <i class="fs-4" data-duoicon="book-3"></i>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="avatar text-dark bg-light rounded-circle d-flex align-items-center justify-content-center">
+                                                    <i class="bi bi-file-earmark-lock2 fs-5"></i>
+                                                </div>
+                                                <div class="ms-3">
+                                                    <div>GDPR Compliance Finalization</div>
+                                                    <div class="fs-sm text-body-secondary">Deadline: May 25, 2025</div>
+                                                </div>
                                             </div>
-                                            <div class="ms-4">
-                                                <div>Update documentation</div>
-                                                <div class="fs-sm text-body-secondary">Created on Jan 22, 2024</div>
+                                        </td>
+                                        <td><span class="badge bg-danger-subtle text-danger">Urgent</span></td>
+                                        <td>
+                                            <div class="d-flex align-items-center text-nowrap">
+                                                <div class="avatar avatar-xs me-2"><img class="avatar-img" src="/img/photos/photo-4.jpg" alt="..." /></div>
+                                                Olivia Davis
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span class="badge bg-secondary-subtle text-secondary">In Testing</span>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex align-items-center text-nowrap">
-                                            <div class="avatar avatar-xs me-2">
-                                                <img class="avatar-img" src="./img/photos/photo-2.jpg" alt="..." />
+                                        </td>
+                                        <td>
+                                            <div class="avatar-group">
+                                                <div class="avatar avatar-xs"><img class="avatar-img" src="/img/photos/photo-3.jpg" alt="..." /></div>
+                                                <div class="avatar avatar-xs"><img class="avatar-img" src="/img/photos/photo-6.jpg" alt="..." /></div>
+                                                <div class="avatar avatar-xs"><img class="avatar-img" src="/img/photos/photo-2.jpg" alt="..." /></div>
                                             </div>
-                                            Michael Johnson
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="avatar-group">
-                                            <div class="avatar avatar-xs">
-                                                <img class="avatar-img" src=".img/photos/photo-1.jpg" alt="..." />
-                                            </div>
-                                            <div class="avatar avatar-xs">
-                                                <img class="avatar-img" src=".img/photos/photo-3.jpg" alt="..." />
-                                            </div>
-                                            <div class="avatar avatar-xs">
-                                                <img class="avatar-img" src="./img/photos/photo-6.jpg" alt="..." />
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="avatar">
-                                                <img class="avatar-img" src="./img/projects/project-3.png" alt="..." />
-                                            </div>
-                                            <div class="ms-4">
-                                                <div>Update Touche</div>
-                                                <div class="fs-sm text-body-secondary">Updated on Apr 14, 2024</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span class="badge bg-success-subtle text-success">Ready to Ship</span>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex align-items-center text-nowrap">
-                                            <div class="avatar avatar-xs me-2">
-                                                <img class="avatar-img" src="./img/photos/photo-5.jpg" alt="..." />
-                                            </div>
-                                            Jessica Miller
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="avatar-group">
-                                            <div class="avatar avatar-xs">
-                                                <img class="avatar-img" src=".img/photos/photo-3.jpg" alt="..." />
-                                            </div>
-                                            <div class="avatar avatar-xs">
-                                                <img class="avatar-img" src="./img/photos/photo-4.jpg" alt="..." />
-                                            </div>
-                                            <div class="avatar avatar-xs">
-                                                <img class="avatar-img" src="./img/photos/photo-5.jpg" alt="..." />
-                                            </div>
-                                            <div class="avatar avatar-xs">
-                                                <img class="avatar-img" src="./img/photos/photo-6.jpg" alt="..." />
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <div class="avatar text-primary">
-                                                <i class="fs-4" data-duoicon="box"></i>
-                                            </div>
-                                            <div class="ms-4">
-                                                <div>Add Transactions</div>
-                                                <div class="fs-sm text-body-secondary">Created on Apr 25, 2024</div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span class="badge bg-light text-body-secondary">Backlog</span>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex align-items-center text-nowrap">
-                                            <div class="avatar avatar-xs me-2">
-                                                <img class="avatar-img" src="./img/photos/photo-4.jpg" alt="..." />
-                                            </div>
-                                            Olivia Davis
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="avatar-group">
-                                            <div class="avatar avatar-xs">
-                                                <img class="avatar-img" src="./img/photos/photo-3.jpg" alt="..." />
-                                            </div>
-                                            <div class="avatar avatar-xs">
-                                                <img class="avatar-img" src="./img/photos/photo-6.jpg" alt="..." />
-                                            </div>
-                                            <div class="avatar avatar-xs">
-                                                <img class="avatar-img" src="./img/photos/photo-1.jpg" alt="..." />
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>
+
             </div>
             <div class="col-12 col-xxl-4">
-                <!-- Goals -->
-                <div class="card mb-6">
-                    <div class="card-header">
-                        <h3 class="fs-6 mb-0">Goals</h3>
-                    </div>
-                    <div class="card-body py-3">
-                        <div class="list-group list-group-flush">
-                            <div class="list-group-item px-0">
-                                <div class="row align-items-center">
-                                    <div class="col-auto">
-                                        <div class="avatar">
-                                            <div class="progress progress-circle text-primary"
-                                                 role="progressbar"
-                                                 aria-label="Increase monthly revenue"
-                                                 aria-valuenow="75"
-                                                 aria-valuemin="0"
-                                                 aria-valuemax="100"
-                                                 data-bs-toggle="tooltip"
-                                                 data-bs-title="75%"
-                                                 style="--bs-progress-circle-value: 75"></div>
+                    <div class="card mb-6 shadow-sm">
+                        <div class="card-header">
+                            <h3 class="fs-6 mb-0 text-primary">Operational Goals</h3>
+                        </div>
+                        <div class="card-body py-3">
+                            <div class="list-group list-group-flush">
+
+                                <div class="list-group-item px-0">
+                                    <div class="row align-items-center">
+                                        <div class="col-auto">
+                                            <div class="avatar">
+                                                <div class="progress progress-circle text-success"
+                                                     role="progressbar"
+                                                     aria-valuenow="80"
+                                                     aria-valuemin="0"
+                                                     aria-valuemax="100"
+                                                     data-bs-toggle="tooltip"
+                                                     data-bs-title="80%"
+                                                     style="--bs-progress-circle-value: 80;"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col ms-n2">
+                                            <h6 class="fs-base fw-normal mb-0">Detect suspicious transactions</h6>
+                                            <span class="fs-sm text-body-secondary">120 flagged this month</span>
+                                        </div>
+                                        <div class="col-auto">
+                                            <time class="text-body-secondary">May 10</time>
                                         </div>
                                     </div>
-                                    <div class="col ms-n2">
-                                        <h6 class="fs-base fw-normal mb-0">Increase monthly revenue</h6>
-                                        <span class="fs-sm text-body-secondary">$10,000</span>
-                                    </div>
-                                    <div class="col-auto">
-                                        <time class="text-body-secondary" datetime="03/15/2024">Mar 15</time>
-                                    </div>
                                 </div>
-                            </div>
-                            <div class="list-group-item px-0">
-                                <div class="row align-items-center">
-                                    <div class="col-auto">
-                                        <div class="avatar">
-                                            <div class="progress progress-circle text-secondary"
-                                                 role="progressbar"
-                                                 aria-label="Launch new feature"
-                                                 aria-valuenow="50"
-                                                 aria-valuemin="0"
-                                                 aria-valuemax="100"
-                                                 data-bs-toggle="tooltip"
-                                                 data-bs-title="50%"
-                                                 style="--bs-progress-circle-value: 50"></div>
+
+                                <div class="list-group-item px-0">
+                                    <div class="row align-items-center">
+                                        <div class="col-auto">
+                                            <div class="avatar">
+                                                <div class="progress progress-circle text-warning"
+                                                     role="progressbar"
+                                                     aria-valuenow="60"
+                                                     aria-valuemin="0"
+                                                     aria-valuemax="100"
+                                                     data-bs-toggle="tooltip"
+                                                     data-bs-title="60%"
+                                                     style="--bs-progress-circle-value: 60;"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col ms-n2">
+                                            <h6 class="fs-base fw-normal mb-0">Approve pending loan applications</h6>
+                                            <span class="fs-sm text-body-secondary">18 out of 30 processed</span>
+                                        </div>
+                                        <div class="col-auto">
+                                            <time class="text-body-secondary">May 12</time>
                                         </div>
                                     </div>
-                                    <div class="col ms-n2">
-                                        <h6 class="fs-base fw-normal mb-0">Launch new feature</h6>
-                                        <span class="fs-sm text-body-secondary">Dark mode</span>
-                                    </div>
-                                    <div class="col-auto">
-                                        <time class="text-body-secondary" datetime="10/01/2024">Oct 01</time>
-                                    </div>
                                 </div>
-                            </div>
-                            <div class="list-group-item px-0">
-                                <div class="row align-items-center">
-                                    <div class="col-auto">
-                                        <div class="avatar">
-                                            <div class="progress progress-circle text-danger"
-                                                 role="progressbar"
-                                                 aria-label="Grow user base"
-                                                 aria-valuenow="45"
-                                                 aria-valuemin="0"
-                                                 aria-valuemax="100"
-                                                 data-bs-toggle="tooltip"
-                                                 data-bs-title="45%"
-                                                 style="--bs-progress-circle-value: 45"></div>
+
+                                <div class="list-group-item px-0">
+                                    <div class="row align-items-center">
+                                        <div class="col-auto">
+                                            <div class="avatar">
+                                                <div class="progress progress-circle text-danger"
+                                                     role="progressbar"
+                                                     aria-valuenow="40"
+                                                     aria-valuemin="0"
+                                                     aria-valuemax="100"
+                                                     data-bs-toggle="tooltip"
+                                                     data-bs-title="40%"
+                                                     style="--bs-progress-circle-value: 40;"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col ms-n2">
+                                            <h6 class="fs-base fw-normal mb-0">Complete customer profile audits</h6>
+                                            <span class="fs-sm text-body-secondary">60 of 150 checked</span>
+                                        </div>
+                                        <div class="col-auto">
+                                            <time class="text-body-secondary">May 20</time>
                                         </div>
                                     </div>
-                                    <div class="col ms-n2">
-                                        <h6 class="fs-base fw-normal mb-0">Grow user base</h6>
-                                        <span class="fs-sm text-body-secondary">75%</span>
-                                    </div>
-                                    <div class="col-auto">
-                                        <time class="text-body-secondary" datetime="12/12/2024">Dec 12</time>
-                                    </div>
                                 </div>
-                            </div>
-                            <div class="list-group-item px-0">
-                                <div class="row align-items-center">
-                                    <div class="col-auto">
-                                        <div class="avatar">
-                                            <div class="progress progress-circle text-primary"
-                                                 role="progressbar"
-                                                 aria-label="Improve customer satisfaction"
-                                                 aria-valuenow="60"
-                                                 aria-valuemin="0"
-                                                 aria-valuemax="100"
-                                                 data-bs-toggle="tooltip"
-                                                 data-bs-title="60%"
-                                                 style="--bs-progress-circle-value: 60"></div>
+
+                                <div class="list-group-item px-0">
+                                    <div class="row align-items-center">
+                                        <div class="col-auto">
+                                            <div class="avatar">
+                                                <div class="progress progress-circle text-primary"
+                                                     role="progressbar"
+                                                     aria-valuenow="90"
+                                                     aria-valuemin="0"
+                                                     aria-valuemax="100"
+                                                     data-bs-toggle="tooltip"
+                                                     data-bs-title="90%"
+                                                     style="--bs-progress-circle-value: 90;"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col ms-n2">
+                                            <h6 class="fs-base fw-normal mb-0">Maintain uptime of banking services</h6>
+                                            <span class="fs-sm text-body-secondary">99.9% uptime this month</span>
+                                        </div>
+                                        <div class="col-auto">
+                                            <time class="text-body-secondary">May 14</time>
                                         </div>
                                     </div>
-                                    <div class="col ms-n2">
-                                        <h6 class="fs-base fw-normal mb-0">Improve customer satisfaction</h6>
-                                        <span class="fs-sm text-body-secondary">85%</span>
-                                    </div>
-                                    <div class="col-auto">
-                                        <time class="text-body-secondary" datetime="12/15/2024">Dec 15</time>
-                                    </div>
                                 </div>
-                            </div>
-                            <div class="list-group-item px-0">
-                                <div class="row align-items-center">
-                                    <div class="col-auto">
-                                        <div class="avatar">
-                                            <div class="progress progress-circle text-success"
-                                                 role="progressbar"
-                                                 aria-label="Reduce response time"
-                                                 aria-valuenow="100"
-                                                 aria-valuemin="0"
-                                                 aria-valuemax="100"
-                                                 data-bs-toggle="tooltip"
-                                                 data-bs-title="100%"
-                                                 style="--bs-progress-circle-value: 100"></div>
+
+                                <div class="list-group-item px-0">
+                                    <div class="row align-items-center">
+                                        <div class="col-auto">
+                                            <div class="avatar">
+                                                <div class="progress progress-circle text-info"
+                                                     role="progressbar"
+                                                     aria-valuenow="100"
+                                                     aria-valuemin="0"
+                                                     aria-valuemax="100"
+                                                     data-bs-toggle="tooltip"
+                                                     data-bs-title="100%"
+                                                     style="--bs-progress-circle-value: 100;"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col ms-n2">
+                                            <h6 class="fs-base fw-normal mb-0">Onboard new customer support agents</h6>
+                                            <span class="fs-sm text-body-secondary">All 5 trained</span>
+                                        </div>
+                                        <div class="col-auto">
+                                            <time class="text-body-secondary">May 01</time>
                                         </div>
                                     </div>
-                                    <div class="col ms-n2">
-                                        <h6 class="fs-base fw-normal mb-0">Reduce response time</h6>
-                                        <span class="fs-sm text-body-secondary">1hr</span>
-                                    </div>
-                                    <div class="col-auto">
-                                        <time class="text-body-secondary" datetime="01/01/2025">Jan 01</time>
-                                    </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
-                </div>
 
                 <!-- Activity -->
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="fs-6 mb-0">Recent activity</h3>
+                    <div class="card">
+                        <div class="card-header bg-blur text-white d-flex justify-content-between align-items-center">
+                            <h5 class="fs-6 mb-0">🚀 New from Axion Bank</h5>
+                            <span class="badge bg-light text-body">Announcement</span>
+                        </div>
+                        <div class="card-body text-center">
+
+                            <div class="real-card">
+                                <div class="bank-name">Axion Bank</div>
+                                <div class="chip"></div>
+                                <div class="card-number">**** ****  **** **** </div>
+                                <div class="exp">VALID THRU: @($"{07:D2}/{2030}")</div>
+                                <div class="exp">ISSUED: 12/10/2017</div>
+                               
+                            </div>
+                           
+                            <p class="text-muted mb-3 mt-5">
+                                Axion Bank’s new card is now available for issue. The updated design offers better security and a modern look for customers. You can now assign this card to eligible accounts.
+                            </p>
+                            <a href="/Customer/Details/9" class="btn btn-outline-primary rounded-pill px-4">
+                                View Your Cards
+                            </a>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <ul class="activity">
-                            <li data-icon="thumb_up">
-                                <div>
-                                    <h6 class="fs-base mb-1">You <span class="fs-sm fw-normal text-body-secondary ms-1">1hr ago</span></h6>
-                                    @*  <p class="mb-0">Liked a post by @john_doe</p> *@
-                                </div>
-                            </li>
-                            <li data-icon="chat_bubble">
-                                <div>
-                                    <h6 class="fs-base mb-1">Jessica Miller <span class="fs-sm fw-normal text-body-secondary ms-1">3hr ago</span></h6>
-                                    <p class="mb-0">Commented on a photo</p>
-                                </div>
-                            </li>
-                            <li data-icon="share">
-                                <div>
-                                    <h6 class="fs-base mb-1">Emily Thompson <span class="fs-sm fw-normal text-body-secondary ms-1">3hr ago</span></h6>
-                                    <p class="mb-0">Shared an article: "Top 10 Travel Destinations"</p>
-                                </div>
-                            </li>
-                            <li data-icon="person_add">
-                                <div>
-                                    <h6 class="fs-base mb-1">You <span class="fs-sm fw-normal text-body-secondary ms-1">1 day ago</span></h6>
-                                    @*  <p class="mb-0">Started following @jane_smith</p> *@
-                                </div>
-                            </li>
-                            <li data-icon="account_circle">
-                                <div>
-                                    <h6 class="fs-base mb-1">Olivia Davis <span class="fs-sm fw-normal text-body-secondary ms-1">2 days ago</span></h6>
-                                    <p class="mb-0">Updated profile picture</p>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+
             </div>
         </div>
     </div>

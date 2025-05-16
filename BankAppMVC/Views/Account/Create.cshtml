@@ -26,8 +26,11 @@
         <span asp-validation-for="Frequency" class="text-danger"></span>
     </div>
 
-    <button type="submit" class="btn btn-primary">Create</button>
-    <a asp-action="Details" asp-controller="Customer" asp-route-id="@Model.CustomerId" class="btn btn-secondary">Back to Customer</a>
+    <div class="mt-5">
+        <button type="submit" class="btn btn-primary">Create</button>
+        <a asp-action="Details" asp-controller="Customer" asp-route-id="@Model.CustomerId" class="btn btn-secondary">Back to Customer</a>
+    </div>
+
 </form>
 @Html.ValidationSummary()
 
