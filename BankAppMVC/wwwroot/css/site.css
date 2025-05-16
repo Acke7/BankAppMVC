@@ -111,7 +111,7 @@ body {
     color: white; /* Optional */
 }
 .bg-app-wrapper {
-    background-image: url('/img/backgrounds/14  .jpg') !important;  
+    background-image: url('/img/backgrounds/14.jpg') !important;  
     background-size: cover; 
     background-position: center;
     background-repeat: repeat;
