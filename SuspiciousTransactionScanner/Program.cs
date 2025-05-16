@@ -11,38 +11,46 @@ class Program
     {
         var services = new ServiceCollection();
 
-        // 1. Configure logging (optional)
+        // Logging
         services.AddLogging(builder =>
         {
             builder.AddConsole();
             builder.SetMinimumLevel(LogLevel.Information);
-        }); 
+        });
 
-        // 2. Add DbContext with correct connection string + split query
+        // DbContext
         services.AddDbContext<BankAppDataContext>(options =>
             options.UseSqlServer("Server=.;Database=BankAppData;Trusted_Connection=True;MultipleActiveResultSets=true;")
-
         );
 
-        // 3. Register your service
+        // Service registration
         services.AddScoped<ISuspiciousTransactionService, SuspiciousTransactionService>();
-
-        // 4. Build the service provider
         var serviceProvider = services.BuildServiceProvider();
 
-        // 5. Run the detection
+        // Choose one country
+        var countries = new[] { "Sweden", "Finland", "Norway", "Denmark" };
+        string selectedCountry = ShowSingleCountryMenu(countries);
+
+        // Detect suspicious transactions
         var suspiciousService = serviceProvider.GetRequiredService<ISuspiciousTransactionService>();
         var suspiciousList = await suspiciousService.DetectSuspiciousTransactionsAsync();
 
-        Console.WriteLine($"Found {suspiciousList.Count} suspicious transactions.");
+        // Filter by selected country
+        suspiciousList = suspiciousList
+            .Where(s => s.Country.Equals(selectedCountry, StringComparison.OrdinalIgnoreCase))
+            .ToList();
 
-        // 6. Build reports folder (under project root)
+        Console.WriteLine($"Found {suspiciousList.Count} suspicious transactions in {selectedCountry}.");
+
+        // Folder setup: country + timestamp
         var now = DateTime.Now;
         string baseFolder = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "Reports");
-        string reportFolder = Path.Combine(baseFolder, now.ToString("yyyy-MM-dd_HHmmss"));
+        string timestamp = now.ToString("yyyy-MM-dd_HHmm");
+        string folderName = $"{selectedCountry}_{timestamp}";
+        string reportFolder = Path.Combine(baseFolder, folderName);
         Directory.CreateDirectory(reportFolder);
 
-        // 7. Load previously reported TransactionIds
+        // Load reported IDs
         var reportedIds = new HashSet<int>();
         if (Directory.Exists(baseFolder))
         {
@@ -66,31 +74,57 @@ class Program
             }
         }
 
-        // 8. Generate reports
-        var groupedByCountry = suspiciousList.GroupBy(s => s.Country);
-        foreach (var group in groupedByCountry)
-        {
-            var country = group.Key;
-            var newOnes = group.Where(t => !reportedIds.Contains(t.TransactionId)).ToList();
-            var reportFile = Path.Combine(reportFolder, $"SuspiciousReport_{country}.txt");
+        // Generate single report
+        var newOnes = suspiciousList.Where(t => !reportedIds.Contains(t.TransactionId)).ToList();
+        var reportFile = Path.Combine(reportFolder, $"SuspiciousReport_{selectedCountry}.txt");
 
-            if (newOnes.Any())
-            {
-                var lines = newOnes.Select(s =>
-                   $"CustomerName: {s.FullName}, accountId: {s.AccountId}, TransactionId: {s.TransactionId}, Amount {s.Amount},  Country: {s.Country}, DetectedAt: {s.DetectedAt}"
-);
-                File.WriteAllLines(reportFile, lines);
-            }
-            else
-            {
-                File.WriteAllText(reportFile, $"{country} has no new suspicious transactions since last check.");
-            }
+        if (newOnes.Any())
+        {
+            var lines = newOnes.Select(s =>
+               $"CustomerName: {s.FullName}, accountId: {s.AccountId}, TransactionId: {s.TransactionId},TransactionDate:  {s.Date}, Amount: {s.Amount}, Country: {s.Country}, DetectedAt: {s.DetectedAt}"
+            );
+            File.WriteAllLines(reportFile, lines);
+        }
+        else
+        {
+            File.WriteAllText(reportFile, $"{selectedCountry} has no new suspicious transactions since last check.");
         }
 
-        Console.WriteLine("✅ Detection complete. Reports written to:");
+        Console.WriteLine("✅ Detection complete. Report written to:");
         Console.WriteLine(reportFolder);
 
-        // 9. Open the folder in Explorer
         Process.Start("explorer.exe", Path.GetFullPath(reportFolder));
+    }
+
+    static string ShowSingleCountryMenu(string[] countries)
+    {
+        int index = 0;
+        ConsoleKey key;
+
+        do
+        {
+            Console.Clear();
+            Console.WriteLine("⬇️  Use ↑/↓ to select a country, ENTER to confirm:\n");
+
+            for (int i = 0; i < countries.Length; i++)
+            {
+                var highlight = i == index ? ">> " : "   ";
+                Console.WriteLine($"{highlight}{countries[i]}");
+            }
+
+            key = Console.ReadKey(true).Key;
+
+            switch (key)
+            {
+                case ConsoleKey.UpArrow:
+                    index = (index - 1 + countries.Length) % countries.Length;
+                    break;
+                case ConsoleKey.DownArrow:
+                    index = (index + 1) % countries.Length;
+                    break;
+            }
+        } while (key != ConsoleKey.Enter);
+
+        return countries[index];
     }
 }

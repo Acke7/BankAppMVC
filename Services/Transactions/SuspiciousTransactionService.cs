@@ -60,6 +60,7 @@ public class SuspiciousTransactionService : ISuspiciousTransactionService
                             CustomerId = customer.CustomerId,
                             Country = customer.Country,
                             DetectedAt = now,
+                            Date=tx.Date,
                             AccountId = account.AccountId,
                             FullName = $"{customer.Givenname} {customer.Surname}" // 👈 adjust based on your Customer model
                         });
@@ -85,6 +86,7 @@ public class SuspiciousTransactionService : ISuspiciousTransactionService
                             CustomerId = customer.CustomerId,
                             Country = customer.Country,
                             DetectedAt = now,
+                            Date = tx.Date,
                             AccountId = account.AccountId,
                             FullName = $"{customer.Givenname} {customer.Surname}" // 👈 adjust based on your Customer model
                         });

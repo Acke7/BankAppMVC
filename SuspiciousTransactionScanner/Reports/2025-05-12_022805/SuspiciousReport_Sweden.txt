@@ -1,4 +1,0 @@
-CustomerName: Abellona Kruse, AccountNumber: 47, TransactionId: 1060186, Amount 160000.00,  Country: Sweden, DetectedAt: 5/12/2025 2:28:02 AM
-CustomerName: ahmad aloalbi, AccountNumber: 12274, TransactionId: 1060187, Amount 6000.00,  Country: Sweden, DetectedAt: 5/12/2025 2:28:02 AM
-CustomerName: ahmad aloalbi, AccountNumber: 12274, TransactionId: 1060188, Amount 6000.00,  Country: Sweden, DetectedAt: 5/12/2025 2:28:02 AM
-CustomerName: ahmad aloalbi, AccountNumber: 12274, TransactionId: 1060189, Amount 14000.00,  Country: Sweden, DetectedAt: 5/12/2025 2:28:02 AM

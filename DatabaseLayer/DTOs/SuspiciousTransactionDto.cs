@@ -13,6 +13,7 @@ namespace DatabaseLayer.DTOs
         public string Country { get; set; }
         public DateTime DetectedAt { get; set; }
 
+        public DateOnly Date { get; set; }
         public decimal Amount { get; set; }
         public int AccountId { get; set; }
 

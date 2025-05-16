@@ -20,9 +20,9 @@ namespace BankAppMVC.Models.ViewModels.CustomerVm
         public string? Emailaddress { get; set; }
 
         public List<AccountViewModel> Accounts { get; set; } = new();
+        public List<CardViewModel> LinkedCards { get; set; } = new(); // 👈 New
 
-
-
+        // Derived properties
         public string FullName => $"{Givenname} {Surname}";
         public string FormattedBirthday => Birthday?.ToString("yyyy-MM-dd") ?? "N/A";
         public string Phone => string.IsNullOrWhiteSpace(Telephonecountrycode) || string.IsNullOrWhiteSpace(Telephonenumber)
@@ -34,5 +34,4 @@ namespace BankAppMVC.Models.ViewModels.CustomerVm
         public decimal TotalBalance => Accounts?.Sum(a => a.Balance) ?? 0;
         public string TotalBalanceFormatted => TotalBalance.ToString("C");
     }
-
-    }
+}

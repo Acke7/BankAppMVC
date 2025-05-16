@@ -1,9 +1,7 @@
 ﻿using DatabaseLayer.DTOs.Account;
+
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DatabaseLayer.DTOs.Customer
 {
@@ -25,5 +23,6 @@ namespace DatabaseLayer.DTOs.Customer
         public string? Emailaddress { get; set; }
 
         public List<AccountDTO> Accounts { get; set; } = new();
+        public List<CardDto> LinkedCards { get; set; } = new(); // 👈 NEW
     }
 }

@@ -110,7 +110,6 @@ namespace BankAppMVC.Controllers
                 TempData["Error"] = $"Customer with ID {id.Value} not found.";
                 return View(model: null); // show just the search box
             }
-
             var vm = new CustomerProfileViewModel
             {
                 CustomerId = customer.CustomerId,
@@ -127,15 +126,27 @@ namespace BankAppMVC.Controllers
                 Telephonecountrycode = customer.Telephonecountrycode,
                 Telephonenumber = customer.Telephonenumber,
                 Emailaddress = customer.Emailaddress,
+
                 Accounts = customer.Accounts.Select(a => new AccountViewModel
                 {
-                   
                     AccountId = a.AccountId,
                     Frequency = a.Frequency,
                     Created = a.Created,
                     Balance = a.Balance
+                }).ToList(),
+
+                LinkedCards = customer.LinkedCards.Select(c => new CardViewModel
+                {
+                    CardId = c.CardId,
+                    Type = c.Type,
+                    Issued = c.Issued,
+                    Cctype = c.Cctype,
+                    Ccnumber = c.Ccnumber,
+                    ExpM = c.ExpM,
+                    ExpY = c.ExpY
                 }).ToList()
             };
+
 
             return View(vm); // same Details.cshtml
         }

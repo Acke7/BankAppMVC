@@ -2,13 +2,7 @@
 using DatabaseLayer.DTOs.Account;
 using DatabaseLayer.DTOs.Customer;
 using DatabaseLayer.Models;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Services.Customers
 {
@@ -16,6 +10,7 @@ namespace Services.Customers
     {
         private readonly BankAppDataContext _context;
         private readonly IMapper _mapper;
+
         public CustomerService(BankAppDataContext context, IMapper mapper)
         {
             _context = context;
@@ -36,11 +31,11 @@ namespace Services.Customers
                 .Where(c => c.Country == country)
                 .ToListAsync();
         }
+
         public async Task<List<CustomerListDto>> GetAllCustomersAsync()
         {
-
             return await _context.Customers
-                  .Where(c => c.IsActive)
+                .Where(c => c.IsActive)
                 .Select(c => new CustomerListDto
                 {
                     CustomerId = c.CustomerId,
@@ -48,7 +43,6 @@ namespace Services.Customers
                     City = c.City,
                     StreetAddress = c.Streetaddress,
                     NationalId = c.NationalId
-
                 })
                 .ToListAsync();
         }
@@ -58,6 +52,8 @@ namespace Services.Customers
             var customer = await _context.Customers
                 .Include(c => c.Dispositions)
                     .ThenInclude(d => d.Account)
+                .Include(c => c.Dispositions)
+                    .ThenInclude(d => d.Cards)
                 .FirstOrDefaultAsync(c => c.CustomerId == customerId);
 
             if (customer == null)
@@ -80,57 +76,36 @@ namespace Services.Customers
                 Telephonenumber = customer.Telephonenumber,
                 Emailaddress = customer.Emailaddress,
                 Accounts = customer.Dispositions
-                    .Where(d => d.Account != null && d.Account.IsActive)
+                    .Where(d => d.Account?.IsActive == true)
                     .Select(d => new AccountDTO
                     {
                         AccountId = d.Account.AccountId,
-                       
                         Frequency = d.Account.Frequency,
                         Created = d.Account.Created,
                         Balance = d.Account.Balance
-                    }).ToList()
+                    }).ToList(),
 
+                LinkedCards = customer.Dispositions
+                    .SelectMany(d => d.Cards)
+                    .Select(c => new CardDto
+                    {
+                        CardId = c.CardId,
+                        Type = c.Type,
+                        Issued = c.Issued,
+                        Cctype = c.Cctype,
+                        Ccnumber = c.Ccnumber,
+                        Cvv2 = c.Cvv2,
+                        ExpM = c.ExpM,
+                        ExpY = c.ExpY
+                    }).ToList()
             };
         }
 
         public async Task<CustomerProfileDto?> GetCustomerByNationalIdAsync(int id)
         {
-            var customer = await _context.Customers
-                .Include(c => c.Dispositions)
-                    .ThenInclude(d => d.Account)
-                .FirstOrDefaultAsync(c => c.CustomerId == id);
-
-            if (customer == null)
-                return null;
-
-            return new CustomerProfileDto
-            {
-                CustomerId = customer.CustomerId,
-                Gender = customer.Gender,
-                Givenname = customer.Givenname,
-                Surname = customer.Surname,
-                Streetaddress = customer.Streetaddress,
-                City = customer.City,
-                Zipcode = customer.Zipcode,
-                Country = customer.Country,
-                CountryCode = customer.CountryCode,
-                Birthday = customer.Birthday,
-                NationalId = customer.NationalId,
-                Telephonecountrycode = customer.Telephonecountrycode,
-                Telephonenumber = customer.Telephonenumber,
-                Emailaddress = customer.Emailaddress,
-                Accounts = customer.Dispositions
-                    .Where(d => d.Account != null)
-                    .Select(d => new AccountDTO
-                    {
-                        AccountId = d.Account.AccountId,
-
-                        Frequency = d.Account.Frequency,
-                        Created = d.Account.Created,
-                        Balance = d.Account.Balance
-                    }).ToList()
-            };
+            return await GetCustomerProfileAsync(id);
         }
+
         public async Task<List<CustomerDto>> GetAllActiveAsync()
         {
             var customers = await _context.Customers
@@ -169,11 +144,11 @@ namespace Services.Customers
             await _context.SaveChangesAsync();
             return true;
         }
+
         public async Task<bool> CreateAsync(CustomerDto dto)
         {
             var customer = new Customer
             {
-              
                 Gender = dto.Gender,
                 Givenname = dto.Givenname,
                 Surname = dto.Surname,
@@ -187,7 +162,7 @@ namespace Services.Customers
                 Telephonecountrycode = dto.Telephonecountrycode,
                 Telephonenumber = dto.Telephonenumber,
                 Emailaddress = dto.Emailaddress,
-                IsActive = true 
+                IsActive = true
             };
 
             _context.Customers.Add(customer);

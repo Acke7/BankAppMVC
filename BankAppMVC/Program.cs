@@ -22,7 +22,9 @@ namespace BankAppMVC
         {
             var builder = WebApplication.CreateBuilder(args);
             // Add services to the container.
-            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+      ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
             builder.Services.AddDbContext<BankAppDataContext>(options =>
                 options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -41,10 +43,24 @@ namespace BankAppMVC
             builder.Services.AddResponseCaching(); // ? Add this
             var app = builder.Build();
             // I lOve this one
+            // Behövs för Azure!
             using (var scope = app.Services.CreateScope())
             {
-                scope.ServiceProvider.GetService<DataInitializer>().SeedData();
+                var dbContext = scope.ServiceProvider.
+                     GetRequiredService<BankAppDataContext>();
+                if (dbContext.Database.IsRelational())
+                {
+                    dbContext.Database.Migrate();
+                }
             }
+            //using (var scope = app.Services.CreateScope())
+            //{
+            //    scope.ServiceProvider.GetService<DataInitializer>().SeedData();
+            //}
+
+          
+
+
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
