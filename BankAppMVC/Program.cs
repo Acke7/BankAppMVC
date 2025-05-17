@@ -39,10 +39,10 @@ namespace BankAppMVC
             builder.Services.AddScoped<ITransactionService, TransactionService>();
             builder.Services.AddAutoMapper(typeof(MappingProfile));
             builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddResponseCaching();
 
-            builder.Services.AddResponseCaching(); // ? Add this
             var app = builder.Build();
-            // I lOve this one
+           
             // Behövs för Azure!
             using (var scope = app.Services.CreateScope())
             {
