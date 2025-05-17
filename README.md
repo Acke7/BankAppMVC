@@ -87,6 +87,5 @@ If no suspicious activity is found at the new scann , the file will say:
 ---
 
 ## Visit Our Website
-
-- 🌐 [alolabi.site](https://alolabi.site)  
+ 
 - 🌐 [BankApp on Azure](https://bankappazue-exbzcdavfhb2bdck.swedencentral-01.azurewebsites.net)
