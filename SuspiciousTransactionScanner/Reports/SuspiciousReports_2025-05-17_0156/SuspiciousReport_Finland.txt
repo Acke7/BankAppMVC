@@ -1,1 +1,0 @@
-CustomerName: Aamos Groop, accountId: 181, TransactionId: 1060114, TransactionDate: 5/17/2025, Amount: 199999.00, Country: Finland, DetectedAt: 5/17/2025 1:56:24 AM

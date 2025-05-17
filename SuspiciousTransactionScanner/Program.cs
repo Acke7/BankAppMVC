@@ -12,7 +12,7 @@ class Program
     {
         var services = new ServiceCollection();
 
-        Console.WriteLine("Press any key to start checking it takes 30s");
+        Console.WriteLine("Press any key to start scanning ,It takes 30s ,Check Reports File After Scanning");
         Console.ReadLine();
         // Logging
         services.AddLogging(builder =>
