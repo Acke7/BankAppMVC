@@ -79,9 +79,10 @@ Transaction: 100122
 Reason: Total over 23000 kr in 72h
 ```
 
-If no suspicious activity is found, the file will say:
+If no suspicious activity is found at the new scann , the file will say:
 
 > **No new suspicious transactions found for [Country]**
+ **Only new suspicious activity will be shown evry scanning made **
 
 ---
 
