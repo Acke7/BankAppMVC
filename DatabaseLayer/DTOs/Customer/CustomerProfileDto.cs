@@ -8,6 +8,7 @@ namespace DatabaseLayer.DTOs.Customer
     public class CustomerProfileDto
     {
         public int CustomerId { get; set; }
+        public decimal TotalBalance => Accounts?.Sum(a => a.Balance) ?? 0;
         public string Gender { get; set; } = null!;
         public string Givenname { get; set; } = null!;
         public string Surname { get; set; } = null!;

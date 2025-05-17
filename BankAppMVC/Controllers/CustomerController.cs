@@ -46,19 +46,19 @@ namespace BankAppMVC.Controllers
             }
 
             //Search
-            
-                if (!string.IsNullOrWhiteSpace(search))
-                {
-                    allCustomers = allCustomers
-                        .Where(c =>
-                            (!string.IsNullOrEmpty(c.FullName) && c.FullName.ToLower().Contains(search.ToLower())) ||
-                            (!string.IsNullOrEmpty(c.City) && c.City.ToLower().Contains(search.ToLower())) ||
-                             (!string.IsNullOrEmpty(c.StreetAddress) && c.StreetAddress.ToLower().Contains(search.ToLower())) ||
-                            (!string.IsNullOrEmpty(c.NationalId) && c.NationalId.ToLower().Contains(search.ToLower()))
-                        )
-                        .ToList();
-                }
-           
+            if (!string.IsNullOrWhiteSpace(search))
+            {
+                allCustomers = allCustomers
+                    .Where(c =>
+                        (!string.IsNullOrEmpty(c.FullName) && c.FullName.ToLower().Contains(search.ToLower())) ||
+                        (!string.IsNullOrEmpty(c.City) && c.City.ToLower().Contains(search.ToLower())) ||
+                     
+                        c.CustomerId.ToString().Contains(search) 
+                     
+                    )
+                    .ToList();
+            }
+
 
 
             // Sort

@@ -147,7 +147,9 @@
                             </td>
                             <td>@transaction.Type</td>
                             <td>@transaction.Operation</td>
-                            <td>@transaction.Amount.ToString("C")</td>
+                        <td class="fw-semibold @(transaction.Type == "Credit" ? "text-success" : "text-danger")">
+                            @transaction.Amount.ToString("C")
+                        </td>
                             <td>@transaction.Balance.ToString("C")</td>
                             <td>@transaction.Symbol</td>
                             <td>@transaction.Bank</td>
@@ -158,11 +160,24 @@
             </table>
         </div>
 
-        <button id="loadMoreBtn" class="btn btn-secondary d-block"
+    <div class="d-flex justify-content-start gap-3 mt-4">
+        <!-- Load More Button -->
+        <button id="loadMoreBtn"
+                class="btn btn-secondary"
                 data-skip="20"
-            data-AccountId="@ViewBag.AccountId">
+                data-accountid="@ViewBag.AccountId">
             Load more
         </button>
+
+        <!-- Back to Customer Details Button -->
+        <a asp-controller="Customer"
+           asp-action="Details"
+           asp-route-id="@ViewBag.CustomerId"
+           class="btn btn-primary">
+            <i class="bi bi-arrow-left-circle me-1"></i> Back to Customer
+        </a>
+    </div>
+
    
 </main>
 
@@ -190,6 +205,7 @@
          role="alert" style="z-index: 9999; max-width: 400px;">
         <i class="bi bi-check-circle-fill me-2"></i> @TempData["SuccessMessage"]
     </div>
+ 
 
     <script>
         setTimeout(function () {

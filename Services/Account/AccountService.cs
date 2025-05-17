@@ -20,6 +20,14 @@ namespace Services.Account
                 _context = context;
             }
 
+
+        public async Task<int?> GetCustomerIdByAccountIdAsync(int accountId)
+        {
+            return await _context.Dispositions
+                .Where(d => d.AccountId == accountId)
+                .Select(d => (int?)d.CustomerId)
+                .FirstOrDefaultAsync();
+        }
         public async Task<List<DatabaseLayer.Models.Account>> GetAccountsByCustomerIdAsync(int customerId)
         {
             return await _context.Accounts
@@ -31,6 +39,7 @@ namespace Services.Account
         {
             // 1. Try to find the account
             var account = await _context.Accounts
+
                 .FirstOrDefaultAsync(a => a.AccountId == accountId);
 
             if (account == null)

@@ -2,6 +2,7 @@
 using DatabaseLayer.DTOs;
 using DatabaseLayer.DTOs.Account;
 using DatabaseLayer.DTOs.Transaktion;
+using DatabaseLayer.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -22,34 +23,36 @@ namespace BankAppMVC.Controllers
             _accountService = accountService;
             _transactionService = transactionService;
         }
-
-
         [HttpGet]
         public async Task<IActionResult> Details(int AccountId)
         {
+            var customerId = await _accountService.GetCustomerIdByAccountIdAsync(AccountId);
+            if (customerId == null)
+                return BadRequest("No customer linked to this account.");
+
             var transactions = await _accountService.GetTransactionsByAccountNumber(AccountId);
             var accountBalance = await _accountService.GetBalanceByAccountId(AccountId);
 
-            var viewModel = transactions
-
-                /*.ThenByDescending( t => transactions.)*/ // Order transactions by date from newest
-                .Select(t => new AccountTransactionsViewModel
-                {
-                    AccountBalance = accountBalance,
-                    Date = t.Date,
-                    Type = t.Type,
-                    Operation = t.Operation,
-                    Amount = t.Amount,
-                    Balance = t.Balance,
-                    Symbol = t.Symbol,
-                    Bank = t.Bank,
-                    Account = t.Account,
-                    AccountId = AccountId
-                }).ToList();
+            var viewModel = transactions.Select(t => new AccountTransactionsViewModel
+            {
+                AccountBalance = accountBalance,
+                Date = t.Date,
+                Type = t.Type,
+                Operation = t.Operation,
+                Amount = t.Amount,
+                Balance = t.Balance,
+                Symbol = t.Symbol,
+                Bank = t.Bank,
+                Account = t.Account,
+                AccountId = AccountId
+            }).ToList();
 
             ViewBag.AccountId = AccountId;
+            ViewBag.CustomerId = customerId;
+
             return View(viewModel);
         }
+
 
         [HttpGet]
         public IActionResult Deposit(int AccountId)

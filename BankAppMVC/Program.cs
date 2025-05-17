@@ -53,12 +53,12 @@ namespace BankAppMVC
                     dbContext.Database.Migrate();
                 }
             }
-            //using (var scope = app.Services.CreateScope())
-            //{
-            //    scope.ServiceProvider.GetService<DataInitializer>().SeedData();
-            //}
+            using (var scope = app.Services.CreateScope())
+            {
+                scope.ServiceProvider.GetService<DataInitializer>().SeedData();
+            }
 
-          
+
 
 
             // Configure the HTTP request pipeline.

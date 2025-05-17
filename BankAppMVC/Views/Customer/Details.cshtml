@@ -175,6 +175,14 @@
                         </div>
                     </div>
 
+                <!-- 🟢 Total Balance Card -->
+                <div class="mb-4">
+                    <div class="card shadow-sm rounded-4 p-4">
+                        <h5 class="text-muted">Total Balance</h5>
+                        <h2 class="text-success fw-bold">@Model.TotalBalance.ToString("C")</h2>
+                    </div>
+                </div>
+
                 @if (Model.LinkedCards != null && Model.LinkedCards.Any())
                 {
                     <h4 class="fw-bold text-body mt-5 mb-3">Linked Cards</h4>

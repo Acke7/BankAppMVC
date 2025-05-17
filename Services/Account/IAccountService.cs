@@ -19,6 +19,7 @@ namespace Services.Account
         Task UpdateAccount(int accountId, UpdateAccountDto dto);
         Task DeleteAccount(int accountId);
         Task<List<DatabaseLayer.Models.Account>> GetAccountsByCustomerIdAsync(int customerId);
+        Task<int?> GetCustomerIdByAccountIdAsync(int accountId);
 
     }
 }
