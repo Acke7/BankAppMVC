@@ -274,14 +274,14 @@
                             </a>
                             <div class="dropdown-menu">
                                 <a class="nav-link" asp-controller="User" asp-action="Index">Users Manger</a>
-                                
+
                             </div>
                         </div>
-                   
+
                     }
-                   
-               
-             
+
+
+
                 </nav>
 
                 <!-- Divider -->
@@ -315,8 +315,8 @@
                             </a>
                         </div>
                     </div>
-                
-                 
+
+
                 </nav>
             </div>
         </div>
@@ -339,7 +339,7 @@
 
 
                     <!-- Search -->
-                   @*  <div class="input-group" style="max-width: 400px">
+                    @*  <div class="input-group" style="max-width: 400px">
                         <input class="form-control" id="topnavSearchInput" type="search" placeholder="Search" aria-label="Search" aria-describedby="navbarSearch" />
                         <span class="input-group-text" id="navbarSearch">
                             <kbd class="badge bg-body-secondary text-body">⌘</kbd>
@@ -348,7 +348,7 @@
                     </div> *@
                 </div>
 
-               
+
                 <div class="col-auto">
                     <!-- User -->
                     <div class="dropdown my-n2">
@@ -362,7 +362,7 @@
                                     <img class="avatar-img" src="@avatarUrl" alt="avatar" />
                                 </span>
                             </a> <!-- CLOSE the <a> here -->
-                           
+
                             <ul class="dropdown-menu dropdown-menu-end">
                                 @if (User.IsInRole("Admin"))
                                 {
@@ -370,6 +370,11 @@
                                 }
                                 @* <li><a class="dropdown-item" asp-area="Identity" asp-page="/Account/Register">Register</a></li> *@
                                 <li>
+
+                                    @if (!(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" &&
+                                  ViewContext.RouteData.Values["action"]?.ToString() == "TopCustomers"))
+                                    {
+                                        
                                     <form method="post"
                                           asp-area="Identity"
                                           asp-page="/Account/Logout"
@@ -377,6 +382,7 @@
                                           class="w-100">
                                         <button type="submit" class="dropdown-item text-start w-100">Sign out</button>
                                     </form>
+                                    }
                                 </li>
                             </ul>
 
