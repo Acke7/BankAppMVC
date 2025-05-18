@@ -3,6 +3,7 @@ using DatabaseLayer.DTOs;
 using DatabaseLayer.DTOs.Account;
 using DatabaseLayer.DTOs.Transaktion;
 using DatabaseLayer.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,7 @@ using Services.Transactions;
 
 namespace BankAppMVC.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
 

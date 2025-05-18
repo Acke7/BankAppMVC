@@ -7,6 +7,7 @@ using Services.Users;
 
 namespace BankAppMVC.Controllers
 {
+
     [Authorize(Roles = "Admin")]
     public class UserController : Controller
         {

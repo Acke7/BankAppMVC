@@ -9,10 +9,12 @@ using BankAppMVC.Models.ViewModels.AccountVm;
 using AutoMapper;
 using DatabaseLayer.DTOs.Customer;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace BankAppMVC.Controllers
 {
+    [Authorize]
     [BindProperties]
     public class CustomerController : Controller
     {
